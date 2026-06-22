@@ -53,39 +53,73 @@
   }
   .sidebar-close{background:none; border:none; color:var(--text-muted); cursor:pointer; padding:6px; line-height:0;}
   .sidebar-close:hover{color:var(--text);}
-  .topbar-row{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
-  .filters-toggle{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:11px 18px;
-    border:0.5px solid var(--border); border-radius:var(--radius);
-    background:var(--bg); color:var(--text); font-size:14px; font-weight:600; cursor:pointer;
+  .sidebar-head{
+    display:flex; align-items:center; justify-content:space-between;
+    background:transparent; color:var(--text);
+    border-bottom:0.5px solid var(--border);
+    margin:-28px -24px 18px; padding:18px 24px 14px;
   }
-  .filters-toggle:hover{background:var(--surface);}
-  .filters-toggle svg{color:var(--magenta);}
+  .sidebar-head h2{color:var(--text); font-size:15px;}
+  .sidebar-head h2 svg{color:var(--magenta);}
+  .filter-divider{border-top:0.5px solid var(--border); margin:18px 0;}
+  .filter-section-label{font-size:13px; font-weight:700; color:var(--text); margin:0 0 12px;}
+  .field .filter-section-label{margin:0;}
 
-  /* Top-level page nav (Map view / Correlation view) */
-  .page-tabs{display:flex; gap:4px; border-bottom:0.5px solid var(--border);}
+  .dashboard-title{font-size:20px; font-weight:700; color:var(--text); margin:0;}
+  .topbar-row{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    margin-bottom:12px; padding-bottom:12px; border-bottom:0.5px solid var(--border);
+  }
+  .topbar-left{display:flex; align-items:center; gap:10px;}
+  .filters-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; padding:0;
+    border:0.5px solid var(--border); border-radius:var(--radius);
+    background:var(--bg); color:var(--text-muted); cursor:pointer;
+  }
+  .filters-toggle:hover{background:var(--surface); color:var(--text);}
+
+  /* Top-level page nav (Map View / Correlation View) */
+  .page-tabs{display:flex; gap:24px;}
   .page-tab-btn{
-    padding:12px 4px; background:none; border:none; cursor:pointer;
+    display:flex; align-items:center; gap:6px;
+    padding:6px 2px; background:none; border:none; cursor:pointer;
     font-size:14px; font-weight:600; color:var(--text-muted);
-    border-bottom:2px solid transparent; margin-bottom:-1px; margin-right:16px;
+    border-bottom:2px solid transparent;
   }
   .page-tab-btn:hover{color:var(--text);}
   .page-tab-btn.active{color:var(--magenta); border-bottom-color:var(--magenta);}
 
   /* ---------- Main ---------- */
-  .main{padding:28px 32px; min-width:0; flex:1;}
+  .main{padding:14px 28px; min-width:0; flex:1;}
   .topbar{display:none;}
 
   .card{
     background:var(--bg);
     border:0.5px solid var(--border);
     border-radius:var(--radius);
-    padding:22px;
+    padding:12px 14px;
   }
-  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
-  .card-head h2{font-size:18px; font-weight:600; margin:0;}
+  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+  .card-head h2{font-size:16px; font-weight:600; margin:0;}
   .card-head .sub{font-size:13px; color:var(--text-muted); margin-top:2px;}
+
+  /* Card title with leading icon + subtitle (correlation cards) */
+  .card-title{display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;}
+  .card-title-main{min-width:0;}
+  .card-title h2{font-size:16px; font-weight:700; margin:0;}
+  .card-title-icon{width:20px; height:20px; flex:0 0 auto; color:var(--magenta); margin-top:1px;}
+  .card-subtitle{font-size:12px; color:var(--text-muted); margin-top:2px;}
+  .title-line{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .pearson-stat{font-size:11.5px; font-weight:600; color:var(--text-muted); white-space:nowrap;}
+
+  /* Actual / Normalized scale toggle (scatter card) */
+  .scale-toggle{margin-left:auto; flex:0 0 auto; display:inline-flex; gap:2px;
+    background:var(--surface); border:0.5px solid var(--border); border-radius:999px; padding:2px;}
+  .scale-tab{padding:3px 9px; border:none; background:none; border-radius:999px;
+    font-size:10.5px; font-weight:600; color:var(--text-muted); cursor:pointer; white-space:nowrap;}
+  .scale-tab:hover{color:var(--text);}
+  .scale-tab.active{background:var(--magenta); color:#fff;}
   .icon-btn{
     background:none; border:none; color:var(--text-muted);
     cursor:pointer; padding:6px; border-radius:6px; line-height:0;
@@ -94,42 +128,35 @@
   .icon-btn svg{width:18px;height:18px;}
 
   /* KPI strip */
-  .kpi-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:16px;}
-  .kpi{position:relative; overflow:hidden; padding:18px 20px;}
+  .kpi-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:10px;}
+  .kpi{position:relative; overflow:hidden; padding:12px 14px;}
   .kpi::before{
     content:""; position:absolute; top:0; left:0; right:0; height:2px;
     background-image:linear-gradient(to right, rgba(236,0,140,0.15) 60%, transparent 60%);
     background-size:8px 2px; background-repeat:repeat-x;
   }
   .kpi .label{display:block; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted);}
-  .kpi .value{display:block; font-size:28px; font-weight:700; margin-top:8px; line-height:1.1;}
+  .kpi .value{display:block; font-size:20px; font-weight:700; margin-top:5px; line-height:1.1;}
   .kpi-dist{
     display:block; font-size:12px; font-weight:600; color:var(--magenta);
-    margin-top:4px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    margin-top:3px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
   .kpi-dist:empty{display:none;}
   .kpi-dist:hover{text-decoration:underline;}
 
-  /* Quadrant KPI cards (Correlation page) */
-  .quad-kpi .label{
-    display:flex; align-items:center; gap:6px;
-    font-size:12px; letter-spacing:0; text-transform:none; font-weight:700; color:var(--text);
-  }
-  .quad-kpi-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto;}
-  .quad-kpi .kpi-sub{display:block; font-size:11px; color:var(--text-muted); margin-top:4px; font-weight:400;}
-
   /* Grid rows */
-  .row-mid{display:grid; grid-template-columns:1.4fr 1fr; gap:16px; margin-bottom:16px;}
-  .row-bot{margin-bottom:16px;}
+  .row-mid{display:grid; grid-template-columns:1.1fr 1fr; gap:10px; margin-bottom:10px;}
+  .row-mid.cols-equal{grid-template-columns:1.6fr 1fr;}
+  .row-bot{margin-bottom:10px;}
 
   /* Map */
-  #map{height:640px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface);}
+  #map{height:420px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface);}
   .map-msg{
     padding:10px 14px; font-size:13px; color:var(--text-muted);
     background:var(--surface); border:0.5px solid var(--border);
     border-radius:6px; margin-bottom:10px; display:none;
   }
-  .legend{margin-top:16px;}
+  .legend{margin-top:10px;}
   .legend-bar{height:8px; border-radius:999px; background:linear-gradient(to right,var(--map-low),var(--magenta));}
   .legend-row{display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-bottom:6px;}
   .legend-row .cap{font-weight:600; color:var(--text);}
@@ -145,6 +172,26 @@
   .field select:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 1px var(--magenta);}
   .toggle-row{display:flex; align-items:center; gap:8px; margin:6px 0 16px; font-size:12px; color:var(--text-muted);}
   .toggle-row input{accent-color:var(--magenta);}
+
+  /* Searchable metric combobox (sits in front of a hidden <select> that remains the source of truth) */
+  .combobox{position:relative;}
+  .combobox-input{
+    width:100%; padding:10px 12px; border:0.5px solid var(--border);
+    border-radius:var(--radius); background:var(--bg); color:var(--text); font-size:14px;
+  }
+  .combobox-input:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 1px var(--magenta);}
+  .combobox-list{
+    position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:50;
+    max-height:280px; overflow-y:auto;
+    background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius);
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  }
+  .combobox-group-label{
+    padding:8px 12px 4px; font-size:11px; font-weight:600; text-transform:uppercase;
+    letter-spacing:0.04em; color:var(--text-muted);
+  }
+  .combobox-option{padding:8px 12px; font-size:14px; cursor:pointer;}
+  .combobox-option:hover, .combobox-option.active{background:var(--surface);}
 
   .range-head{display:flex; justify-content:space-between; align-items:center;}
   .range-head .vals{font-size:12px; color:var(--text-muted);}
@@ -163,6 +210,12 @@
     pointer-events:auto; width:16px; height:16px; border-radius:50%;
     background:var(--bg); border:2px solid var(--magenta); cursor:pointer;
   }
+  .dual.accent-amber .fill{background:var(--amber);}
+  .dual.accent-amber input[type=range]::-webkit-slider-thumb{border-color:var(--amber);}
+  .dual.accent-amber input[type=range]::-moz-range-thumb{border-color:var(--amber);}
+  .dual.accent-teal .fill{background:var(--teal);}
+  .dual.accent-teal input[type=range]::-webkit-slider-thumb{border-color:var(--teal);}
+  .dual.accent-teal input[type=range]::-moz-range-thumb{border-color:var(--teal);}
   .btn-primary{
     width:100%; padding:12px; border:none; border-radius:var(--radius);
     background:var(--magenta); color:#fff; font-size:14px; font-weight:600; cursor:pointer;
@@ -191,9 +244,9 @@
   tbody tr:hover{background:var(--surface);}
   tbody tr.selected{background:rgba(236,0,140,0.08);}
   tbody tr.selected td.dist{color:var(--magenta); font-weight:700;}
-  .row-mid > .card{display:flex; flex-direction:column;}
-  .table-scroll{flex:1; overflow:auto;}
-  .table-scroll.expanded{max-height:360px; flex:none;}
+  .row-mid > .card{display:flex; flex-direction:column; min-width:0;}
+  .table-scroll{flex:1; overflow:auto; max-height:280px;}
+  .table-scroll.expanded{max-height:280px; flex:none;}
   .icon-btn[disabled]{opacity:.4; cursor:not-allowed;}
   .link-btn{
     width:100%; margin-top:12px; padding:9px; background:none;
@@ -202,47 +255,56 @@
   }
   .link-btn:hover{background:var(--surface);}
 
-  /* Scatter */
-  .chart-wrap{position:relative; height:540px;}
-  .scatter-cap{font-size:12px; color:var(--text-muted); margin-top:10px;}
-  .quad-legend{display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:8px;}
-  .quad-legend .qitem{display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-muted);}
-  .quad-legend .qdot{width:10px; height:10px; border-radius:50%; flex:0 0 auto;}
-  .axis-row{display:flex; gap:12px; margin-top:14px;}
-  .axis-row .field{flex:1; margin-bottom:0;}
-  .axis-row .field label{font-size:12px;}
-  .axis-row select{padding:8px 10px; font-size:13px;}
+  /* Scatter — the main visual is the hero element: largest, with clean space */
+  .chart-wrap{position:relative; height:352px; margin:10px 4px 8px;}
+  .quad-legend{margin-top:8px;}
+  .quad-legend .qdot{width:10px; height:10px; border-radius:50%; flex:0 0 auto; display:inline-block;}
+  .quad-insight{border:0.5px solid var(--border); border-radius:var(--radius); background:var(--surface); padding:10px 12px;}
+  .quad-insight-empty{display:flex; align-items:center; padding:8px 12px;}
+  .quad-insight-head{display:flex; align-items:center; gap:8px; font-size:13.5px; margin-bottom:3px;}
+  .quad-insight-row{font-size:11.5px; color:var(--text); margin:0 0 3px;}
+  .qi-label{font-weight:600; color:var(--text-muted);}
+  .quad-insight-text{font-size:11.5px; color:var(--text-muted); margin:5px 0 0; line-height:1.4;}
 
-  /* 4-quadrant district list (stacked sections, narrow-column friendly) */
-  .quad-stack-wrap{overflow:auto; max-height:640px;}
-  .quad-group{margin-bottom:4px;}
-  .quad-group-head{
-    display:flex; align-items:center; gap:8px;
-    font-size:12px; font-weight:700; padding:9px 4px;
-    position:sticky; top:0; background:var(--bg); z-index:1;
-    border-bottom:2px solid var(--border);
+  /* Quadrant chips (clickable legend above the scatter chart) — single row, extra compact */
+  .quad-chips{display:flex; flex-wrap:wrap; gap:5px 6px; margin:7px 0;}
+  .qchip{
+    display:inline-flex; align-items:center; gap:5px;
+    padding:3px 8px; border:1px solid var(--border); border-radius:999px;
+    background:var(--bg); color:var(--text); font-size:10px; font-weight:500;
+    white-space:nowrap; cursor:pointer;
   }
-  .quad-group-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto;}
-  .quad-group-count{margin-left:auto; color:var(--text-muted); font-weight:600;}
-  .quad-dist{
-    display:flex; justify-content:space-between; align-items:baseline; gap:10px;
-    padding:8px 4px; cursor:pointer;
-    border-bottom:0.5px solid var(--border);
-  }
-  .quad-dist:hover{background:var(--surface);}
-  .quad-dist-name{
-    font-weight:500;
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
-  .quad-dist-val{font-size:11px; color:var(--text-muted); white-space:nowrap; flex:0 0 auto;}
-  .quad-dist:hover .quad-dist-name{text-decoration:underline;}
-  .quad-dist.selected{background:rgba(236,0,140,0.08);}
-  .quad-dist.selected .quad-dist-name{font-weight:700;}
+  .qchip:hover{border-color:var(--qc, var(--magenta));}
+  .qchip.active{background:var(--qc, var(--magenta)); border-color:var(--qc, var(--magenta)); color:#fff;}
+  .qchip-dot{width:6px; height:6px; border-radius:50%; flex:0 0 auto;}
+  .qchip.active .qchip-dot{background:#fff !important;}
+
+  /* X/Y axis selectors — flat, icon + dropdown inline, no labels, minimal space */
+  .axis-row{display:flex; gap:10px; margin-bottom:8px;}
+  .axis-field{flex:1; min-width:0; display:flex; align-items:center; gap:6px;}
+  .axis-icon{width:15px; height:15px; flex:0 0 auto; color:var(--magenta);}
+  .axis-field .combobox{flex:1; min-width:0;}
+  .axis-field .combobox-input{padding:5px 8px; font-size:12px; background:var(--bg);}
+  .axis-field select{padding:5px 8px; font-size:12px;}
+
+  /* Download Full List button (pinned to bottom of the table card) */
+  .download-btn{display:flex; align-items:center; justify-content:center; gap:8px;}
+  .download-btn svg{width:16px; height:16px; flex:0 0 auto;}
+
+  /* 4-quadrant district list (sortable table) — compact */
+  .quad-stack-wrap{overflow:auto; flex:1; min-height:0; max-height:430px;}
+  .quad-stack-wrap table{table-layout:fixed;}
+  .quad-stack-wrap th:first-child, .quad-stack-wrap td:first-child{width:36%;}
+  .quad-stack-wrap thead th{padding:9px 12px; font-size:12px;}
+  .quad-stack-wrap tbody td{padding:8px 12px; font-size:12.5px;}
+  .qt-sortable{cursor:pointer; user-select:none;}
+  .qt-sortable:hover{color:var(--magenta);}
+  .qt-dist{font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
   @media (max-width:1024px){
     .main{padding:22px 20px;}
     .kpi-strip{grid-template-columns:repeat(2,1fr);}
-    .row-mid{grid-template-columns:1fr;}
+    .row-mid, .row-mid.cols-equal{grid-template-columns:1fr;}
     .topbar-row{flex-wrap:wrap;}
   }
   @media (max-width:768px){
@@ -265,7 +327,7 @@
       margin-bottom:12px;
     }
     .page-tabs{width:100%; justify-content:space-between;}
-    .page-tab-btn{flex:1; margin-right:0; text-align:center;}
+    .page-tab-btn{flex:1; justify-content:center;}
     .kpi-strip{grid-template-columns:1fr 1fr; gap:12px;}
     .card{padding:16px;}
     .card-head{flex-wrap:wrap; gap:8px;}
@@ -280,7 +342,6 @@
     .sidebar{flex-basis:100%; width:100%;}
     .sidebar.collapsed{flex-basis:0; width:0;}
     .main{padding:12px 10px;}
-    .filters-toggle{width:100%; justify-content:center;}
     .kpi-strip{grid-template-columns:1fr;}
     .page-tab-btn{font-size:13px;}
     .card-head .sub{font-size:12px;}
@@ -296,9 +357,9 @@
 <div class="app">
   <!-- ============ SIDEBAR: Data filters (fixed, collapsible) ============ -->
   <aside class="sidebar" id="sidebar">
-    <div class="card-head" style="border-bottom:0.5px solid var(--border); padding-bottom:14px;">
+    <div class="sidebar-head">
       <h2 style="display:flex; align-items:center; gap:8px;">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--magenta)" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
         Data filters
       </h2>
       <button class="sidebar-close" id="sidebar-close" aria-label="Close filters"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -308,10 +369,10 @@
       <select id="f-metric"></select>
       <div class="toggle-row"><input type="checkbox" id="f-showall" /><label for="f-showall" style="font-weight:400;">Show all 421 metrics</label></div>
     </div>
-    <div class="field">
-      <label for="f-programme">BRAC programme</label>
-      <select id="f-programme"></select>
-    </div>
+
+    <div class="filter-divider"></div>
+    <div class="filter-section-label">Range Sliders</div>
+
     <div class="field">
       <div class="range-head">
         <label>Value range</label>
@@ -323,19 +384,55 @@
         <input type="range" id="range-hi" />
       </div>
     </div>
+    <div class="field">
+      <div class="range-head">
+        <label>Poverty rate range</label>
+        <span class="vals" id="poverty-range-vals">—</span>
+      </div>
+      <div class="dual accent-amber" id="poverty-dual">
+        <div class="track"></div><div class="fill" id="poverty-range-fill"></div>
+        <input type="range" id="poverty-range-lo" />
+        <input type="range" id="poverty-range-hi" />
+      </div>
+    </div>
+    <div class="field">
+      <div class="range-head">
+        <label>CVI range</label>
+        <span class="vals" id="cvi-range-vals">—</span>
+      </div>
+      <div class="dual accent-teal" id="cvi-dual">
+        <div class="track"></div><div class="fill" id="cvi-range-fill"></div>
+        <input type="range" id="cvi-range-lo" />
+        <input type="range" id="cvi-range-hi" />
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+    <div class="field">
+      <label class="filter-section-label" for="f-programme">Programme Selection</label>
+      <select id="f-programme"></select>
+    </div>
     <button class="btn-primary" id="apply-btn">Apply filters</button>
   </aside>
 
   <!-- ============ MAIN ============ -->
   <main class="main">
     <div class="topbar-row">
-      <button class="filters-toggle" id="filters-toggle">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-        Data filters
-      </button>
+      <div class="topbar-left">
+        <button class="filters-toggle" id="filters-toggle" aria-label="Toggle filters" title="Toggle filters">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        </button>
+        <h1 class="dashboard-title">Geo-Targeting</h1>
+      </div>
       <nav class="page-tabs" role="tablist">
-        <button class="page-tab-btn active" id="page-tab-map" role="tab" aria-selected="true">Map view</button>
-        <button class="page-tab-btn" id="page-tab-correlation" role="tab" aria-selected="false">Correlation view</button>
+        <button class="page-tab-btn active" id="page-tab-map" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="9 18 3 21 3 6 9 3 15 6 21 3 21 18 15 21 9 18"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+          Map View
+        </button>
+        <button class="page-tab-btn" id="page-tab-correlation" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Correlation View
+        </button>
       </nav>
     </div>
 
@@ -356,7 +453,6 @@
           <div class="card-head">
             <div>
               <h2>Spatial distribution</h2>
-              <div class="sub" id="map-sub">—</div>
             </div>
             <div>
               <button class="icon-btn" id="map-zoom-in" title="Zoom in (disabled — view is locked for now)" aria-label="Zoom in" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
@@ -380,7 +476,6 @@
           <div class="card-head">
             <div>
               <h2>Regional data breakdowns</h2>
-              <div class="sub" id="table-sub">—</div>
             </div>
             <button class="btn-ghost" id="sort-btn">Sort by value
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 10 12 5 17 10"/><polyline points="7 14 12 19 17 14"/></svg>
@@ -399,45 +494,53 @@
 
     <!-- ============ PAGE: CORRELATION ============ -->
     <div id="page-correlation" style="display:none;">
-      <!-- Quadrant KPI strip -->
-      <section class="kpi-strip">
-        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#EC008C;"></span>High X · High Y</span><span class="value" id="kpi-hh">—</span><span class="kpi-sub">districts</span></div>
-        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#FFA100;"></span>High X · Low Y</span><span class="value" id="kpi-hl">—</span><span class="kpi-sub">districts</span></div>
-        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#3DB7E4;"></span>Low X · High Y</span><span class="value" id="kpi-lh">—</span><span class="kpi-sub">districts</span></div>
-        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#007161;"></span>Low X · Low Y</span><span class="value" id="kpi-ll">—</span><span class="kpi-sub">districts</span></div>
-      </section>
-
       <!-- Correlation scatter + 4-quadrant district list -->
-      <section class="row-mid">
+      <section class="row-mid cols-equal">
         <!-- Scatter -->
         <div class="card">
-          <div class="card-head">
-            <h2>Data correlation analysis</h2>
+          <div class="card-title">
+            <svg class="card-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>
+            <div class="card-title-main">
+              <div class="title-line">
+                <h2>Data Correlation Analysis</h2>
+                <span class="pearson-stat" id="scatter-pearson"></span>
+              </div>
+              <div class="card-subtitle" id="scatter-subtitle">—</div>
+            </div>
+            <div class="scale-toggle" id="scale-toggle" role="tablist" aria-label="Axis value scale">
+              <button class="scale-tab active" data-scale="actual" role="tab" aria-selected="true">Actual</button>
+              <button class="scale-tab" data-scale="normalized" role="tab" aria-selected="false">Normalized</button>
+            </div>
           </div>
-          <div class="chart-wrap"><canvas id="scatter"></canvas></div>
-          <div class="scatter-cap" id="scatter-cap">—</div>
-          <div class="quad-legend" id="quad-legend"></div>
           <div class="axis-row">
-            <div class="field">
-              <label for="f-scatx">X-axis</label>
+            <div class="axis-field" title="X-axis">
+              <svg class="axis-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="X-axis"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
               <select id="f-scatx"></select>
             </div>
-            <div class="field">
-              <label for="f-scaty">Y-axis</label>
+            <div class="axis-field" title="Y-axis">
+              <svg class="axis-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Y-axis"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
               <select id="f-scaty"></select>
             </div>
           </div>
+          <div class="quad-chips" id="quad-chips"></div>
+          <div class="chart-wrap"><canvas id="scatter"></canvas></div>
+          <div class="quad-legend" id="quad-legend"></div>
         </div>
 
         <!-- 4-quadrant district list -->
         <div class="card">
-          <div class="card-head">
+          <div class="card-title">
+            <svg class="card-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
             <div>
-              <h2>4-quadrant district list</h2>
-              <div class="sub" id="quad-sub">—</div>
+              <h2>4-Quadrant District List</h2>
+              <div class="card-subtitle" id="quad-sub">—</div>
             </div>
           </div>
           <div class="quad-stack-wrap" id="quad-stack"></div>
+          <button class="link-btn download-btn" id="quad-download-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Full List
+          </button>
         </div>
       </section>
     </div>
@@ -455,12 +558,18 @@ const state = {
   metric: 'HCR_Upper_pct_HIES_22',   // default reproduces reference (Poverty Headcount Rate)
   bracProgramme: '',
   valueRange: null,                  // [lo, hi] on selected metric, or null = full
+  cviRange: null,                    // [lo, hi] on CVI, or null = full
+  povertyRange: null,                // [lo, hi] on HCR_Upper_pct_HIES_22, or null = full
   selectedDistrict: null,            // district code
   sortDir: 'desc',
   scatterX: 'UPGP',                  // BRAC response (need vs response framing)
   scatterY: 'HCR_Upper_pct_HIES_22', // BBS need
   showAllMetrics: false,
-  activeLevel: 'district'
+  activeLevel: 'district',
+  quadSortKey: 'y',                  // 'name' | 'x' | 'y' — 4-quadrant table sort column
+  quadSortDir: 'desc',
+  quadFilter: null,                  // 'HH' | 'HL' | 'LH' | 'LL' | null — active quadrant chip filter
+  scatterScale: 'actual'             // 'actual' | 'normalized' — scatter axis value scale
 };
 
 let DATA = null;          // raw json
@@ -640,6 +749,11 @@ function linReg(pts){ // pts: [{x,y}] -> {m,b,r}
   return {m,b,r};
 }
 
+function hexToRgba(hex, alpha){
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 // light magenta tint -> full BRAC magenta across metric range
 function colorScale(val, min, max){
   if(val === null || val === undefined || Number.isNaN(val)) return '#E8E8E4';
@@ -670,18 +784,24 @@ function valuesOf(units, key){
 /* =====================================================================
    FILTER PIPELINE -> currently visible units
    ===================================================================== */
+function passesRange(u, key, range){
+  if(!range) return true; // null = this slider isn't filtering
+  const [lo,hi] = range;
+  const v = u.metrics[key];
+  if(v === null || v === undefined || Number.isNaN(v)) return false;
+  if(v < lo || v > hi) return false;
+  return true;
+}
+
 function passesFilters(u){
   if(!u) return false;
   // BRAC programme selection is an independent overlay (map pins only, see
   // renderProgrammeMarkers) — it does NOT gate the choropleth/KPI/table/scatter.
-  // Those only depend on the metric value range, so a metric value alone is
-  // enough to show a district, even when a programme is also selected.
-  if(state.valueRange){
-    const [lo,hi] = state.valueRange;
-    const v = u.metrics[state.metric];
-    if(v === null || v === undefined || Number.isNaN(v)) return false;
-    if(v < lo || v > hi) return false;
-  }
+  // The 3 range sliders (Value range on the selected metric, Poverty rate, CVI)
+  // all AND together — a district must satisfy every active range to show.
+  if(!passesRange(u, state.metric, state.valueRange)) return false;
+  if(!passesRange(u, 'CVI', state.cviRange)) return false;
+  if(!passesRange(u, 'HCR_Upper_pct_HIES_22', state.povertyRange)) return false;
   return true;
 }
 
@@ -737,13 +857,138 @@ function buildMetricDropdown(){
   // scatter axis dropdowns use the same key pool
   buildOptgroups($('f-scatx'), keys.includes(state.scatterX)?keys:keys.concat(state.scatterX), state.scatterX);
   buildOptgroups($('f-scaty'), keys.includes(state.scatterY)?keys:keys.concat(state.scatterY), state.scatterY);
+
+  // Comboboxes (if already built) mirror whatever the hidden <select>s now contain.
+  metricCombo?.refresh();
+  scatXCombo?.refresh();
+  scatYCombo?.refresh();
+}
+
+/* =====================================================================
+   SEARCHABLE METRIC COMBOBOX
+   A thin search/filter front-end over a hidden native <select>, which stays
+   the single source of truth (buildOptgroups/buildMetricDropdown above are
+   unchanged). Selecting a row sets the hidden select's value and dispatches
+   a real 'change' event, so the existing bindFilters() listeners fire as-is.
+   ===================================================================== */
+let metricCombo, scatXCombo, scatYCombo;
+
+function buildCombobox(selectEl){
+  const baseId = selectEl.id;
+  let wrap = document.getElementById(baseId + '-combo');
+  if(!wrap){
+    wrap = document.createElement('div');
+    wrap.className = 'combobox';
+    wrap.id = baseId + '-combo';
+    wrap.innerHTML =
+      `<input type="text" class="combobox-input" id="${baseId}-input"
+              role="combobox" aria-expanded="false" aria-autocomplete="list"
+              aria-controls="${baseId}-listbox" autocomplete="off" />
+       <div class="combobox-list" id="${baseId}-listbox" role="listbox" hidden></div>`;
+    selectEl.insertAdjacentElement('afterend', wrap);
+    selectEl.style.display = 'none';
+  }
+  const input = wrap.querySelector('.combobox-input');
+  const list = wrap.querySelector('.combobox-list');
+  let optionRows = []; // flat cache of {value,label,el} rebuilt on each refresh()
+  let activeIndex = -1;
+
+  function refresh(){
+    list.innerHTML = '';
+    optionRows = [];
+    Array.from(selectEl.querySelectorAll('optgroup')).forEach(og => {
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'combobox-group';
+      const label = document.createElement('div');
+      label.className = 'combobox-group-label';
+      label.textContent = og.label;
+      groupDiv.appendChild(label);
+      Array.from(og.children).forEach(opt => {
+        const row = document.createElement('div');
+        row.className = 'combobox-option';
+        row.setAttribute('role', 'option');
+        row.dataset.value = opt.value;
+        row.textContent = opt.textContent;
+        groupDiv.appendChild(row);
+        optionRows.push({value: opt.value, label: opt.textContent, el: row, groupEl: groupDiv});
+      });
+      list.appendChild(groupDiv);
+    });
+    syncInputToSelection();
+  }
+
+  function syncInputToSelection(){
+    const sel = selectEl.selectedOptions[0];
+    input.value = sel ? sel.textContent : '';
+  }
+
+  function filterList(query){
+    const q = query.trim().toLowerCase();
+    activeIndex = -1;
+    optionRows.forEach((o, i) => {
+      const match = !q || o.label.toLowerCase().includes(q);
+      o.el.style.display = match ? '' : 'none';
+      if(match && activeIndex === -1) activeIndex = i;
+    });
+    list.querySelectorAll('.combobox-group').forEach(g => {
+      const anyVisible = Array.from(g.querySelectorAll('.combobox-option')).some(el => el.style.display !== 'none');
+      g.style.display = anyVisible ? '' : 'none';
+    });
+    highlightActive();
+  }
+
+  function highlightActive(){
+    optionRows.forEach((o, i) => o.el.classList.toggle('active', i === activeIndex));
+    if(activeIndex >= 0) optionRows[activeIndex].el.scrollIntoView({block: 'nearest'});
+  }
+
+  function openList(){ list.hidden = false; input.setAttribute('aria-expanded', 'true'); filterList(''); }
+  function closeList(){ list.hidden = true; input.setAttribute('aria-expanded', 'false'); syncInputToSelection(); }
+
+  function commitValue(value){
+    selectEl.value = value;
+    selectEl.dispatchEvent(new Event('change', {bubbles: true}));
+    closeList();
+  }
+
+  input.addEventListener('focus', () => { input.select(); openList(); });
+  input.addEventListener('input', () => filterList(input.value));
+  input.addEventListener('keydown', e => {
+    const visible = optionRows.filter(o => o.el.style.display !== 'none');
+    if(e.key === 'ArrowDown'){
+      e.preventDefault();
+      if(!visible.length) return;
+      const idx = (visible.findIndex(o => o.el.classList.contains('active')) + 1) % visible.length;
+      activeIndex = optionRows.indexOf(visible[idx]); highlightActive();
+    } else if(e.key === 'ArrowUp'){
+      e.preventDefault();
+      if(!visible.length) return;
+      const idx = (visible.findIndex(o => o.el.classList.contains('active')) - 1 + visible.length) % visible.length;
+      activeIndex = optionRows.indexOf(visible[idx]); highlightActive();
+    } else if(e.key === 'Enter'){
+      e.preventDefault();
+      if(activeIndex >= 0) commitValue(optionRows[activeIndex].value);
+    } else if(e.key === 'Escape'){
+      closeList(); input.blur();
+    }
+  });
+  list.addEventListener('mousedown', e => {
+    const row = e.target.closest('.combobox-option');
+    if(row) commitValue(row.dataset.value);
+  });
+  document.addEventListener('click', e => {
+    if(!wrap.contains(e.target)) closeList();
+  });
+
+  refresh();
+  return {refresh};
 }
 
 function buildProgrammeDropdown(){
   const sel = $('f-programme');
   sel.innerHTML = '';
   const all = document.createElement('option');
-  all.value = ''; all.textContent = '(All)';
+  all.value = ''; all.textContent = 'BRAC programme (All)';
   sel.appendChild(all);
   // Only the true programmes (BRAC_PROGRAMMES) — supporting/outcome metrics like
   // Total_Brac_Reach stay out of this filter even though they share the data category.
@@ -758,7 +1003,7 @@ function buildProgrammeDropdown(){
 }
 
 /* =====================================================================
-   VALUE RANGE SLIDER
+   RANGE SLIDERS (Value range on the selected metric, Poverty rate, CVI)
    ===================================================================== */
 function metricBounds(key){
   const vals = valuesOf(getUnits(), key);
@@ -766,28 +1011,71 @@ function metricBounds(key){
   return [Math.min(...vals), Math.max(...vals)];
 }
 
-function setupRange(){
-  const [min,max] = metricBounds(state.metric);
-  const lo = $('range-lo'), hi = $('range-hi');
-  const rate = isRateMetric(state.metric);
-  const step = rate ? Math.max((max-min)/200, 0.01) : Math.max(Math.round((max-min)/200),1);
-  [lo,hi].forEach(r => { r.min = min; r.max = max; r.step = step; });
-  lo.value = min; hi.value = max;
-  state.valueRange = null; // full range = no filter
-  paintRange();
+// One reusable dual-handle slider, parametrized so the same logic backs the
+// dynamic Value-range slider (tracks whatever state.metric currently is) and
+// the 2 fixed sliders (always CVI / always poverty), without 3x copy-paste.
+function createRangeSlider({getKey, getState, setState, ids, onCommit}){
+  function setup(){
+    const [min,max] = metricBounds(getKey());
+    const lo = $(ids.lo), hi = $(ids.hi);
+    const rate = isRateMetric(getKey());
+    const step = rate ? Math.max((max-min)/200, 0.01) : Math.max(Math.round((max-min)/200),1);
+    [lo,hi].forEach(r => { r.min = min; r.max = max; r.step = step; });
+    lo.value = min; hi.value = max;
+    setState(null); // full range = no filter
+    paint();
+  }
+
+  function paint(){
+    const lo = $(ids.lo), hi = $(ids.hi);
+    let a = parseFloat(lo.value), b = parseFloat(hi.value);
+    if(a > b){ [a,b] = [b,a]; }
+    const min = parseFloat(lo.min), max = parseFloat(lo.max);
+    const span = (max - min) || 1;
+    $(ids.fill).style.left = ((a-min)/span*100) + '%';
+    $(ids.fill).style.width = ((b-a)/span*100) + '%';
+    $(ids.vals).textContent = fmt(a, getKey()) + ' – ' + fmt(b, getKey());
+  }
+
+  function commit(){
+    let a = parseFloat($(ids.lo).value), b = parseFloat($(ids.hi).value);
+    if(a > b)[a,b] = [b,a];
+    const [min,max] = metricBounds(getKey());
+    setState((a<=min && b>=max) ? null : [a,b]);
+    onCommit();
+  }
+
+  $(ids.lo).addEventListener('input', paint);
+  $(ids.hi).addEventListener('input', paint);
+  $(ids.lo).addEventListener('change', commit);
+  $(ids.hi).addEventListener('change', commit);
+
+  return {setup, paint, commit};
 }
 
-function paintRange(){
-  const lo = $('range-lo'), hi = $('range-hi');
-  let a = parseFloat(lo.value), b = parseFloat(hi.value);
-  if(a > b){ [a,b] = [b,a]; }
-  const min = parseFloat(lo.min), max = parseFloat(lo.max);
-  const span = (max - min) || 1;
-  const fill = $('range-fill');
-  fill.style.left = ((a-min)/span*100) + '%';
-  fill.style.width = ((b-a)/span*100) + '%';
-  $('range-vals').textContent = fmt(a, state.metric) + ' – ' + fmt(b, state.metric);
-}
+const valueRangeSlider = createRangeSlider({
+  getKey: () => state.metric,
+  getState: () => state.valueRange,
+  setState: v => { state.valueRange = v; },
+  ids: {lo:'range-lo', hi:'range-hi', fill:'range-fill', vals:'range-vals'},
+  onCommit: reRenderAll
+});
+
+const povertyRangeSlider = createRangeSlider({
+  getKey: () => 'HCR_Upper_pct_HIES_22',
+  getState: () => state.povertyRange,
+  setState: v => { state.povertyRange = v; },
+  ids: {lo:'poverty-range-lo', hi:'poverty-range-hi', fill:'poverty-range-fill', vals:'poverty-range-vals'},
+  onCommit: reRenderAll
+});
+
+const cviRangeSlider = createRangeSlider({
+  getKey: () => 'CVI',
+  getState: () => state.cviRange,
+  setState: v => { state.cviRange = v; },
+  ids: {lo:'cvi-range-lo', hi:'cvi-range-hi', fill:'cvi-range-fill', vals:'cvi-range-vals'},
+  onCommit: reRenderAll
+});
 
 /* =====================================================================
    5. MAP + CHOROPLETH
@@ -819,9 +1107,14 @@ async function initMap(){
     // Revert by restoring zoomControl:true and removing the false flags below.
     zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false,
     touchZoom:false, boxZoom:false, keyboard:false,
+    // Fractional zoom so fitBounds can fill the card tightly instead of rounding
+    // down to the nearest whole zoom level (which left large margins of India/Myanmar visible).
+    zoomSnap:0.1, zoomDelta:0.1,
     attributionControl:true
   }).setView([23.7, 90.35], 6.4);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  // nolabels variant: drops basemap place-name labels (Meghalaya, Assam, Tripura,
+  // Kolkata, etc.) that otherwise clutter the area around Bangladesh.
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     attribution:'&copy; OpenStreetMap, &copy; CARTO', subdomains:'abcd', maxZoom:19
   }).addTo(map);
 
@@ -868,7 +1161,7 @@ function renderChoropleth(geojson){
     }
   }).addTo(map);
 
-  try{ map.fitBounds(geoLayer.getBounds(), {padding:[10,10]}); }catch(e){}
+  try{ map.invalidateSize(); map.fitBounds(geoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
   if(unmatched.length) console.warn('Unmatched GeoJSON district features:', unmatched);
   applyMapSelection();
   renderProgrammeMarkers();
@@ -910,11 +1203,17 @@ function recolorMap(){
 // active (non-null value = active, same convention used elsewhere). Pins always
 // show; the district name + reach value only shows on hover, to stay readable for
 // high-coverage programmes (e.g. BHP is active in 61/64 districts).
+const PIN_RADIUS_MIN = 5, PIN_RADIUS_MAX = 16;
+
 function renderProgrammeMarkers(){
   if(programmeMarkers){ map.removeLayer(programmeMarkers); programmeMarkers = null; }
   if(!state.bracProgramme || !geoLayer) return;
   const progKey = state.bracProgramme;
   const progLabel = metricLabel(progKey);
+  // Bubble radius scales with this programme's own reach value per district
+  // (more reach = bigger bubble) — never with the district polygon's size.
+  const [vmin, vmax] = metricBounds(progKey);
+  const span = (vmax - vmin) || 1;
   const markers = [];
   for(const u of getUnits()){
     const v = u.metrics[progKey];
@@ -923,7 +1222,9 @@ function renderProgrammeMarkers(){
     if(!layer) continue;
     let center;
     try{ center = layer.getBounds().getCenter(); }catch(e){ continue; }
-    const m = L.circleMarker(center, { radius:6, fillColor:'#80379B', color:'#FFFFFF', weight:1.5, fillOpacity:0.95 });
+    const t = (v - vmin) / span;
+    const radius = PIN_RADIUS_MIN + t * (PIN_RADIUS_MAX - PIN_RADIUS_MIN);
+    const m = L.circleMarker(center, { radius, fillColor:'#80379B', color:'#FFFFFF', weight:1.5, fillOpacity:0.95 });
     m.bindTooltip(`<strong>${u.name}</strong><br>${progLabel}: ${fmt(v, progKey)}`, {sticky:true});
     m.on('click', () => selectDistrict(u.code));
     markers.push(m);
@@ -983,9 +1284,6 @@ let tableExpanded = false;
 
 function renderTable(){
   const k = state.metric;
-  const dictE = DICT[k];
-  const year = dictE && dictE.source === 'BRAC Bangladesh' ? '2025' : '2022';
-  $('table-sub').textContent = `${metricLabel(k)} — ${dictE?dictE.source:''} ${year}`;
   $('th-value').textContent = 'Value';
 
   let units = visibleUnits().slice();
@@ -1024,16 +1322,31 @@ function initScatter(){
     data:{datasets:[]},
     options:{
       responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:8, right:8, left:2}}, // small breathing space around the plot
       scales:{
         x:{title:{display:true,text:''}, grid:{color:'rgba(211,209,199,0.4)'}},
         y:{title:{display:true,text:''}, grid:{color:'rgba(211,209,199,0.4)'}}
       },
       plugins:{
         legend:{display:false},
-        tooltip:{callbacks:{label:(c)=>{
-          const d = c.raw;
-          return `${d.name}: x=${fmt(d.x,state.scatterX)}, y=${fmt(d.y,state.scatterY)}`;
-        }}}
+        tooltip:{
+          backgroundColor:'#1A1B16', titleColor:'#fff', bodyColor:'#fff',
+          padding:10, cornerRadius:8, displayColors:false,
+          titleFont:{weight:'700', size:13}, bodyFont:{size:12},
+          callbacks:{
+            title:(items)=>{ const d = items[0] && items[0].raw; return d ? `${d.name},` : ''; },
+            label:(c)=>{
+              const d = c.raw, ax = d.ax!==undefined?d.ax:d.x, ay = d.ay!==undefined?d.ay:d.y;
+              return [`${metricLabel(state.scatterX)}: ${fmt(ax,state.scatterX)}`, `${metricLabel(state.scatterY)}: ${fmt(ay,state.scatterY)}`];
+            }
+          }
+        }
+      },
+      onClick: (evt, elements) => {
+        const hit = elements.find(el => scatterChart.data.datasets[el.datasetIndex].label === 'Districts');
+        if(!hit) return;
+        const p = scatterChart.data.datasets[hit.datasetIndex].data[hit.index];
+        selectDistrict(p.code);
       }
     }
   });
@@ -1058,19 +1371,35 @@ function updateScatter(){
   const quadrantGroups = {HH:[],HL:[],LH:[],LL:[]};
   pts.forEach(p => quadrantGroups[quadOf(p)].push(p));
 
-  // outliers: farthest from regression line (label 2-3)
-  const reg = linReg(pts);
-  let outliers = new Set();
-  if(reg){
-    const scored = pts.map(p=>({code:p.code, d:Math.abs(reg.m*p.x - p.y + reg.b)/Math.sqrt(reg.m*reg.m+1)}));
-    scored.sort((a,b)=>b.d-a.d);
-    scored.slice(0,3).forEach(s=>outliers.add(s.code));
-  }
+  const selPt = pts.find(p => p.code === state.selectedDistrict);
+  const selQuad = selPt ? quadOf(selPt) : null;
 
+  const reg = linReg(pts);
+
+  // Axis scale toggle: 'actual' plots raw values; 'normalized' min-max scales
+  // each axis to 0–1 so the two very-different-scale metrics become comparable.
+  // Min-max is monotonic, so quadrant membership / medians are unchanged — only
+  // the plotted coordinate (and the displayed axis ticks) differ.
+  const norm = state.scatterScale === 'normalized';
+  const xs0 = pts.map(p=>p.x), ys0 = pts.map(p=>p.y);
+  const xMin = Math.min(...xs0), xMax = Math.max(...xs0);
+  const yMin = Math.min(...ys0), yMax = Math.max(...ys0);
+  const normX = v => (xMax===xMin) ? 0.5 : (v - xMin)/(xMax - xMin);
+  const normY = v => (yMax===yMin) ? 0.5 : (v - yMin)/(yMax - yMin);
+  const projX = v => norm ? normX(v) : v;
+  const projY = v => norm ? normY(v) : v;
+  // Plotted points carry projected coords for position + actual (ax/ay) for tooltips.
+  const plotPts = pts.map(p => ({x:projX(p.x), y:projY(p.y), ax:p.x, ay:p.y, name:p.name, code:p.code}));
+
+  // A quadrant chip filter (state.quadFilter) dims the other 3 quadrants'
+  // points instead of hiding them, so the trend line / axes stay stable.
   const main = {
     label:'Districts',
-    data:pts,
-    pointBackgroundColor: pts.map(p=>QUAD_COLORS[quadOf(p)]||'#9AA0A6'),
+    data:plotPts,
+    pointBackgroundColor: pts.map(p=>{
+      const base = QUAD_COLORS[quadOf(p)]||'#9AA0A6';
+      return (state.quadFilter && quadOf(p)!==state.quadFilter) ? hexToRgba(base,0.15) : base;
+    }),
     pointBorderColor: pts.map(p=>p.code===state.selectedDistrict?'#EC008C':'rgba(0,0,0,0)'),
     pointBorderWidth: pts.map(p=>p.code===state.selectedDistrict?3:0),
     pointRadius: pts.map(p=>p.code===state.selectedDistrict?8:5),
@@ -1079,13 +1408,13 @@ function updateScatter(){
 
   const datasets=[main];
 
-  // trend line
+  // trend line (endpoints projected into the current scale — projection is affine
+  // per-axis, so a straight line stays straight under it)
   if(reg && pts.length>1){
-    const xs = pts.map(p=>p.x);
-    const x0 = Math.min(...xs), x1 = Math.max(...xs);
+    const x0 = xMin, x1 = xMax;
     datasets.push({
       label:'Trend', type:'line',
-      data:[{x:x0,y:reg.m*x0+reg.b},{x:x1,y:reg.m*x1+reg.b}],
+      data:[{x:projX(x0), y:projY(reg.m*x0+reg.b)}, {x:projX(x1), y:projY(reg.m*x1+reg.b)}],
       borderColor:'#007161', borderWidth:1.5, borderDash:[5,4],
       pointRadius:0, fill:false
     });
@@ -1093,76 +1422,277 @@ function updateScatter(){
 
   // outlier labels via a tiny plugin-free approach: separate labelled dataset
   scatterChart.data.datasets = datasets;
-  scatterChart.options.scales.x.title.text = metricLabel(xk);
-  scatterChart.options.scales.y.title.text = metricLabel(yk);
+  scatterChart.options.scales.x.title.text = metricLabel(xk) + (norm ? '  (normalized 0–1)' : '');
+  scatterChart.options.scales.y.title.text = metricLabel(yk) + (norm ? '  (normalized 0–1)' : '');
+  // In normalized mode pin both axes to a 0–1 baseline; in actual mode auto-scale.
+  scatterChart.options.scales.x.min = norm ? 0 : undefined;
+  scatterChart.options.scales.x.max = norm ? 1 : undefined;
+  scatterChart.options.scales.y.min = norm ? 0 : undefined;
+  scatterChart.options.scales.y.max = norm ? 1 : undefined;
+  scatterChart.options.plugins.tooltip.callbacks.title = (items)=>{
+    const d = items[0] && items[0].raw;
+    return d ? `${d.name},` : '';
+  };
   scatterChart.options.plugins.tooltip.callbacks.label = (c)=>{
     if(c.dataset.label==='Trend') return null;
-    const d=c.raw; return `${d.name}: x=${fmt(d.x,xk)}, y=${fmt(d.y,yk)}`;
+    const d=c.raw;
+    if(norm) return [`${metricLabel(xk)}: ${fmt(d.ax,xk)} (norm ${d.x.toFixed(2)})`,
+                     `${metricLabel(yk)}: ${fmt(d.ay,yk)} (norm ${d.y.toFixed(2)})`];
+    return [`${metricLabel(xk)}: ${fmt(d.ax,xk)}`, `${metricLabel(yk)}: ${fmt(d.ay,yk)}`];
   };
 
-  // outlier annotations via afterDraw
-  scatterChart.$outliers = pts.filter(p=>outliers.has(p.code));
-  // median split for the quadrant divider plugin (null when too few points)
-  scatterChart.$quadrant = (pts.length>1 && mx!==null && my!==null) ? {mx, my} : null;
+  // outlier name labels turned off for a cleaner chart (kept the computation
+  // harmless above in case we re-enable it later).
+  scatterChart.$outliers = [];
+  // median split for the quadrant divider plugin (null when too few points);
+  // carry projected positions (for line placement) + display labels (actual or
+  // normalized depending on the active scale).
+  scatterChart.$quadrant = (pts.length>1 && mx!==null && my!==null) ? {
+    mxPlot: projX(mx), myPlot: projY(my),
+    mxLabel: norm ? normX(mx).toFixed(2) : fmt(mx, xk),
+    myLabel: norm ? normY(my).toFixed(2) : fmt(my, yk)
+  } : null;
   scatterChart.$quadrantGroups = quadrantGroups;
+  // glowing halo plugin (see selectedHalo registration below) draws around this point
+  scatterChart.$selectedPoint = selPt ? {code:selPt.code, color:QUAD_COLORS[selQuad]} : null;
   scatterChart.update();
 
+  // Pearson r sits inline on the title line; the subtitle is just the relationship.
   const r = reg ? reg.r.toFixed(2) : '—';
-  $('scatter-cap').textContent = `${pts.length} of 64 shown · Pearson r = ${r} · color = quadrant (split at median)`;
+  $('scatter-pearson').textContent = `Pearson r ${r}`;
+  $('scatter-subtitle').textContent = `Relationship between ${metricLabel(xk)} and ${metricLabel(yk)}`;
 
-  // quadrant legend
-  $('quad-legend').innerHTML = ['HH','HL','LH','LL'].map(q =>
-    `<span class="qitem"><span class="qdot" style="background:${QUAD_COLORS[q]}"></span>${QUAD_LABELS[q]}</span>`
-  ).join('');
+  // Live insight card for whichever district is currently selected (any panel
+  // can set it) — replaces a once-static "High X · High Y" legend. Short,
+  // labeled sections (selected district, each axis, interpretation) rather
+  // than a long write-up — real metric names, template-generated, no AI call.
+  $('quad-legend').innerHTML = selPt
+    ? buildInsightHtml(selPt, selQuad, mx, my, xk, yk)
+    : `<div class="quad-insight quad-insight-empty"><p class="quad-insight-text" style="margin:0;">Click a district (here, on the map, or in the table) to see its quadrant breakdown</p></div>`;
 
-  renderQuadrantKPIs();
+  renderQuadChips(quadrantGroups);
   renderQuadrantList();
 }
 
-function renderQuadrantKPIs(){
-  const groups = (scatterChart && scatterChart.$quadrantGroups) || {HH:[],HL:[],LH:[],LL:[]};
-  $('kpi-hh').textContent = groups.HH.length;
-  $('kpi-hl').textContent = groups.HL.length;
-  $('kpi-lh').textContent = groups.LH.length;
-  $('kpi-ll').textContent = groups.LL.length;
+/* =====================================================================
+   INSIGHT ENGINE (offline, template-based but polarity- & domain-aware)
+   No AI/API call — but reads "AI-like" because it reasons about whether a
+   high value is good or bad (polarity), names the real domain (from each
+   metric's own category), and ends with a BRAC-targeting recommendation.
+   Scales to any X×Y of the 421 metrics: ~15 domains × 3 roles, not 1000s of
+   per-pair templates.
+   ===================================================================== */
+
+// Category -> human domain name + the action you'd take about it.
+const CATEGORY_DOMAIN = {
+  poverty_vulnerability:   {name:'poverty', action:'poverty-reduction and resilience support'},
+  literacy_education:      {name:'education', action:'education access and learning support'},
+  wash:                    {name:'WASH', action:'water, sanitation and hygiene services'},
+  energy_fuel:             {name:'energy', action:'clean-energy access'},
+  employment_work:         {name:'livelihood', action:'livelihood and employment programmes'},
+  financial_inclusion:     {name:'financial-inclusion', action:'financial-inclusion services'},
+  digital_access:          {name:'digital-access', action:'digital-access initiatives'},
+  housing_quality:         {name:'housing', action:'housing-improvement support'},
+  disability:              {name:'disability', action:'disability-inclusive services'},
+  brac_programmes:         {name:'programme', action:'programme expansion'},
+  household_structure:     {name:'household', action:'targeted household support'},
+  population_demography:   {name:'demographic', action:'context-tailored support'},
+  marriage_child_marriage: {name:'child-protection', action:'child-protection and early-marriage prevention'},
+  religion_ethnicity:      {name:'community', action:'community-tailored support'},
+  remittance_migration:    {name:'migration', action:'migration and remittance support'}
+};
+
+// Cross-category themes detected by keyword (climate/health span several categories).
+function metricDomain(key){
+  const s = (metricLabel(key)||'').toLowerCase() + ' ' + String(key).toLowerCase();
+  if(/cvi|climat|flood|cyclone|vulnerab|disaster|hazard/.test(s)) return {name:'climate', action:'climate resilience and adaptation measures'};
+  if(/mortal|nutrition|stunt|wasting|health|disease|immuniz|immunis|tuberculosis/.test(s)) return {name:'health', action:'health and nutrition services'};
+  const cat = (DICT[key] && DICT[key].category) || '';
+  return CATEGORY_DOMAIN[cat] || {name:'', action:'targeted support'};
+}
+
+// Polarity: does a higher value mean a worse situation, a better one, or neither?
+function metricPolarity(key){
+  const s = (metricLabel(key)||'').toLowerCase() + ' ' + String(key).toLowerCase();
+  if(/pover|hcr|\bmpi\b|vulnerab|cvi|mortal|death|deprivation|kancha|unemploy|out.?of.?school|illiter|child.?marriage|disab|without|lack|flood|disaster|hazard/.test(s)) return 'worse';
+  if(/literac|school|enrol|educat|incom|saving|account|\bbank|electric|sanitat|hygien|\bwater|coverage|beneficiar|reach|employ|graduat|financ|internet|mobile|phone|pucca|access|ownership/.test(s)) return 'better';
+  return 'neutral';
+}
+
+// Role frames how the axis reads for targeting.
+function metricRole(key){
+  if((DICT[key] && DICT[key].category) === 'brac_programmes') return 'response';
+  const p = metricPolarity(key);
+  return p === 'worse' ? 'need' : p === 'better' ? 'asset' : 'neutral';
+}
+
+function axisPhrase(key, high){
+  const role = metricRole(key), dom = metricDomain(key).name, d = dom ? dom + ' ' : '';
+  if(role === 'need')     return high ? `elevated ${d}need` : `relatively low ${d}need`;
+  if(role === 'asset')    return high ? `strong ${d}outcomes` : `weak ${d}outcomes`;
+  if(role === 'response') return high ? 'solid programme coverage' : 'limited programme coverage';
+  return high ? `high ${metricLabel(key)}` : `low ${metricLabel(key)}`;
+}
+
+// Is this axis a "concern" (high need, or low asset)?  / a programme "gap" (low coverage)?
+function axisConcern(key, high){ const r = metricRole(key); return r==='need' ? high : r==='asset' ? !high : false; }
+function axisGap(key, high){ return metricRole(key)==='response' && !high; }
+
+function buildRecommendation(district, xk, yk, xHigh, yHigh){
+  const xCon = axisConcern(xk, xHigh), yCon = axisConcern(yk, yHigh);
+  const xGap = axisGap(xk, xHigh), yGap = axisGap(yk, yHigh);
+  // 1) classic targeting gap: real need on one axis + thin programme coverage on the other
+  if((xCon && yGap) || (yCon && xGap)){
+    const needKey = xCon ? xk : yk;
+    return `This points to a gap between need and programme reach — making ${district} a strong candidate to prioritise for ${metricDomain(needKey).action}.`;
+  }
+  // 2) both axes flag concern
+  if(xCon && yCon){
+    const a = metricDomain(xk), b = metricDomain(yk);
+    // same domain -> name the concrete action; different domains -> just name both areas
+    const focus = (a.name && a.name===b.name) ? a.action
+                : (a.name && b.name) ? `${a.name} and ${b.name}`
+                : (a.action || b.action);
+    return `Both indicators flag elevated need, making ${district} a priority for targeted intervention${focus ? ` — particularly around ${focus}` : ''}.`;
+  }
+  // 3) one axis flags concern
+  if(xCon || yCon){
+    const ck = xCon ? xk : yk, dom = metricDomain(ck);
+    return `The elevated ${dom.name||'risk'} indicator suggests ${district} may warrant additional ${dom.action}.`;
+  }
+  // 4) at least one axis is meaningfully favorable
+  if(metricRole(xk)!=='neutral' || metricRole(yk)!=='neutral'){
+    return `Both indicators are comparatively favorable, suggesting ${district} is a lower immediate priority for additional support.`;
+  }
+  // 5) two neutral/descriptive metrics — no clear targeting signal
+  return `These two indicators don't point to a clear need on their own; targeting decisions for ${district} should weigh additional local context.`;
+}
+
+function insightHash(s){ let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))|0; return Math.abs(h); }
+
+function buildInsightText(selPt, mx, my, xk, yk){
+  const xHigh = selPt.x>=mx, yHigh = selPt.y>=my;
+  const domX = metricDomain(xk), domY = metricDomain(yk);
+  const district = selPt.name;
+  const openers = [
+    `${district} stands out here`,
+    `Looking at ${district}`,
+    `For ${district}`
+  ];
+  const opener = openers[insightHash(selPt.code) % openers.length];
+  // collapse the description when both axes are the same domain & same direction
+  let placement;
+  if(domX.name && domX.name === domY.name && xHigh === yHigh){
+    placement = `both its ${domX.name} indicators sit ${xHigh ? 'above' : 'below'} the median`;
+  } else {
+    placement = `${axisPhrase(xk, xHigh)} and ${axisPhrase(yk, yHigh)}`;
+  }
+  const s1 = `${opener}: ${placement}.`;
+  const s2 = buildRecommendation(district, xk, yk, xHigh, yHigh);
+  return `${s1} ${s2}`;
+}
+
+function buildInsightHtml(selPt, selQuad, mx, my, xk, yk){
+  const xLabel = metricLabel(xk), yLabel = metricLabel(yk);
+  return `<div class="quad-insight">
+      <div class="quad-insight-head"><span class="qdot" style="background:${QUAD_COLORS[selQuad]}"></span><strong>${selPt.name}</strong></div>
+      <p class="quad-insight-row"><span class="qi-label">X-axis — ${xLabel}:</span> ${fmt(selPt.x,xk)} (${selPt.x>=mx?'High':'Low'}, median ${fmt(mx,xk)})</p>
+      <p class="quad-insight-row"><span class="qi-label">Y-axis — ${yLabel}:</span> ${fmt(selPt.y,yk)} (${selPt.y>=my?'High':'Low'}, median ${fmt(my,yk)})</p>
+      <p class="quad-insight-text"><strong>Insight:</strong> ${buildInsightText(selPt, mx, my, xk, yk)}</p>
+    </div>`;
+}
+
+function renderQuadChips(groups){
+  const order = ['HH','HL','LH','LL'];
+  $('quad-chips').innerHTML = order.map(q=>{
+    const active = state.quadFilter === q;
+    return `<button type="button" class="qchip${active?' active':''}" data-quad="${q}" style="--qc:${QUAD_COLORS[q]}">`
+      + `<span class="qchip-dot" style="background:${QUAD_COLORS[q]}"></span>${QUAD_LABELS[q]} (${groups[q].length})</button>`;
+  }).join('');
+  $('quad-chips').querySelectorAll('.qchip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const q = btn.dataset.quad;
+      state.quadFilter = (state.quadFilter === q) ? null : q;
+      updateScatter();
+    });
+  });
 }
 
 function renderQuadrantList(){
   const groups = (scatterChart && scatterChart.$quadrantGroups) || {HH:[],HL:[],LH:[],LL:[]};
   const xk = state.scatterX, yk = state.scatterY;
-  const total = groups.HH.length + groups.HL.length + groups.LH.length + groups.LL.length;
-  $('quad-sub').textContent = `${total} of 64 shown · split at median`;
 
+  let rows = [];
+  ['HH','HL','LH','LL'].forEach(q => groups[q].forEach(p => rows.push({...p, quad:q})));
+  if(state.quadFilter) rows = rows.filter(p => p.quad === state.quadFilter);
+  $('quad-sub').textContent = state.quadFilter
+    ? `${rows.length} of 64 shown · ${QUAD_LABELS[state.quadFilter]} only`
+    : `${rows.length} of 64 shown · split at median`;
+
+  const dir = state.quadSortDir === 'asc' ? 1 : -1;
+  rows.sort((a,b)=>{
+    if(state.quadSortKey === 'name') return a.name.localeCompare(b.name) * dir;
+    if(state.quadSortKey === 'x') return (a.x - b.x) * dir;
+    return (a.y - b.y) * dir;
+  });
+
+  const arrow = key => state.quadSortKey===key ? (state.quadSortDir==='asc' ? ' ▴' : ' ▾') : '';
   const wrap = $('quad-stack');
-  wrap.innerHTML = '';
-  ['HH','HL','LH','LL'].forEach(q=>{
-    const group = document.createElement('div');
-    group.className = 'quad-group';
+  wrap.innerHTML = `<table>
+      <thead><tr>
+        <th class="qt-sortable" data-sort="name">District${arrow('name')}</th>
+        <th class="qt-sortable num" data-sort="x">${metricLabel(xk)}${arrow('x')}</th>
+        <th class="qt-sortable num" data-sort="y">${metricLabel(yk)}${arrow('y')}</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>`;
 
-    const head = document.createElement('div');
-    head.className = 'quad-group-head';
-    head.innerHTML = `<span class="quad-group-dot" style="background:${QUAD_COLORS[q]}"></span>${QUAD_LABELS[q]}<span class="quad-group-count">${groups[q].length}</span>`;
-    group.appendChild(head);
+  const tb = wrap.querySelector('tbody');
+  rows.forEach(p=>{
+    const tr = document.createElement('tr');
+    if(p.code === state.selectedDistrict) tr.classList.add('selected');
+    tr.innerHTML = `<td class="qt-dist" style="color:${QUAD_COLORS[p.quad]}">${p.name}</td>`
+      + `<td class="num">${fmt(p.x,xk)}</td>`
+      + `<td class="num">${fmt(p.y,yk)}</td>`;
+    tr.addEventListener('click', ()=>selectDistrict(p.code));
+    tb.appendChild(tr);
+  });
 
-    groups[q].slice().sort((a,b)=>b.y-a.y).forEach(p=>{
-      const item = document.createElement('div');
-      item.className = 'quad-dist';
-      if(p.code === state.selectedDistrict) item.classList.add('selected');
-      const name = document.createElement('span');
-      name.className = 'quad-dist-name';
-      name.style.color = QUAD_COLORS[q];
-      name.textContent = p.name;
-      const val = document.createElement('span');
-      val.className = 'quad-dist-val';
-      val.textContent = `X ${fmt(p.x,xk)} · Y ${fmt(p.y,yk)}`;
-      item.appendChild(name);
-      item.appendChild(val);
-      item.addEventListener('click', ()=>selectDistrict(p.code));
-      group.appendChild(item);
+  wrap.querySelectorAll('.qt-sortable').forEach(th=>{
+    th.addEventListener('click', ()=>{
+      const key = th.dataset.sort;
+      if(state.quadSortKey === key) state.quadSortDir = state.quadSortDir==='asc' ? 'desc' : 'asc';
+      else { state.quadSortKey = key; state.quadSortDir = key==='name' ? 'asc' : 'desc'; }
+      renderQuadrantList();
     });
-    wrap.appendChild(group);
   });
 }
+
+// Plugin to draw a glowing halo behind the currently selected point — pure
+// canvas drawing (not a fake dataset), so it never interferes with click hit-
+// testing or tooltip behavior on the real point underneath it.
+Chart.register({
+  id:'selectedHalo',
+  beforeDatasetsDraw(chart){
+    const sel = chart.$selectedPoint;
+    if(!sel) return;
+    const meta = chart.getDatasetMeta(0);
+    const idx = chart.data.datasets[0].data.findIndex(d=>d.code===sel.code);
+    if(idx<0) return;
+    const pt = meta.data[idx];
+    if(!pt) return;
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, 15, 0, Math.PI*2);
+    ctx.fillStyle = hexToRgba(sel.color, 0.18);
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = hexToRgba(sel.color, 0.55);
+    ctx.stroke();
+    ctx.restore();
+  }
+});
 
 // Plugin to draw the quadrant divider cross (vertical at median X, horizontal at median Y)
 Chart.register({
@@ -1171,17 +1701,19 @@ Chart.register({
     const q = chart.$quadrant;
     if(!q) return;
     const {chartArea:area, scales} = chart;
-    const px = scales.x.getPixelForValue(q.mx);
-    const py = scales.y.getPixelForValue(q.my);
+    const px = scales.x.getPixelForValue(q.mxPlot);
+    const py = scales.y.getPixelForValue(q.myPlot);
     const ctx = chart.ctx;
     ctx.save();
-    ctx.strokeStyle = '#80379B'; // var(--purple)
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6,4]);
+    ctx.lineWidth = 1.25;
+    ctx.setLineDash([5,5]);
+    // faint quadrant-split guide lines, no value labels (kept clean per design)
     if(px>=area.left && px<=area.right){
+      ctx.strokeStyle = 'rgba(154,160,166,0.7)'; // vertical (X median)
       ctx.beginPath(); ctx.moveTo(px, area.top); ctx.lineTo(px, area.bottom); ctx.stroke();
     }
     if(py>=area.top && py<=area.bottom){
+      ctx.strokeStyle = 'rgba(0,113,97,0.6)'; // horizontal (Y median)
       ctx.beginPath(); ctx.moveTo(area.left, py); ctx.lineTo(area.right, py); ctx.stroke();
     }
     ctx.restore();
@@ -1245,16 +1777,12 @@ function updateLegend(){
   const [min,max] = metricBounds(state.metric);
   $('legend-min').textContent = fmt(min,state.metric);
   $('legend-max').textContent = fmt(max,state.metric);
-  const dictE = DICT[state.metric];
-  const year = dictE && dictE.source === 'BRAC Bangladesh' ? '2025' : '2022';
-  $('map-sub').textContent = `${metricLabel(state.metric)} — ${dictE?dictE.source:''} ${year}`;
 }
 
 function bindFilters(){
   $('f-metric').addEventListener('change', e=>{
     state.metric = e.target.value;
-    state.valueRange = null;
-    setupRange();
+    valueRangeSlider.setup(); // resets to the new metric's full bounds, state.valueRange=null
     renderKPIs(); recolorMap(); updateLegend(); renderTable();
   });
   $('f-showall').addEventListener('change', e=>{
@@ -1268,19 +1796,11 @@ function bindFilters(){
   $('f-scatx').addEventListener('change', e=>{ state.scatterX=e.target.value; updateScatter(); });
   $('f-scaty').addEventListener('change', e=>{ state.scatterY=e.target.value; updateScatter(); });
 
-  $('range-lo').addEventListener('input', paintRange);
-  $('range-hi').addEventListener('input', paintRange);
-  const commitRange = ()=>{
-    let a=parseFloat($('range-lo').value), b=parseFloat($('range-hi').value);
-    if(a>b)[a,b]=[b,a];
-    const [min,max]=metricBounds(state.metric);
-    state.valueRange = (a<=min && b>=max) ? null : [a,b];
-    reRenderAll();
-  };
-  $('range-lo').addEventListener('change', commitRange);
-  $('range-hi').addEventListener('change', commitRange);
-
-  $('apply-btn').addEventListener('click', commitRange);
+  $('apply-btn').addEventListener('click', ()=>{
+    valueRangeSlider.commit();
+    povertyRangeSlider.commit();
+    cviRangeSlider.commit();
+  });
 
   $('sort-btn').addEventListener('click', ()=>{
     state.sortDir = state.sortDir==='desc'?'asc':'desc';
@@ -1292,11 +1812,16 @@ function bindFilters(){
 
   $('map-zoom-in').addEventListener('click', ()=>{ /* TEMP: zoom disabled, see initMap() — map.zoomIn(); */ });
   $('map-reset').addEventListener('click', ()=>{
-    if(map && geoLayer){ try{ map.fitBounds(geoLayer.getBounds(),{padding:[10,10]}); }catch(e){ map.setView([23.7,90.35],6.4); } }
+    if(map && geoLayer){ try{ map.invalidateSize(); map.fitBounds(geoLayer.getBounds(),{padding:[4,4]}); }catch(e){ map.setView([23.7,90.35],6.4); } }
   });
 
   // Sidebar: fixed + collapsible (pushes main content, no overlay)
-  const toggleSidebar = ()=> $('sidebar').classList.toggle('collapsed');
+  const toggleSidebar = ()=>{
+    $('sidebar').classList.toggle('collapsed');
+    // Sidebar width change resizes the map column too — Leaflet caches container
+    // size, so it needs a nudge once the 0.25s CSS transition finishes.
+    if(map && geoLayer) setTimeout(()=>{ map.invalidateSize(); map.fitBounds(geoLayer.getBounds(), {padding:[4,4]}); }, 270);
+  };
   $('filters-toggle').addEventListener('click', toggleSidebar);
   $('sidebar-close').addEventListener('click', toggleSidebar);
 
@@ -1314,6 +1839,57 @@ function bindFilters(){
   };
   $('page-tab-map').addEventListener('click', ()=>switchPage('map'));
   $('page-tab-correlation').addEventListener('click', ()=>switchPage('correlation'));
+
+  $('quad-download-btn').addEventListener('click', downloadQuadrantCsv);
+
+  // Actual / Normalized scatter scale toggle
+  $('scale-toggle').querySelectorAll('.scale-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      const scale = tab.dataset.scale;
+      if(state.scatterScale === scale) return;
+      state.scatterScale = scale;
+      $('scale-toggle').querySelectorAll('.scale-tab').forEach(t=>{
+        const on = t.dataset.scale === scale;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on);
+      });
+      updateScatter();
+    });
+  });
+}
+
+// Export all 64 districts (District, X value, Y value, quadrant) as a CSV —
+// fully client-side via a Blob, no backend. Uses the current X/Y axis metrics.
+function downloadQuadrantCsv(){
+  const xk = state.scatterX, yk = state.scatterY;
+  const xLabel = metricLabel(xk), yLabel = metricLabel(yk);
+  // recompute medians over all districts that have both values (same rule as the scatter)
+  const valid = getUnits().filter(u=>{
+    const x = u.metrics[xk], y = u.metrics[yk];
+    return x!=null && !Number.isNaN(x) && y!=null && !Number.isNaN(y);
+  });
+  const mx = median(valid.map(u=>u.metrics[xk])), my = median(valid.map(u=>u.metrics[yk]));
+  const quadName = (x,y)=> (mx==null||my==null) ? '' :
+    (x>=mx ? (y>=my?'High X · High Y':'High X · Low Y') : (y>=my?'Low X · High Y':'Low X · Low Y'));
+  const esc = s => /[",\n]/.test(String(s)) ? `"${String(s).replace(/"/g,'""')}"` : String(s);
+
+  const header = ['District', xLabel, yLabel, 'Quadrant'];
+  const lines = [header.map(esc).join(',')];
+  getUnits().slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(u=>{
+    const x = u.metrics[xk], y = u.metrics[yk];
+    const xv = (x==null||Number.isNaN(x)) ? '' : x;
+    const yv = (y==null||Number.isNaN(y)) ? '' : y;
+    const q = (xv===''||yv==='') ? '' : quadName(x,y);
+    lines.push([u.name, xv, yv, q].map(esc).join(','));
+  });
+
+  const blob = new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `geo-targeting_${xk}_vs_${yk}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
 }
 
 /* =====================================================================
@@ -1350,7 +1926,15 @@ async function init(){
 
   buildMetricDropdown();
   buildProgrammeDropdown();
-  setupRange();
+
+  metricCombo = buildCombobox($('f-metric'));
+  scatXCombo = buildCombobox($('f-scatx'));
+  scatYCombo = buildCombobox($('f-scaty'));
+
+  valueRangeSlider.setup();
+  povertyRangeSlider.setup();
+  cviRangeSlider.setup();
+
   bindFilters();
   initScatter();
 
