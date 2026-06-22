@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BRAC DataExplorer — Bangladesh District Dashboard</title>
+
+<!-- CDN libs only: Leaflet 1.9 (map) + Chart.js 4 (scatter) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+<style>
+  :root{
+    --magenta:#EC008C;            /* primary / choropleth high */
+    --teal:#007161;               /* data-viz (scatter quadrant) */
+    --blue:#3DB7E4; --amber:#FFA100; --purple:#80379B;
+    --text:#27281C; --text-muted:#4D4F53;
+    --bg:#FFFFFF; --surface:#F8F8F6; --page:#F4F2F7; --border:#D3D1C7;
+    --map-low:#FEEBF6;            /* choropleth low (light magenta tint) */
+    --nodata:#E8E8E4;             /* null fill */
+    --radius:8px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--page);
+    color:var(--text);
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:14px; line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  button,select,input{font-family:inherit;}
+
+  /* ---------- App shell ---------- */
+  .app{display:flex; min-height:100vh; align-items:flex-start;}
+
+  /* ---------- Sidebar (Data filters, fixed + collapsible, pushes content) ---------- */
+  .sidebar{
+    background:var(--surface);
+    border-right:0.5px solid var(--border);
+    padding:28px 24px;
+    display:flex; flex-direction:column;
+    flex:0 0 320px; width:320px; height:100vh; overflow-y:auto; overflow-x:hidden;
+    position:sticky; top:0;
+    transition:flex-basis 0.25s ease, width 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
+  }
+  .sidebar.collapsed{
+    flex-basis:0; width:0; padding-left:0; padding-right:0; border-right:none;
+    opacity:0; pointer-events:none;
+  }
+  .sidebar-close{background:none; border:none; color:var(--text-muted); cursor:pointer; padding:6px; line-height:0;}
+  .sidebar-close:hover{color:var(--text);}
+  .topbar-row{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+  .filters-toggle{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 18px;
+    border:0.5px solid var(--border); border-radius:var(--radius);
+    background:var(--bg); color:var(--text); font-size:14px; font-weight:600; cursor:pointer;
+  }
+  .filters-toggle:hover{background:var(--surface);}
+  .filters-toggle svg{color:var(--magenta);}
+
+  /* Top-level page nav (Map view / Correlation view) */
+  .page-tabs{display:flex; gap:4px; border-bottom:0.5px solid var(--border);}
+  .page-tab-btn{
+    padding:12px 4px; background:none; border:none; cursor:pointer;
+    font-size:14px; font-weight:600; color:var(--text-muted);
+    border-bottom:2px solid transparent; margin-bottom:-1px; margin-right:16px;
+  }
+  .page-tab-btn:hover{color:var(--text);}
+  .page-tab-btn.active{color:var(--magenta); border-bottom-color:var(--magenta);}
+
+  /* ---------- Main ---------- */
+  .main{padding:28px 32px; min-width:0; flex:1;}
+  .topbar{display:none;}
+
+  .card{
+    background:var(--bg);
+    border:0.5px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+  .card-head h2{font-size:18px; font-weight:600; margin:0;}
+  .card-head .sub{font-size:13px; color:var(--text-muted); margin-top:2px;}
+  .icon-btn{
+    background:none; border:none; color:var(--text-muted);
+    cursor:pointer; padding:6px; border-radius:6px; line-height:0;
+  }
+  .icon-btn:hover{background:var(--surface); color:var(--text);}
+  .icon-btn svg{width:18px;height:18px;}
+
+  /* KPI strip */
+  .kpi-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:16px;}
+  .kpi{position:relative; overflow:hidden; padding:18px 20px;}
+  .kpi::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:2px;
+    background-image:linear-gradient(to right, rgba(236,0,140,0.15) 60%, transparent 60%);
+    background-size:8px 2px; background-repeat:repeat-x;
+  }
+  .kpi .label{display:block; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted);}
+  .kpi .value{display:block; font-size:28px; font-weight:700; margin-top:8px; line-height:1.1;}
+  .kpi-dist{
+    display:block; font-size:12px; font-weight:600; color:var(--magenta);
+    margin-top:4px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .kpi-dist:empty{display:none;}
+  .kpi-dist:hover{text-decoration:underline;}
+
+  /* Quadrant KPI cards (Correlation page) */
+  .quad-kpi .label{
+    display:flex; align-items:center; gap:6px;
+    font-size:12px; letter-spacing:0; text-transform:none; font-weight:700; color:var(--text);
+  }
+  .quad-kpi-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto;}
+  .quad-kpi .kpi-sub{display:block; font-size:11px; color:var(--text-muted); margin-top:4px; font-weight:400;}
+
+  /* Grid rows */
+  .row-mid{display:grid; grid-template-columns:1.4fr 1fr; gap:16px; margin-bottom:16px;}
+  .row-bot{margin-bottom:16px;}
+
+  /* Map */
+  #map{height:640px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface);}
+  .map-msg{
+    padding:10px 14px; font-size:13px; color:var(--text-muted);
+    background:var(--surface); border:0.5px solid var(--border);
+    border-radius:6px; margin-bottom:10px; display:none;
+  }
+  .legend{margin-top:16px;}
+  .legend-bar{height:8px; border-radius:999px; background:linear-gradient(to right,var(--map-low),var(--magenta));}
+  .legend-row{display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-bottom:6px;}
+  .legend-row .cap{font-weight:600; color:var(--text);}
+  .legend-row span:not(.cap){font-weight:700; color:var(--text);}
+
+  /* Filters */
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
+  .field label{font-size:13px; font-weight:600;}
+  .field select{
+    width:100%; padding:10px 12px; border:0.5px solid var(--border);
+    border-radius:var(--radius); background:var(--bg); color:var(--text); font-size:14px;
+  }
+  .field select:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 1px var(--magenta);}
+  .toggle-row{display:flex; align-items:center; gap:8px; margin:6px 0 16px; font-size:12px; color:var(--text-muted);}
+  .toggle-row input{accent-color:var(--magenta);}
+
+  .range-head{display:flex; justify-content:space-between; align-items:center;}
+  .range-head .vals{font-size:12px; color:var(--text-muted);}
+  .dual{position:relative; height:28px;}
+  .dual input[type=range]{
+    position:absolute; left:0; top:8px; width:100%; margin:0; height:4px;
+    background:none; pointer-events:none; -webkit-appearance:none; appearance:none;
+  }
+  .dual .track{position:absolute; left:0; top:8px; width:100%; height:4px; border-radius:999px; background:var(--border);}
+  .dual .fill{position:absolute; top:8px; height:4px; border-radius:999px; background:var(--magenta);}
+  .dual input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; pointer-events:auto; width:16px; height:16px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--magenta); cursor:pointer; margin-top:0;
+  }
+  .dual input[type=range]::-moz-range-thumb{
+    pointer-events:auto; width:16px; height:16px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--magenta); cursor:pointer;
+  }
+  .btn-primary{
+    width:100%; padding:12px; border:none; border-radius:var(--radius);
+    background:var(--magenta); color:#fff; font-size:14px; font-weight:600; cursor:pointer;
+  }
+  .btn-primary:hover{opacity:0.92;}
+  .btn-primary:focus{outline:2px solid var(--purple); outline-offset:2px;}
+
+  /* Table */
+  .btn-ghost{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:7px 12px; border:0.5px solid var(--border); border-radius:var(--radius);
+    background:var(--bg); color:var(--text); font-size:13px; font-weight:500; cursor:pointer;
+  }
+  .btn-ghost:hover{background:var(--surface);}
+  .btn-ghost svg{width:16px;height:16px;}
+  table{width:100%; border-collapse:collapse;}
+  thead th{
+    background:var(--surface); text-align:left; font-size:13px; font-weight:600;
+    padding:11px 16px; border-bottom:0.5px solid var(--border);
+  }
+  thead th.num{text-align:right;}
+  tbody td{padding:11px 16px; border-bottom:0.5px solid var(--border); font-size:14px;}
+  tbody td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  tbody td.dist{color:var(--text); font-weight:500;}
+  tbody tr{cursor:pointer;}
+  tbody tr:hover{background:var(--surface);}
+  tbody tr.selected{background:rgba(236,0,140,0.08);}
+  tbody tr.selected td.dist{color:var(--magenta); font-weight:700;}
+  .row-mid > .card{display:flex; flex-direction:column;}
+  .table-scroll{flex:1; overflow:auto;}
+  .table-scroll.expanded{max-height:360px; flex:none;}
+  .icon-btn[disabled]{opacity:.4; cursor:not-allowed;}
+  .link-btn{
+    width:100%; margin-top:12px; padding:9px; background:none;
+    border:0.5px solid var(--border); border-radius:var(--radius);
+    color:var(--magenta); font-weight:600; font-size:13px; cursor:pointer;
+  }
+  .link-btn:hover{background:var(--surface);}
+
+  /* Scatter */
+  .chart-wrap{position:relative; height:540px;}
+  .scatter-cap{font-size:12px; color:var(--text-muted); margin-top:10px;}
+  .quad-legend{display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:8px;}
+  .quad-legend .qitem{display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-muted);}
+  .quad-legend .qdot{width:10px; height:10px; border-radius:50%; flex:0 0 auto;}
+  .axis-row{display:flex; gap:12px; margin-top:14px;}
+  .axis-row .field{flex:1; margin-bottom:0;}
+  .axis-row .field label{font-size:12px;}
+  .axis-row select{padding:8px 10px; font-size:13px;}
+
+  /* 4-quadrant district list (stacked sections, narrow-column friendly) */
+  .quad-stack-wrap{overflow:auto; max-height:640px;}
+  .quad-group{margin-bottom:4px;}
+  .quad-group-head{
+    display:flex; align-items:center; gap:8px;
+    font-size:12px; font-weight:700; padding:9px 4px;
+    position:sticky; top:0; background:var(--bg); z-index:1;
+    border-bottom:2px solid var(--border);
+  }
+  .quad-group-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto;}
+  .quad-group-count{margin-left:auto; color:var(--text-muted); font-weight:600;}
+  .quad-dist{
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+    padding:8px 4px; cursor:pointer;
+    border-bottom:0.5px solid var(--border);
+  }
+  .quad-dist:hover{background:var(--surface);}
+  .quad-dist-name{
+    font-weight:500;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .quad-dist-val{font-size:11px; color:var(--text-muted); white-space:nowrap; flex:0 0 auto;}
+  .quad-dist:hover .quad-dist-name{text-decoration:underline;}
+  .quad-dist.selected{background:rgba(236,0,140,0.08);}
+  .quad-dist.selected .quad-dist-name{font-weight:700;}
+
+  @media (max-width:1024px){
+    .main{padding:22px 20px;}
+    .kpi-strip{grid-template-columns:repeat(2,1fr);}
+    .row-mid{grid-template-columns:1fr;}
+    .topbar-row{flex-wrap:wrap;}
+  }
+  @media (max-width:768px){
+    .app{display:block;}
+    .sidebar{
+      position:relative;
+      width:100%;
+      flex:0 0 100%;
+      height:auto;
+      max-height:none;
+      overflow:visible;
+    }
+    .sidebar.collapsed{display:none;}
+    .main{padding:16px 12px;}
+    .topbar-row{
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .page-tabs{width:100%; justify-content:space-between;}
+    .page-tab-btn{flex:1; margin-right:0; text-align:center;}
+    .kpi-strip{grid-template-columns:1fr 1fr; gap:12px;}
+    .card{padding:16px;}
+    .card-head{flex-wrap:wrap; gap:8px;}
+    .card-head h2{font-size:16px;}
+    .row-mid > .card{min-width:0;}
+    #map{height:420px;}
+    .chart-wrap{height:420px;}
+    .quad-stack-wrap{max-height:420px;}
+    thead th, tbody td{padding:10px 12px; font-size:12px;}
+  }
+  @media (max-width:480px){
+    .sidebar{flex-basis:100%; width:100%;}
+    .sidebar.collapsed{flex-basis:0; width:0;}
+    .main{padding:12px 10px;}
+    .filters-toggle{width:100%; justify-content:center;}
+    .kpi-strip{grid-template-columns:1fr;}
+    .page-tab-btn{font-size:13px;}
+    .card-head .sub{font-size:12px;}
+    #map{height:360px;}
+    .chart-wrap{height:360px;}
+    .axis-row{flex-direction:column;}
+    .legend-row{font-size:11px;}
+    .btn-primary, .link-btn{padding:10px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ============ SIDEBAR: Data filters (fixed, collapsible) ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="card-head" style="border-bottom:0.5px solid var(--border); padding-bottom:14px;">
+      <h2 style="display:flex; align-items:center; gap:8px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--magenta)" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Data filters
+      </h2>
+      <button class="sidebar-close" id="sidebar-close" aria-label="Close filters"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="field">
+      <label for="f-metric">Metric name</label>
+      <select id="f-metric"></select>
+      <div class="toggle-row"><input type="checkbox" id="f-showall" /><label for="f-showall" style="font-weight:400;">Show all 421 metrics</label></div>
+    </div>
+    <div class="field">
+      <label for="f-programme">BRAC programme</label>
+      <select id="f-programme"></select>
+    </div>
+    <div class="field">
+      <div class="range-head">
+        <label>Value range</label>
+        <span class="vals" id="range-vals">—</span>
+      </div>
+      <div class="dual" id="dual">
+        <div class="track"></div><div class="fill" id="range-fill"></div>
+        <input type="range" id="range-lo" />
+        <input type="range" id="range-hi" />
+      </div>
+    </div>
+    <button class="btn-primary" id="apply-btn">Apply filters</button>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <div class="topbar-row">
+      <button class="filters-toggle" id="filters-toggle">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Data filters
+      </button>
+      <nav class="page-tabs" role="tablist">
+        <button class="page-tab-btn active" id="page-tab-map" role="tab" aria-selected="true">Map view</button>
+        <button class="page-tab-btn" id="page-tab-correlation" role="tab" aria-selected="false">Correlation view</button>
+      </nav>
+    </div>
+
+    <!-- ============ PAGE: MAP ============ -->
+    <div id="page-map">
+      <!-- KPI strip -->
+      <section class="kpi-strip">
+        <div class="card kpi"><span class="label">Maximum</span><span class="value" id="kpi-max">—</span><span class="kpi-dist" id="kpi-max-district"></span></div>
+        <div class="card kpi"><span class="label">Minimum</span><span class="value" id="kpi-min">—</span><span class="kpi-dist" id="kpi-min-district"></span></div>
+        <div class="card kpi"><span class="label">Average</span><span class="value" id="kpi-avg">—</span></div>
+        <div class="card kpi"><span class="label">Std dev</span><span class="value" id="kpi-std">—</span></div>
+      </section>
+
+      <!-- Map + Regional data breakdowns -->
+      <section class="row-mid">
+        <!-- Map -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Spatial distribution</h2>
+              <div class="sub" id="map-sub">—</div>
+            </div>
+            <div>
+              <button class="icon-btn" id="map-zoom-in" title="Zoom in (disabled — view is locked for now)" aria-label="Zoom in" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+              <button class="icon-btn" id="map-reset" title="Reset view" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+            </div>
+          </div>
+          <div class="map-msg" id="map-msg"></div>
+          <div id="map" role="img" aria-label="Choropleth map of Bangladesh districts"></div>
+          <div class="legend">
+            <div class="legend-row">
+              <span id="legend-min">—</span>
+              <span class="cap">Value distribution density</span>
+              <span id="legend-max">—</span>
+            </div>
+            <div class="legend-bar"></div>
+          </div>
+        </div>
+
+        <!-- Regional data breakdowns -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Regional data breakdowns</h2>
+              <div class="sub" id="table-sub">—</div>
+            </div>
+            <button class="btn-ghost" id="sort-btn">Sort by value
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 10 12 5 17 10"/><polyline points="7 14 12 19 17 14"/></svg>
+            </button>
+          </div>
+          <div class="table-scroll" id="table-scroll">
+            <table>
+              <thead><tr><th>Geo location (District)</th><th class="num" id="th-value">Value</th></tr></thead>
+              <tbody id="table-body"></tbody>
+            </table>
+          </div>
+          <button class="link-btn" id="viewall-btn">View all 64 regions</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ PAGE: CORRELATION ============ -->
+    <div id="page-correlation" style="display:none;">
+      <!-- Quadrant KPI strip -->
+      <section class="kpi-strip">
+        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#EC008C;"></span>High X · High Y</span><span class="value" id="kpi-hh">—</span><span class="kpi-sub">districts</span></div>
+        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#FFA100;"></span>High X · Low Y</span><span class="value" id="kpi-hl">—</span><span class="kpi-sub">districts</span></div>
+        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#3DB7E4;"></span>Low X · High Y</span><span class="value" id="kpi-lh">—</span><span class="kpi-sub">districts</span></div>
+        <div class="card kpi quad-kpi"><span class="label"><span class="quad-kpi-dot" style="background:#007161;"></span>Low X · Low Y</span><span class="value" id="kpi-ll">—</span><span class="kpi-sub">districts</span></div>
+      </section>
+
+      <!-- Correlation scatter + 4-quadrant district list -->
+      <section class="row-mid">
+        <!-- Scatter -->
+        <div class="card">
+          <div class="card-head">
+            <h2>Data correlation analysis</h2>
+          </div>
+          <div class="chart-wrap"><canvas id="scatter"></canvas></div>
+          <div class="scatter-cap" id="scatter-cap">—</div>
+          <div class="quad-legend" id="quad-legend"></div>
+          <div class="axis-row">
+            <div class="field">
+              <label for="f-scatx">X-axis</label>
+              <select id="f-scatx"></select>
+            </div>
+            <div class="field">
+              <label for="f-scaty">Y-axis</label>
+              <select id="f-scaty"></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-quadrant district list -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>4-quadrant district list</h2>
+              <div class="sub" id="quad-sub">—</div>
+            </div>
+          </div>
+          <div class="quad-stack-wrap" id="quad-stack"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+"use strict";
+
+/* =====================================================================
+   1. STATE
+   ===================================================================== */
+const state = {
+  page: 'map',                       // 'map' | 'correlation'
+  metric: 'HCR_Upper_pct_HIES_22',   // default reproduces reference (Poverty Headcount Rate)
+  bracProgramme: '',
+  valueRange: null,                  // [lo, hi] on selected metric, or null = full
+  selectedDistrict: null,            // district code
+  sortDir: 'desc',
+  scatterX: 'UPGP',                  // BRAC response (need vs response framing)
+  scatterY: 'HCR_Upper_pct_HIES_22', // BBS need
+  showAllMetrics: false,
+  activeLevel: 'district'
+};
+
+let DATA = null;          // raw json
+let DICT = null;          // metric_dictionary
+let ALL_UNITS = [];       // all geo units of the active level
+let geoLayer = null;      // leaflet layer
+let map = null;
+let scatterChart = null;
+let unitByNorm = {};       // normalized name -> unit (for geojson join)
+let layerByCode = {};      // district code -> leaflet layer
+let programmeMarkers = null; // leaflet layer group: pins for the selected BRAC programme
+
+/* District-name aliases: our name <- geojson variants */
+const NAME_ALIASES = {
+  "Bogura":["Bogra"], "Barisal":["Barishal"], "Chattogram":["Chittagong"],
+  "Cumilla":["Comilla"], "Cox's Bazar":["Coxs Bazar","Cox'S Bazar"],
+  "Jashore":["Jessore"], "Kishoregonj":["Kishoreganj"],
+  "Brahmanbaria":["Brahamanbaria","Brahman Baria"],
+  "Chapainawabganj":["Nawabganj","Chapai Nawabganj","Chapainababganj"],
+  "Netrakona":["Netrokona"], "Lakshmipur":["Laxmipur","Lakshimpur"],
+  "Moulvibazar":["Maulvibazar","Moulavibazar"], "Khagrachhari":["Khagrachari"]
+};
+
+/* Consistent categorical palette for climate zones */
+const ZONE_COLORS = {
+  "Barind":"#FFA100", "CHT":"#80379B", "Coastal":"#3DB7E4", "Haor":"#007161",
+  "Other":"#9AA0A6", "River & Char":"#EC008C", "River-Char":"#C2185B"
+};
+
+/* Quadrant palette for the scatter (split at median of X and Y) */
+const QUAD_COLORS = {
+  HH:"#EC008C", // High X · High Y  (magenta)
+  HL:"#FFA100", // High X · Low Y   (orange)
+  LH:"#3DB7E4", // Low X  · High Y  (blue)
+  LL:"#007161"  // Low X  · Low Y   (teal)
+};
+const QUAD_LABELS = { HH:"High X · High Y", HL:"High X · Low Y", LH:"Low X · High Y", LL:"Low X · Low Y" };
+
+/* =====================================================================
+   2. UNITS (geo-level agnostic)
+   ===================================================================== */
+function getUnits(){
+  return ALL_UNITS.filter(u => u.geo_level === state.activeLevel);
+}
+
+/* =====================================================================
+   3. UTILS
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+
+/* ---- Readable indicator names ----
+   Tier 1: explicit plain-English overrides (units verified against value ranges).
+   Tier 2: prettifyLabel() auto-cleans everything else.
+   Tier 3 (resolved 2026-06-21): BRAC programme glossary supplied by BRAC — see
+           BRAC_PROGRAMMES / BRAC_SUPPORTING_METRICS below, merged into this lookup. */
+const NAME_OVERRIDES = {
+  HCR_Upper_pct_HIES_22: 'Poverty headcount rate, upper line (%)',
+  H_Harmonised_National_MPI: 'Poverty incidence — H, harmonised national MPI',
+  MPI: 'Multidimensional Poverty Index (MPI)',
+  CVI: 'Climate Vulnerability Index (CVI)',
+  Weighted_avg_composite_score_vulnerability: 'Composite vulnerability score',
+  Number_of_Poor_000: 'Number of poor people (thousands)',
+  Population_Total: 'Total population (count)',
+  num_Male: 'Male population (count)',
+  num_female: 'Female population (count)',
+  Overall_Sex_Ratio: 'Sex ratio (males per 100 females)',
+  Average_Rate_of_Child_marriage_pct: 'Child marriage rate (%)',
+  Female_Employed_Population: 'Female employed population (count)',
+  Unemployment_Rate_Overall_calculated: 'Unemployment rate (%)',
+  Literacy_Rate_7yearplus_Overall: 'Literacy rate, age 7+ (%)',
+  Literacy_Rate_7yearplus_Female: 'Female literacy rate, age 7+ (%)',
+  Literacy_Rate_7yearplus_Male: 'Male literacy rate, age 7+ (%)',
+  Have_financial_account_Overall: 'Adults with a financial account (%)',
+  Have_financial_account_Female: 'Women with a financial account (%)',
+  Mobile_Bank_Account_Overall: 'Adults with a mobile bank account (%)',
+  Kancha_pct: 'Kancha (temporary) houses (%)',
+  Pucca_pct: 'Pucca (permanent) houses (%)',
+  Open_Defecation_No_Latrine_Available_pct: 'Open defecation / no latrine (%)',
+  Safe_Disposal_with_Flushing_Pouring_Water_pct: 'Safe sanitation, flushing/pouring water (%)',
+  Total_Persons_With_Disability: 'Persons with disability (count)'
+};
+
+/* BRAC programme glossary (provided by BRAC, 2026-06-21).
+   Data note: only 15 distinct programme metrics exist in master_data.json — MF and
+   WASH are real BRAC programmes but are filed under the "population_demography"
+   category there (not "brac_programmes"); there is no separate "Migration" metric
+   beyond MEP. So this dropdown shows 15, not the 16 originally expected — flagging
+   rather than inventing a 16th key that isn't in the data. */
+const BRAC_PROGRAMMES = {
+  BEP:  'BRAC Education Programme',
+  BHP:  'BRAC Health Programme',
+  BYP:  'BRAC Youth Programme',
+  CCP:  'Climate Change Programme',
+  DRMP: 'Disaster Risk Management Programme',
+  IDP:  'Integrated Development Programme',
+  MEP:  'Migration Programme',
+  MF:   'Microfinance Programme',
+  SCP:  'Social Community Programme',
+  SDP:  'Skills Development Programme',
+  SELP: 'Social Empowerment & Legal Protection',
+  TBCP: 'Tuberculosis Control Programme',
+  UDP:  'Urban Development Programme',
+  UPGP: 'Ultra-Poor Graduation Programme',
+  WASH: 'Water, Sanitation & Hygiene Programme'
+};
+
+// Same category in the data, but these are outcomes/sub-metrics, not programmes themselves —
+// kept out of the "BRAC programme" filter dropdown, but still selectable as metrics.
+const BRAC_SUPPORTING_METRICS = {
+  Total_Brac_Reach: 'Total BRAC reach (all programmes)',
+  Child_marriages_prevented: 'Child marriages prevented (count)',
+  No_of_Borrower_Dabi: 'MF borrowers — Dabi loan (count)',
+  No_of_Borrower_Progoti: 'MF borrowers — Progoti loan (count)',
+  numParticipants_in_Apprenticeship_Star_programme: 'SDP apprenticeship/Star participants (count)'
+};
+
+Object.assign(NAME_OVERRIDES, BRAC_PROGRAMMES, BRAC_SUPPORTING_METRICS);
+
+function prettifyLabel(s){
+  if(!s) return s;
+  let t = String(s).trim();
+  t = t.replace(/^#\s*/, 'Number of ')          // "# Currently married" -> "Number of ..."
+       .replace(/^num[_\s]/i, 'Number of ');     // "num_Male" handled by override; generic safety
+  t = t.replace(/_/g, ' ');
+  t = t.replace(/\bpct\b/gi, '(%)').replace(/\s*%/g, ' (%)').replace(/\(%\)\s*\(%\)/g,'(%)');
+  t = t.replace(/\(\s*'?000\s*'?\)/g, '(thousands)').replace(/\b000\b/g, '(thousands)');
+  t = t.replace(/HIES[_\s]?22|_22\b|\bHIES\b/gi, '').replace(/_calculated/gi, '');
+  t = t.replace(/\*+/g, '').replace(/\s{2,}/g, ' ').trim();
+  if(t) t = t.charAt(0).toUpperCase() + t.slice(1);
+  return t;
+}
+
+function metricLabel(key){
+  if(NAME_OVERRIDES[key]) return NAME_OVERRIDES[key];
+  const lbl = DICT[key] ? DICT[key].label : key;
+  return prettifyLabel(lbl);
+}
+
+// Heuristic: integers (counts/populations) vs rates/indices (2 decimals).
+function isRateMetric(key){
+  const lbl = (metricLabel(key) || '').toLowerCase();
+  return /%|rate|ratio|index|mpi|score|cvi|\bh\b|pct/.test(lbl) ||
+         /pct|rate|ratio|mpi|index|score/i.test(key);
+}
+
+function fmt(val, key){
+  if(val === null || val === undefined || Number.isNaN(val)) return '—'; // em-dash
+  if(isRateMetric(key)) return Number(val).toFixed(2);
+  return Number(val).toLocaleString('en-US', {maximumFractionDigits:0});
+}
+
+function stdDev(arr){ // population stdev
+  if(!arr.length) return null;
+  const m = arr.reduce((a,b)=>a+b,0)/arr.length;
+  const v = arr.reduce((a,b)=>a+(b-m)*(b-m),0)/arr.length;
+  return Math.sqrt(v);
+}
+
+function median(arr){ // numeric median; returns null for empty input
+  const a = arr.filter(v=>v!==null&&v!==undefined&&!Number.isNaN(v)).slice().sort((x,y)=>x-y);
+  if(!a.length) return null;
+  const mid = Math.floor(a.length/2);
+  return a.length%2 ? a[mid] : (a[mid-1]+a[mid])/2;
+}
+
+function linReg(pts){ // pts: [{x,y}] -> {m,b,r}
+  const n = pts.length;
+  if(n < 2) return null;
+  let sx=0,sy=0,sxy=0,sxx=0,syy=0;
+  for(const p of pts){ sx+=p.x; sy+=p.y; sxy+=p.x*p.y; sxx+=p.x*p.x; syy+=p.y*p.y; }
+  const dx = n*sxx - sx*sx;
+  if(dx === 0) return null;
+  const m = (n*sxy - sx*sy)/dx;
+  const b = (sy - m*sx)/n;
+  const den = Math.sqrt(dx*(n*syy - sy*sy));
+  const r = den === 0 ? 0 : (n*sxy - sx*sy)/den;
+  return {m,b,r};
+}
+
+// light magenta tint -> full BRAC magenta across metric range
+function colorScale(val, min, max){
+  if(val === null || val === undefined || Number.isNaN(val)) return '#E8E8E4';
+  const lo = {r:0xFE,g:0xEB,b:0xF6}, hi = {r:0xEC,g:0x00,b:0x8C};
+  let t = (max === min) ? 0.5 : (val - min)/(max - min);
+  t = Math.max(0, Math.min(1, t));
+  const c = k => Math.round(lo[k] + (hi[k]-lo[k])*t);
+  return `rgb(${c('r')},${c('g')},${c('b')})`;
+}
+
+function normalizeName(s){
+  return (s||'').toString().toLowerCase()
+    .replace(/['’`.]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+/* metric values across an array of units, ignoring nulls */
+function valuesOf(units, key){
+  const out = [];
+  for(const u of units){
+    const v = u.metrics[key];
+    if(v !== null && v !== undefined && !Number.isNaN(v)) out.push(v);
+  }
+  return out;
+}
+
+/* =====================================================================
+   FILTER PIPELINE -> currently visible units
+   ===================================================================== */
+function passesFilters(u){
+  if(!u) return false;
+  // BRAC programme selection is an independent overlay (map pins only, see
+  // renderProgrammeMarkers) — it does NOT gate the choropleth/KPI/table/scatter.
+  // Those only depend on the metric value range, so a metric value alone is
+  // enough to show a district, even when a programme is also selected.
+  if(state.valueRange){
+    const [lo,hi] = state.valueRange;
+    const v = u.metrics[state.metric];
+    if(v === null || v === undefined || Number.isNaN(v)) return false;
+    if(v < lo || v > hi) return false;
+  }
+  return true;
+}
+
+function visibleUnits(){
+  return getUnits().filter(passesFilters);
+}
+
+/* =====================================================================
+   4. DROPDOWNS
+   ===================================================================== */
+function curatedKeys(){
+  return Object.keys(DICT).filter(k => DICT[k].curated);
+}
+
+function metricKeysForDropdown(){
+  return state.showAllMetrics ? Object.keys(DICT) : curatedKeys();
+}
+
+function buildOptgroups(selectEl, keys, selectedKey){
+  selectEl.innerHTML = '';
+  const cats = DATA.meta.categories;
+  // group by category, ordered by meta.categories order
+  const byCat = {};
+  for(const k of keys){
+    const c = DICT[k].category;
+    (byCat[c] = byCat[c] || []).push(k);
+  }
+  const catOrder = Object.keys(cats).filter(c => byCat[c]);
+  // append any categories present in data but missing from meta.categories
+  for(const c of Object.keys(byCat)) if(!catOrder.includes(c)) catOrder.push(c);
+
+  for(const c of catOrder){
+    const og = document.createElement('optgroup');
+    og.label = cats[c] || c;
+    byCat[c].sort((a,b)=> metricLabel(a).localeCompare(metricLabel(b)));
+    for(const k of byCat[c]){
+      const opt = document.createElement('option');
+      opt.value = k; opt.textContent = metricLabel(k);
+      if(k === selectedKey) opt.selected = true;
+      og.appendChild(opt);
+    }
+    selectEl.appendChild(og);
+  }
+  if(selectedKey) selectEl.value = selectedKey; // ensure UI reflects state
+}
+
+function buildMetricDropdown(){
+  const keys = metricKeysForDropdown();
+  // ensure currently-selected metric stays selectable even if filtered out by source
+  if(!keys.includes(state.metric)) keys.push(state.metric);
+  buildOptgroups($('f-metric'), keys, state.metric);
+
+  // scatter axis dropdowns use the same key pool
+  buildOptgroups($('f-scatx'), keys.includes(state.scatterX)?keys:keys.concat(state.scatterX), state.scatterX);
+  buildOptgroups($('f-scaty'), keys.includes(state.scatterY)?keys:keys.concat(state.scatterY), state.scatterY);
+}
+
+function buildProgrammeDropdown(){
+  const sel = $('f-programme');
+  sel.innerHTML = '';
+  const all = document.createElement('option');
+  all.value = ''; all.textContent = '(All)';
+  sel.appendChild(all);
+  // Only the true programmes (BRAC_PROGRAMMES) — supporting/outcome metrics like
+  // Total_Brac_Reach stay out of this filter even though they share the data category.
+  Object.keys(BRAC_PROGRAMMES)
+    .filter(k => DICT[k])
+    .sort((a,b)=> metricLabel(a).localeCompare(metricLabel(b)))
+    .forEach(k => {
+      const o = document.createElement('option');
+      o.value = k; o.textContent = metricLabel(k);
+      sel.appendChild(o);
+    });
+}
+
+/* =====================================================================
+   VALUE RANGE SLIDER
+   ===================================================================== */
+function metricBounds(key){
+  const vals = valuesOf(getUnits(), key);
+  if(!vals.length) return [0,0];
+  return [Math.min(...vals), Math.max(...vals)];
+}
+
+function setupRange(){
+  const [min,max] = metricBounds(state.metric);
+  const lo = $('range-lo'), hi = $('range-hi');
+  const rate = isRateMetric(state.metric);
+  const step = rate ? Math.max((max-min)/200, 0.01) : Math.max(Math.round((max-min)/200),1);
+  [lo,hi].forEach(r => { r.min = min; r.max = max; r.step = step; });
+  lo.value = min; hi.value = max;
+  state.valueRange = null; // full range = no filter
+  paintRange();
+}
+
+function paintRange(){
+  const lo = $('range-lo'), hi = $('range-hi');
+  let a = parseFloat(lo.value), b = parseFloat(hi.value);
+  if(a > b){ [a,b] = [b,a]; }
+  const min = parseFloat(lo.min), max = parseFloat(lo.max);
+  const span = (max - min) || 1;
+  const fill = $('range-fill');
+  fill.style.left = ((a-min)/span*100) + '%';
+  fill.style.width = ((b-a)/span*100) + '%';
+  $('range-vals').textContent = fmt(a, state.metric) + ' – ' + fmt(b, state.metric);
+}
+
+/* =====================================================================
+   5. MAP + CHOROPLETH
+   ===================================================================== */
+function buildNormLookup(){
+  unitByNorm = {};
+  for(const u of getUnits()){
+    unitByNorm[normalizeName(u.name)] = u;
+    unitByNorm[normalizeName(u.name_google)] = u;
+    const aliases = NAME_ALIASES[u.name] || [];
+    for(const a of aliases) unitByNorm[normalizeName(a)] = u;
+  }
+}
+
+function geoNameFromProps(props){
+  // geoBoundaries uses shapeName; other sets use NAME_2 / ADM2_EN etc.
+  return props.shapeName || props.shapeName_1 || props.NAME_2 ||
+         props.ADM2_EN || props.name || props.District || props.DISTRICT || '';
+}
+
+function matchUnit(props){
+  const raw = geoNameFromProps(props);
+  return unitByNorm[normalizeName(raw)] || null;
+}
+
+async function initMap(){
+  map = L.map('map', {
+    // TEMP (requested 2026-06-21): zoom locked while testing the fixed default view.
+    // Revert by restoring zoomControl:true and removing the false flags below.
+    zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false,
+    touchZoom:false, boxZoom:false, keyboard:false,
+    attributionControl:true
+  }).setView([23.7, 90.35], 6.4);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution:'&copy; OpenStreetMap, &copy; CARTO', subdomains:'abcd', maxZoom:19
+  }).addTo(map);
+
+  let geojson = null;
+  // Primary: bundled bd_districts.geojson (geoBoundaries ADM2, same folder) — reliable, no CORS issues.
+  try{
+    geojson = await fetch('./bd_districts.geojson').then(r=>{ if(!r.ok) throw new Error('no bundle'); return r.json(); });
+  }catch(e){
+    console.warn('Bundled bd_districts.geojson missing, trying geoBoundaries API', e);
+    // Fallback: fetch live from geoBoundaries (note: the geoboundaries.org API may block browser CORS).
+    try{
+      const meta = await fetch('https://www.geoboundaries.org/api/current/gbOpen/BGD/ADM2/').then(r=>r.json());
+      geojson = await fetch(meta.gjDownloadURL).then(r=>r.json());
+    }catch(e2){
+      showMapMessage('District boundaries could not be loaded. Other panels remain fully functional.');
+      return;
+    }
+  }
+
+  renderChoropleth(geojson);
+}
+
+function showMapMessage(msg){
+  const el = $('map-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function renderChoropleth(geojson){
+  buildNormLookup();
+  if(geoLayer){ map.removeLayer(geoLayer); }
+  layerByCode = {};
+
+  const unmatched = [];
+  geoLayer = L.geoJSON(geojson, {
+    style: feature => styleFor(matchUnit(feature.properties)),
+    onEachFeature: (feature, layer) => {
+      const u = matchUnit(feature.properties);
+      if(!u){ unmatched.push(geoNameFromProps(feature.properties)); return; }
+      layerByCode[u.code] = layer;
+      layer.on('mouseover', () => { if(u.code!==state.selectedDistrict) layer.setStyle({weight:2, color:'#fff'}); layer.bindTooltip(tooltipHTML(u),{sticky:true}).openTooltip(); });
+      layer.on('mouseout',  () => { if(u.code!==state.selectedDistrict) geoLayer.resetStyle(layer); });
+      layer.on('click', () => selectDistrict(u.code));
+    }
+  }).addTo(map);
+
+  try{ map.fitBounds(geoLayer.getBounds(), {padding:[10,10]}); }catch(e){}
+  if(unmatched.length) console.warn('Unmatched GeoJSON district features:', unmatched);
+  applyMapSelection();
+  renderProgrammeMarkers();
+}
+
+function styleFor(u){
+  const [min,max] = metricBounds(state.metric);
+  // Districts excluded by the value-range / BRAC-programme filters are hidden
+  // (no-data gray) on the map, same as the table/scatter/KPIs already do.
+  const val = passesFilters(u) ? u.metrics[state.metric] : null;
+  return {
+    fillColor: colorScale(val, min, max),
+    fillOpacity: 0.85,
+    color: '#FFFFFF',
+    weight: 0.6
+  };
+}
+
+function tooltipHTML(u){
+  const v = u.metrics[state.metric];
+  return `<strong>${u.name}</strong><br>`+
+    `${metricLabel(state.metric)}: ${v===null?'no data':fmt(v,state.metric)}<br>`+
+    `MPI: ${fmt(u.metrics['MPI'],'MPI')}<br>`+
+    `Vulnerability: ${fmt(u.metrics['Weighted_avg_composite_score_vulnerability'],'Weighted_avg_composite_score_vulnerability')}<br>`+
+    `Total BRAC reach: ${fmt(u.metrics['Total_Brac_Reach'],'Total_Brac_Reach')}`;
+}
+
+function recolorMap(){
+  if(!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    const u = matchUnit(layer.feature.properties);
+    layer.setStyle(styleFor(u));
+  });
+  applyMapSelection();
+  renderProgrammeMarkers();
+}
+
+// When a BRAC programme is selected, pin every district where that programme is
+// active (non-null value = active, same convention used elsewhere). Pins always
+// show; the district name + reach value only shows on hover, to stay readable for
+// high-coverage programmes (e.g. BHP is active in 61/64 districts).
+function renderProgrammeMarkers(){
+  if(programmeMarkers){ map.removeLayer(programmeMarkers); programmeMarkers = null; }
+  if(!state.bracProgramme || !geoLayer) return;
+  const progKey = state.bracProgramme;
+  const progLabel = metricLabel(progKey);
+  const markers = [];
+  for(const u of getUnits()){
+    const v = u.metrics[progKey];
+    if(v === null || v === undefined || Number.isNaN(v)) continue;
+    const layer = layerByCode[u.code];
+    if(!layer) continue;
+    let center;
+    try{ center = layer.getBounds().getCenter(); }catch(e){ continue; }
+    const m = L.circleMarker(center, { radius:6, fillColor:'#80379B', color:'#FFFFFF', weight:1.5, fillOpacity:0.95 });
+    m.bindTooltip(`<strong>${u.name}</strong><br>${progLabel}: ${fmt(v, progKey)}`, {sticky:true});
+    m.on('click', () => selectDistrict(u.code));
+    markers.push(m);
+  }
+  programmeMarkers = L.layerGroup(markers).addTo(map);
+}
+
+function applyMapSelection(){
+  if(!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    const u = matchUnit(layer.feature.properties);
+    if(u && u.code === state.selectedDistrict){
+      layer.setStyle({weight:3, color:'#EC008C'});
+      layer.bringToFront();
+    }
+  });
+}
+
+/* =====================================================================
+   6. KPI STRIP
+   ===================================================================== */
+function renderKPIs(){
+  const k = state.metric;
+  const withValue = visibleUnits().filter(u=>{
+    const v = u.metrics[k];
+    return v !== null && v !== undefined && !Number.isNaN(v);
+  });
+  if(!withValue.length){
+    $('kpi-max').textContent = $('kpi-min').textContent = $('kpi-avg').textContent = $('kpi-std').textContent = '—';
+    $('kpi-max-district').textContent = '';
+    $('kpi-min-district').textContent = '';
+    return;
+  }
+  const vals = withValue.map(u=>u.metrics[k]);
+  const max = Math.max(...vals), min = Math.min(...vals);
+  const avg = vals.reduce((a,b)=>a+b,0)/vals.length;
+  const maxUnit = withValue.find(u=>u.metrics[k]===max);
+  const minUnit = withValue.find(u=>u.metrics[k]===min);
+  $('kpi-max').textContent = fmt(max,k);
+  $('kpi-min').textContent = fmt(min,k);
+  $('kpi-avg').textContent = fmt(avg,k);
+  $('kpi-std').textContent = fmt(stdDev(vals),k);
+  setKpiDistrict('kpi-max-district', maxUnit);
+  setKpiDistrict('kpi-min-district', minUnit);
+}
+
+function setKpiDistrict(elId, unit){
+  const el = $(elId);
+  el.textContent = unit ? unit.name : '';
+  el.onclick = unit ? (()=>selectDistrict(unit.code)) : null;
+}
+
+/* =====================================================================
+   7. TABLE
+   ===================================================================== */
+let tableExpanded = false;
+
+function renderTable(){
+  const k = state.metric;
+  const dictE = DICT[k];
+  const year = dictE && dictE.source === 'BRAC Bangladesh' ? '2025' : '2022';
+  $('table-sub').textContent = `${metricLabel(k)} — ${dictE?dictE.source:''} ${year}`;
+  $('th-value').textContent = 'Value';
+
+  let units = visibleUnits().slice();
+  units.sort((a,b)=>{
+    const va = a.metrics[k], vb = b.metrics[k];
+    const na = va===null||va===undefined||Number.isNaN(va);
+    const nb = vb===null||vb===undefined||Number.isNaN(vb);
+    if(na && nb) return 0;
+    if(na) return 1;          // nulls always last
+    if(nb) return -1;
+    return state.sortDir==='desc' ? vb-va : va-vb;
+  });
+
+  const rows = tableExpanded ? units : units.slice(0,10);
+  const tb = $('table-body');
+  tb.innerHTML = '';
+  for(const u of rows){
+    const tr = document.createElement('tr');
+    tr.dataset.code = u.code;
+    if(u.code === state.selectedDistrict) tr.classList.add('selected');
+    tr.innerHTML = `<td class="dist">${u.name}</td><td class="num">${fmt(u.metrics[k],k)}</td>`;
+    tr.addEventListener('click', ()=>selectDistrict(u.code));
+    tb.appendChild(tr);
+  }
+  $('table-scroll').classList.toggle('expanded', tableExpanded);
+  $('viewall-btn').textContent = tableExpanded ? 'Show top 10' : `View all ${units.length} regions`;
+}
+
+/* =====================================================================
+   8. SCATTER
+   ===================================================================== */
+function initScatter(){
+  const ctx = $('scatter').getContext('2d');
+  scatterChart = new Chart(ctx, {
+    type:'scatter',
+    data:{datasets:[]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{
+        x:{title:{display:true,text:''}, grid:{color:'rgba(211,209,199,0.4)'}},
+        y:{title:{display:true,text:''}, grid:{color:'rgba(211,209,199,0.4)'}}
+      },
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:(c)=>{
+          const d = c.raw;
+          return `${d.name}: x=${fmt(d.x,state.scatterX)}, y=${fmt(d.y,state.scatterY)}`;
+        }}}
+      }
+    }
+  });
+}
+
+function updateScatter(){
+  const xk = state.scatterX, yk = state.scatterY;
+  const units = visibleUnits();
+  const pts = [];
+  for(const u of units){
+    const x = u.metrics[xk], y = u.metrics[yk];
+    if(x===null||x===undefined||Number.isNaN(x)) continue;
+    if(y===null||y===undefined||Number.isNaN(y)) continue;
+    pts.push({x,y,name:u.name,code:u.code,zone:u.climate_zone});
+  }
+
+  // quadrant split at the median of each axis
+  const mx = median(pts.map(p=>p.x)), my = median(pts.map(p=>p.y));
+  const quadOf = p => (mx===null||my===null) ? 'LL'
+    : (p.x>=mx ? (p.y>=my?'HH':'HL') : (p.y>=my?'LH':'LL'));
+
+  const quadrantGroups = {HH:[],HL:[],LH:[],LL:[]};
+  pts.forEach(p => quadrantGroups[quadOf(p)].push(p));
+
+  // outliers: farthest from regression line (label 2-3)
+  const reg = linReg(pts);
+  let outliers = new Set();
+  if(reg){
+    const scored = pts.map(p=>({code:p.code, d:Math.abs(reg.m*p.x - p.y + reg.b)/Math.sqrt(reg.m*reg.m+1)}));
+    scored.sort((a,b)=>b.d-a.d);
+    scored.slice(0,3).forEach(s=>outliers.add(s.code));
+  }
+
+  const main = {
+    label:'Districts',
+    data:pts,
+    pointBackgroundColor: pts.map(p=>QUAD_COLORS[quadOf(p)]||'#9AA0A6'),
+    pointBorderColor: pts.map(p=>p.code===state.selectedDistrict?'#EC008C':'rgba(0,0,0,0)'),
+    pointBorderWidth: pts.map(p=>p.code===state.selectedDistrict?3:0),
+    pointRadius: pts.map(p=>p.code===state.selectedDistrict?8:5),
+    pointHoverRadius:7
+  };
+
+  const datasets=[main];
+
+  // trend line
+  if(reg && pts.length>1){
+    const xs = pts.map(p=>p.x);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs);
+    datasets.push({
+      label:'Trend', type:'line',
+      data:[{x:x0,y:reg.m*x0+reg.b},{x:x1,y:reg.m*x1+reg.b}],
+      borderColor:'#007161', borderWidth:1.5, borderDash:[5,4],
+      pointRadius:0, fill:false
+    });
+  }
+
+  // outlier labels via a tiny plugin-free approach: separate labelled dataset
+  scatterChart.data.datasets = datasets;
+  scatterChart.options.scales.x.title.text = metricLabel(xk);
+  scatterChart.options.scales.y.title.text = metricLabel(yk);
+  scatterChart.options.plugins.tooltip.callbacks.label = (c)=>{
+    if(c.dataset.label==='Trend') return null;
+    const d=c.raw; return `${d.name}: x=${fmt(d.x,xk)}, y=${fmt(d.y,yk)}`;
+  };
+
+  // outlier annotations via afterDraw
+  scatterChart.$outliers = pts.filter(p=>outliers.has(p.code));
+  // median split for the quadrant divider plugin (null when too few points)
+  scatterChart.$quadrant = (pts.length>1 && mx!==null && my!==null) ? {mx, my} : null;
+  scatterChart.$quadrantGroups = quadrantGroups;
+  scatterChart.update();
+
+  const r = reg ? reg.r.toFixed(2) : '—';
+  $('scatter-cap').textContent = `${pts.length} of 64 shown · Pearson r = ${r} · color = quadrant (split at median)`;
+
+  // quadrant legend
+  $('quad-legend').innerHTML = ['HH','HL','LH','LL'].map(q =>
+    `<span class="qitem"><span class="qdot" style="background:${QUAD_COLORS[q]}"></span>${QUAD_LABELS[q]}</span>`
+  ).join('');
+
+  renderQuadrantKPIs();
+  renderQuadrantList();
+}
+
+function renderQuadrantKPIs(){
+  const groups = (scatterChart && scatterChart.$quadrantGroups) || {HH:[],HL:[],LH:[],LL:[]};
+  $('kpi-hh').textContent = groups.HH.length;
+  $('kpi-hl').textContent = groups.HL.length;
+  $('kpi-lh').textContent = groups.LH.length;
+  $('kpi-ll').textContent = groups.LL.length;
+}
+
+function renderQuadrantList(){
+  const groups = (scatterChart && scatterChart.$quadrantGroups) || {HH:[],HL:[],LH:[],LL:[]};
+  const xk = state.scatterX, yk = state.scatterY;
+  const total = groups.HH.length + groups.HL.length + groups.LH.length + groups.LL.length;
+  $('quad-sub').textContent = `${total} of 64 shown · split at median`;
+
+  const wrap = $('quad-stack');
+  wrap.innerHTML = '';
+  ['HH','HL','LH','LL'].forEach(q=>{
+    const group = document.createElement('div');
+    group.className = 'quad-group';
+
+    const head = document.createElement('div');
+    head.className = 'quad-group-head';
+    head.innerHTML = `<span class="quad-group-dot" style="background:${QUAD_COLORS[q]}"></span>${QUAD_LABELS[q]}<span class="quad-group-count">${groups[q].length}</span>`;
+    group.appendChild(head);
+
+    groups[q].slice().sort((a,b)=>b.y-a.y).forEach(p=>{
+      const item = document.createElement('div');
+      item.className = 'quad-dist';
+      if(p.code === state.selectedDistrict) item.classList.add('selected');
+      const name = document.createElement('span');
+      name.className = 'quad-dist-name';
+      name.style.color = QUAD_COLORS[q];
+      name.textContent = p.name;
+      const val = document.createElement('span');
+      val.className = 'quad-dist-val';
+      val.textContent = `X ${fmt(p.x,xk)} · Y ${fmt(p.y,yk)}`;
+      item.appendChild(name);
+      item.appendChild(val);
+      item.addEventListener('click', ()=>selectDistrict(p.code));
+      group.appendChild(item);
+    });
+    wrap.appendChild(group);
+  });
+}
+
+// Plugin to draw the quadrant divider cross (vertical at median X, horizontal at median Y)
+Chart.register({
+  id:'quadrantLines',
+  beforeDatasetsDraw(chart){
+    const q = chart.$quadrant;
+    if(!q) return;
+    const {chartArea:area, scales} = chart;
+    const px = scales.x.getPixelForValue(q.mx);
+    const py = scales.y.getPixelForValue(q.my);
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.strokeStyle = '#80379B'; // var(--purple)
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6,4]);
+    if(px>=area.left && px<=area.right){
+      ctx.beginPath(); ctx.moveTo(px, area.top); ctx.lineTo(px, area.bottom); ctx.stroke();
+    }
+    if(py>=area.top && py<=area.bottom){
+      ctx.beginPath(); ctx.moveTo(area.left, py); ctx.lineTo(area.right, py); ctx.stroke();
+    }
+    ctx.restore();
+  }
+});
+
+// Plugin to draw outlier labels
+Chart.register({
+  id:'outlierLabels',
+  afterDatasetsDraw(chart){
+    const outs = chart.$outliers;
+    if(!outs || !outs.length) return;
+    const meta = chart.getDatasetMeta(0);
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.font = '600 11px Helvetica Neue, Arial, sans-serif';
+    ctx.fillStyle = '#27281C';
+    chart.data.datasets[0].data.forEach((d,i)=>{
+      if(outs.some(o=>o.code===d.code)){
+        const pt = meta.data[i];
+        if(pt) ctx.fillText(d.name, pt.x+8, pt.y-6);
+      }
+    });
+    ctx.restore();
+  }
+});
+
+/* =====================================================================
+   9. SELECTION & FILTER BINDING
+   ===================================================================== */
+function selectDistrict(code){
+  state.selectedDistrict = (state.selectedDistrict === code) ? null : code;
+  // table: ensure visible & highlight
+  if(state.selectedDistrict){
+    const inTop = Array.from($('table-body').querySelectorAll('tr')).some(tr=>tr.dataset.code===code);
+    if(!inTop){ tableExpanded = true; }
+  }
+  renderTable();
+  const selRow = $('table-body').querySelector(`tr[data-code="${state.selectedDistrict}"]`);
+  if(selRow) selRow.scrollIntoView({block:'nearest'});
+  // map
+  if(geoLayer){ geoLayer.eachLayer(l=>geoLayer.resetStyle(l)); applyMapSelection();
+    if(state.selectedDistrict && layerByCode[state.selectedDistrict]){
+      try{ map.panTo(layerByCode[state.selectedDistrict].getBounds().getCenter()); }catch(e){}
+    }
+  }
+  // scatter
+  updateScatter();
+}
+
+function reRenderAll(){
+  buildNormLookup();
+  renderKPIs();
+  recolorMap();
+  updateLegend();
+  renderTable();
+  updateScatter();
+}
+
+function updateLegend(){
+  const [min,max] = metricBounds(state.metric);
+  $('legend-min').textContent = fmt(min,state.metric);
+  $('legend-max').textContent = fmt(max,state.metric);
+  const dictE = DICT[state.metric];
+  const year = dictE && dictE.source === 'BRAC Bangladesh' ? '2025' : '2022';
+  $('map-sub').textContent = `${metricLabel(state.metric)} — ${dictE?dictE.source:''} ${year}`;
+}
+
+function bindFilters(){
+  $('f-metric').addEventListener('change', e=>{
+    state.metric = e.target.value;
+    state.valueRange = null;
+    setupRange();
+    renderKPIs(); recolorMap(); updateLegend(); renderTable();
+  });
+  $('f-showall').addEventListener('change', e=>{
+    state.showAllMetrics = e.target.checked;
+    buildMetricDropdown();
+  });
+  $('f-programme').addEventListener('change', e=>{
+    state.bracProgramme = e.target.value;
+    reRenderAll();
+  });
+  $('f-scatx').addEventListener('change', e=>{ state.scatterX=e.target.value; updateScatter(); });
+  $('f-scaty').addEventListener('change', e=>{ state.scatterY=e.target.value; updateScatter(); });
+
+  $('range-lo').addEventListener('input', paintRange);
+  $('range-hi').addEventListener('input', paintRange);
+  const commitRange = ()=>{
+    let a=parseFloat($('range-lo').value), b=parseFloat($('range-hi').value);
+    if(a>b)[a,b]=[b,a];
+    const [min,max]=metricBounds(state.metric);
+    state.valueRange = (a<=min && b>=max) ? null : [a,b];
+    reRenderAll();
+  };
+  $('range-lo').addEventListener('change', commitRange);
+  $('range-hi').addEventListener('change', commitRange);
+
+  $('apply-btn').addEventListener('click', commitRange);
+
+  $('sort-btn').addEventListener('click', ()=>{
+    state.sortDir = state.sortDir==='desc'?'asc':'desc';
+    renderTable();
+  });
+  $('viewall-btn').addEventListener('click', ()=>{
+    tableExpanded = !tableExpanded; renderTable();
+  });
+
+  $('map-zoom-in').addEventListener('click', ()=>{ /* TEMP: zoom disabled, see initMap() — map.zoomIn(); */ });
+  $('map-reset').addEventListener('click', ()=>{
+    if(map && geoLayer){ try{ map.fitBounds(geoLayer.getBounds(),{padding:[10,10]}); }catch(e){ map.setView([23.7,90.35],6.4); } }
+  });
+
+  // Sidebar: fixed + collapsible (pushes main content, no overlay)
+  const toggleSidebar = ()=> $('sidebar').classList.toggle('collapsed');
+  $('filters-toggle').addEventListener('click', toggleSidebar);
+  $('sidebar-close').addEventListener('click', toggleSidebar);
+
+  // Top-level page nav: Map view / Correlation view
+  const switchPage = page => {
+    const isMap = page === 'map';
+    state.page = page;
+    $('page-tab-map').classList.toggle('active', isMap);
+    $('page-tab-correlation').classList.toggle('active', !isMap);
+    $('page-tab-map').setAttribute('aria-selected', isMap);
+    $('page-tab-correlation').setAttribute('aria-selected', !isMap);
+    $('page-map').style.display = isMap ? '' : 'none';
+    $('page-correlation').style.display = isMap ? 'none' : '';
+    if(!isMap && scatterChart) scatterChart.resize();
+  };
+  $('page-tab-map').addEventListener('click', ()=>switchPage('map'));
+  $('page-tab-correlation').addEventListener('click', ()=>switchPage('correlation'));
+}
+
+/* =====================================================================
+   10. INIT
+   ===================================================================== */
+async function init(){
+  DATA = await fetch('./master_data.json').then(r=>r.json());
+  DICT = DATA.metric_dictionary;
+  ALL_UNITS = DATA.districts;
+
+  // Runtime correction (do not edit master_data.json): MF and WASH are BRAC
+  // programmes, not population/demography counts — recategorize for grouping
+  // in the metric dropdowns so they sit with the rest of BRAC_PROGRAMMES.
+  ['MF', 'WASH'].forEach(k => { if(DICT[k]) DICT[k].category = 'brac_programmes'; });
+
+  // Runtime correction: CVI is curated:false in the raw JSON, but it should be
+  // a default (curated) metric — surface it in the default dropdown.
+  if(DICT.CVI) DICT.CVI.curated = true;
+
+  // Runtime correction: 11 of the 20 BRAC programme/supporting metrics are
+  // curated:false in the raw JSON, hiding them from the Metric/X/Y dropdowns
+  // unless "Show all 421" is checked. They should always be selectable.
+  Object.keys(BRAC_PROGRAMMES).concat(Object.keys(BRAC_SUPPORTING_METRICS)).forEach(k => {
+    if(DICT[k]) DICT[k].curated = true;
+  });
+
+  // Runtime correction: BD4057 (Meherpur) has a corrupted name_google of
+  // "Manikganj" in the raw JSON. buildNormLookup() keys units by both name
+  // and name_google, so this duplicate silently steals the "manikganj" lookup
+  // key from the real Manikganj (BD3056) — its map polygon was binding to
+  // Meherpur's data instead of its own, and BD3056 had no map layer at all.
+  { const meherpur = ALL_UNITS.find(u => u.code === 'BD4057');
+    if(meherpur && meherpur.name_google === 'Manikganj') meherpur.name_google = meherpur.name; }
+
+  buildMetricDropdown();
+  buildProgrammeDropdown();
+  setupRange();
+  bindFilters();
+  initScatter();
+
+  renderKPIs();
+  updateLegend();
+  renderTable();
+  updateScatter();
+
+  await initMap();          // async; map renders when GeoJSON resolves
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

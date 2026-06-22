@@ -1,0 +1,2949 @@
+{
+  "num_Currently_married_population": {
+    "raw_key": "num_Currently_married_population",
+    "original_label": "# Currently married population",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Currently married population",
+    "tier": 2
+  },
+  "num_Currently_married_population_female": {
+    "raw_key": "num_Currently_married_population_female",
+    "original_label": "# Currently married population_female",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Currently married population female",
+    "tier": 2
+  },
+  "num_Currently_married_population_male": {
+    "raw_key": "num_Currently_married_population_male",
+    "original_label": "# Currently married population_male",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Currently married population male",
+    "tier": 2
+  },
+  "num_Divorced_population": {
+    "raw_key": "num_Divorced_population",
+    "original_label": "# Divorced population",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Divorced population",
+    "tier": 2
+  },
+  "num_Divorced_population_female": {
+    "raw_key": "num_Divorced_population_female",
+    "original_label": "# Divorced population_female",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Divorced population female",
+    "tier": 2
+  },
+  "num_Divorced_population_male": {
+    "raw_key": "num_Divorced_population_male",
+    "original_label": "# Divorced population_male",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Divorced population male",
+    "tier": 2
+  },
+  "num_Female_Bangladeshi_National": {
+    "raw_key": "num_Female_Bangladeshi_National",
+    "original_label": "# Female_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Female Bangladeshi National",
+    "tier": 2
+  },
+  "num_Female_Buddhist": {
+    "raw_key": "num_Female_Buddhist",
+    "original_label": "# Female_Buddhist",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Female Buddhist",
+    "tier": 2
+  },
+  "num_Female_Christian": {
+    "raw_key": "num_Female_Christian",
+    "original_label": "# Female_Christian",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Female Christian",
+    "tier": 2
+  },
+  "num_Female_Ethnic_Population": {
+    "raw_key": "num_Female_Ethnic_Population",
+    "original_label": "# Female_Ethnic Population",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Female Ethnic Population",
+    "tier": 2
+  },
+  "num_Female_Hindu": {
+    "raw_key": "num_Female_Hindu",
+    "original_label": "# Female_Hindu",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Female Hindu",
+    "tier": 2
+  },
+  "num_Female_Muslim": {
+    "raw_key": "num_Female_Muslim",
+    "original_label": "# Female_Muslim",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Female Muslim",
+    "tier": 2
+  },
+  "num_Female_Others": {
+    "raw_key": "num_Female_Others",
+    "original_label": "# Female_Others",
+    "category": "population_demography",
+    "display_name": "Number of Female Others",
+    "tier": 2
+  },
+  "num_Hizra_Bangladeshi_National": {
+    "raw_key": "num_Hizra_Bangladeshi_National",
+    "original_label": "# Hizra_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Hizra Bangladeshi National",
+    "tier": 2
+  },
+  "num_Male": {
+    "raw_key": "num_Male",
+    "original_label": "# Male",
+    "category": "population_demography",
+    "display_name": "Male population (count)",
+    "tier": 1
+  },
+  "num_Male_Ethnic_Population": {
+    "raw_key": "num_Male_Ethnic_Population",
+    "original_label": "# Male _Ethnic Population",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Male Ethnic Population",
+    "tier": 2
+  },
+  "num_Male_Bangladeshi_National": {
+    "raw_key": "num_Male_Bangladeshi_National",
+    "original_label": "# Male_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Male Bangladeshi National",
+    "tier": 2
+  },
+  "num_Male_Buddhist": {
+    "raw_key": "num_Male_Buddhist",
+    "original_label": "# Male_Buddhist",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Male Buddhist",
+    "tier": 2
+  },
+  "num_Male_Christian": {
+    "raw_key": "num_Male_Christian",
+    "original_label": "# Male_Christian",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Male Christian",
+    "tier": 2
+  },
+  "num_Male_Hindu": {
+    "raw_key": "num_Male_Hindu",
+    "original_label": "# Male_Hindu",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Male Hindu",
+    "tier": 2
+  },
+  "num_Male_Muslim": {
+    "raw_key": "num_Male_Muslim",
+    "original_label": "# Male_Muslim",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Male Muslim",
+    "tier": 2
+  },
+  "num_Male_Others": {
+    "raw_key": "num_Male_Others",
+    "original_label": "# Male_Others",
+    "category": "population_demography",
+    "display_name": "Number of Male Others",
+    "tier": 2
+  },
+  "num_Never_married_population": {
+    "raw_key": "num_Never_married_population",
+    "original_label": "# Never married population",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Never married population",
+    "tier": 2
+  },
+  "num_Never_married_population_female": {
+    "raw_key": "num_Never_married_population_female",
+    "original_label": "# Never married population_female",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Never married population female",
+    "tier": 2
+  },
+  "num_Never_married_population_male": {
+    "raw_key": "num_Never_married_population_male",
+    "original_label": "# Never married population_male",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Never married population male",
+    "tier": 2
+  },
+  "num_No_Roof": {
+    "raw_key": "num_No_Roof",
+    "original_label": "# No Roof",
+    "category": "housing_quality",
+    "display_name": "Number of No Roof",
+    "tier": 2
+  },
+  "num_No_Wall": {
+    "raw_key": "num_No_Wall",
+    "original_label": "# No Wall",
+    "category": "housing_quality",
+    "display_name": "Number of No Wall",
+    "tier": 2
+  },
+  "num_Overall_Bangladeshi_National": {
+    "raw_key": "num_Overall_Bangladeshi_National",
+    "original_label": "# Overall_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Overall Bangladeshi National",
+    "tier": 2
+  },
+  "num_Overall_Ethnic_Population": {
+    "raw_key": "num_Overall_Ethnic_Population",
+    "original_label": "# Overall_Ethnic Population",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Overall Ethnic Population",
+    "tier": 2
+  },
+  "num_Population_General_HH": {
+    "raw_key": "num_Population_General_HH",
+    "original_label": "# Population_ General HH",
+    "category": "population_demography",
+    "display_name": "Number of Population General HH",
+    "tier": 2
+  },
+  "num_Population_General_HH_Rural": {
+    "raw_key": "num_Population_General_HH_Rural",
+    "original_label": "# Population_ General HH_Rural",
+    "category": "population_demography",
+    "display_name": "Number of Population General HH Rural",
+    "tier": 2
+  },
+  "num_Population_General_HH_Urban": {
+    "raw_key": "num_Population_General_HH_Urban",
+    "original_label": "# Population_ General HH_Urban",
+    "category": "population_demography",
+    "display_name": "Number of Population General HH Urban",
+    "tier": 2
+  },
+  "num_Population_Institutional_HH": {
+    "raw_key": "num_Population_Institutional_HH",
+    "original_label": "# Population_ Institutional HH",
+    "category": "population_demography",
+    "display_name": "Number of Population Institutional HH",
+    "tier": 2
+  },
+  "num_Population_Institutional_HH_Rural": {
+    "raw_key": "num_Population_Institutional_HH_Rural",
+    "original_label": "# Population_Institutional HH_Rural",
+    "category": "population_demography",
+    "display_name": "Number of Population Institutional HH Rural",
+    "tier": 2
+  },
+  "num_Population_Institutional_HH_Urban": {
+    "raw_key": "num_Population_Institutional_HH_Urban",
+    "original_label": "# Population_Institutional HH_Urban",
+    "category": "population_demography",
+    "display_name": "Number of Population Institutional HH Urban",
+    "tier": 2
+  },
+  "num_Population_Rural": {
+    "raw_key": "num_Population_Rural",
+    "original_label": "# Population_Rural",
+    "category": "population_demography",
+    "display_name": "Number of Population Rural",
+    "tier": 2
+  },
+  "num_Population_TypeOf_HH": {
+    "raw_key": "num_Population_TypeOf_HH",
+    "original_label": "# Population_TypeOf_HH",
+    "category": "population_demography",
+    "display_name": "Number of Population TypeOf HH",
+    "tier": 2
+  },
+  "num_Population_Urban": {
+    "raw_key": "num_Population_Urban",
+    "original_label": "# Population_Urban",
+    "category": "population_demography",
+    "display_name": "Number of Population Urban",
+    "tier": 2
+  },
+  "num_Population_other_HH": {
+    "raw_key": "num_Population_other_HH",
+    "original_label": "# Population_other HH",
+    "category": "population_demography",
+    "display_name": "Number of Population other HH",
+    "tier": 2
+  },
+  "num_Population_other_HH_Rural": {
+    "raw_key": "num_Population_other_HH_Rural",
+    "original_label": "# Population_other HH_Rural",
+    "category": "population_demography",
+    "display_name": "Number of Population other HH Rural",
+    "tier": 2
+  },
+  "num_Population_other_HH_Urban": {
+    "raw_key": "num_Population_other_HH_Urban",
+    "original_label": "# Population_other HH_Urban",
+    "category": "population_demography",
+    "display_name": "Number of Population other HH Urban",
+    "tier": 2
+  },
+  "num_Rural_HH": {
+    "raw_key": "num_Rural_HH",
+    "original_label": "# Rural HH",
+    "category": "household_structure",
+    "display_name": "Number of Rural HH",
+    "tier": 2
+  },
+  "num_Rural_HH_byTypeDwelling": {
+    "raw_key": "num_Rural_HH_byTypeDwelling",
+    "original_label": "# Rural HH_byTypeDwelling",
+    "category": "household_structure",
+    "display_name": "Number of Rural HH byTypeDwelling",
+    "tier": 2
+  },
+  "num_Separated_population": {
+    "raw_key": "num_Separated_population",
+    "original_label": "# Separated population",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Separated population",
+    "tier": 2
+  },
+  "num_Separated_population_female": {
+    "raw_key": "num_Separated_population_female",
+    "original_label": "# Separated population_female",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Separated population female",
+    "tier": 2
+  },
+  "num_Separated_population_male": {
+    "raw_key": "num_Separated_population_male",
+    "original_label": "# Separated population_male",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Separated population male",
+    "tier": 2
+  },
+  "num_Total_Buddhist": {
+    "raw_key": "num_Total_Buddhist",
+    "original_label": "# Total_Buddhist",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Total Buddhist",
+    "tier": 2
+  },
+  "num_Total_Christian": {
+    "raw_key": "num_Total_Christian",
+    "original_label": "# Total_Christian",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Total Christian",
+    "tier": 2
+  },
+  "num_Total_Hindu": {
+    "raw_key": "num_Total_Hindu",
+    "original_label": "# Total_Hindu",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Total Hindu",
+    "tier": 2
+  },
+  "num_Total_Muslim": {
+    "raw_key": "num_Total_Muslim",
+    "original_label": "# Total_Muslim",
+    "category": "religion_ethnicity",
+    "display_name": "Number of Total Muslim",
+    "tier": 2
+  },
+  "num_Total_Others": {
+    "raw_key": "num_Total_Others",
+    "original_label": "# Total_Others",
+    "category": "population_demography",
+    "display_name": "Number of Total Others",
+    "tier": 2
+  },
+  "num_Widow_Widower_population": {
+    "raw_key": "num_Widow_Widower_population",
+    "original_label": "# Widow/Widower population",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Widow/Widower population",
+    "tier": 2
+  },
+  "num_Widow_Widower_population_female": {
+    "raw_key": "num_Widow_Widower_population_female",
+    "original_label": "# Widow/Widower population_female",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Widow/Widower population female",
+    "tier": 2
+  },
+  "num_Widow_Widower_population_male": {
+    "raw_key": "num_Widow_Widower_population_male",
+    "original_label": "# Widow/Widower population_male",
+    "category": "marriage_child_marriage",
+    "display_name": "Number of Widow/Widower population male",
+    "tier": 2
+  },
+  "num_female": {
+    "raw_key": "num_female",
+    "original_label": "# female",
+    "category": "population_demography",
+    "display_name": "Female population (count)",
+    "tier": 1
+  },
+  "num_floor_Cement_Concrete_Brick_Terracotta": {
+    "raw_key": "num_floor_Cement_Concrete_Brick_Terracotta",
+    "original_label": "# floor_Cement/Concrete/Brick/Terracotta",
+    "category": "housing_quality",
+    "display_name": "Number of floor Cement/Concrete/Brick/Terracotta",
+    "tier": 2
+  },
+  "num_floor_Other_Materials": {
+    "raw_key": "num_floor_Other_Materials",
+    "original_label": "# floor_Other Materials",
+    "category": "housing_quality",
+    "display_name": "Number of floor Other Materials",
+    "tier": 2
+  },
+  "num_floor_Soil_Sand_Mud": {
+    "raw_key": "num_floor_Soil_Sand_Mud",
+    "original_label": "# floor_Soil/Sand/Mud",
+    "category": "housing_quality",
+    "display_name": "Number of floor Soil/Sand/Mud",
+    "tier": 2
+  },
+  "num_floor_Tiles_Mosaic": {
+    "raw_key": "num_floor_Tiles_Mosaic",
+    "original_label": "# floor_Tiles/Mosaic",
+    "category": "housing_quality",
+    "display_name": "Number of floor Tiles/Mosaic",
+    "tier": 2
+  },
+  "num_floor_Total": {
+    "raw_key": "num_floor_Total",
+    "original_label": "# floor_Total",
+    "category": "housing_quality",
+    "display_name": "Number of floor Total",
+    "tier": 2
+  },
+  "num_floor_Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk": {
+    "raw_key": "num_floor_Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk",
+    "original_label": "# floor_Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk",
+    "category": "housing_quality",
+    "display_name": "Number of floor Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk",
+    "tier": 2
+  },
+  "num_of_Floating_HH": {
+    "raw_key": "num_of_Floating_HH",
+    "original_label": "# of Floating HH",
+    "category": "household_structure",
+    "display_name": "Number of of Floating HH",
+    "tier": 2
+  },
+  "num_of_Floating_HH_rural": {
+    "raw_key": "num_of_Floating_HH_rural",
+    "original_label": "# of Floating HH _rural",
+    "category": "household_structure",
+    "display_name": "Number of of Floating HH rural",
+    "tier": 2
+  },
+  "num_of_Floating_HH_urban": {
+    "raw_key": "num_of_Floating_HH_urban",
+    "original_label": "# of Floating HH _urban",
+    "category": "household_structure",
+    "display_name": "Number of of Floating HH urban",
+    "tier": 2
+  },
+  "num_of_General_HH": {
+    "raw_key": "num_of_General_HH",
+    "original_label": "# of General HH",
+    "category": "household_structure",
+    "display_name": "Number of of General HH",
+    "tier": 2
+  },
+  "num_of_General_HH_Rural": {
+    "raw_key": "num_of_General_HH_Rural",
+    "original_label": "# of General HH_Rural",
+    "category": "household_structure",
+    "display_name": "Number of of General HH Rural",
+    "tier": 2
+  },
+  "num_of_General_HH_Urban": {
+    "raw_key": "num_of_General_HH_Urban",
+    "original_label": "# of General HH_Urban",
+    "category": "household_structure",
+    "display_name": "Number of of General HH Urban",
+    "tier": 2
+  },
+  "num_of_HH": {
+    "raw_key": "num_of_HH",
+    "original_label": "# of HH",
+    "category": "household_structure",
+    "display_name": "Number of of HH",
+    "tier": 2
+  },
+  "num_of_HH_excluding_slum_and_floating": {
+    "raw_key": "num_of_HH_excluding_slum_and_floating",
+    "original_label": "# of HH excluding slum and floating",
+    "category": "household_structure",
+    "display_name": "Number of of HH excluding slum and floating",
+    "tier": 2
+  },
+  "num_of_HH_excluding_slum_and_floating_rural": {
+    "raw_key": "num_of_HH_excluding_slum_and_floating_rural",
+    "original_label": "# of HH excluding slum and floating_rural",
+    "category": "household_structure",
+    "display_name": "Number of of HH excluding slum and floating rural",
+    "tier": 2
+  },
+  "num_of_HH_excluding_slum_and_floating_urban": {
+    "raw_key": "num_of_HH_excluding_slum_and_floating_urban",
+    "original_label": "# of HH excluding slum and floating_urban",
+    "category": "household_structure",
+    "display_name": "Number of of HH excluding slum and floating urban",
+    "tier": 2
+  },
+  "num_of_HH_with_1-Person": {
+    "raw_key": "num_of_HH_with_1-Person",
+    "original_label": "# of HH with 1-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 1-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_10-Person": {
+    "raw_key": "num_of_HH_with_10-Person",
+    "original_label": "# of HH with 10-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 10-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_10-Person_plus": {
+    "raw_key": "num_of_HH_with_10-Person_plus",
+    "original_label": "# of HH with 10-Person +",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 10-Person +",
+    "tier": 2
+  },
+  "num_of_HH_with_2-Person": {
+    "raw_key": "num_of_HH_with_2-Person",
+    "original_label": "# of HH with 2-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 2-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_3-Person": {
+    "raw_key": "num_of_HH_with_3-Person",
+    "original_label": "# of HH with 3-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 3-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_4-Person": {
+    "raw_key": "num_of_HH_with_4-Person",
+    "original_label": "# of HH with 4-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 4-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_5-Person": {
+    "raw_key": "num_of_HH_with_5-Person",
+    "original_label": "# of HH with 5-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 5-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_6-Person": {
+    "raw_key": "num_of_HH_with_6-Person",
+    "original_label": "# of HH with 6-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 6-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_7-Person": {
+    "raw_key": "num_of_HH_with_7-Person",
+    "original_label": "# of HH with 7-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 7-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_8-Person": {
+    "raw_key": "num_of_HH_with_8-Person",
+    "original_label": "# of HH with 8-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 8-Person",
+    "tier": 2
+  },
+  "num_of_HH_with_9-Person": {
+    "raw_key": "num_of_HH_with_9-Person",
+    "original_label": "# of HH with 9-Person",
+    "category": "household_structure",
+    "display_name": "Number of of HH with 9-Person",
+    "tier": 2
+  },
+  "num_of_HH_byTypeDwelling": {
+    "raw_key": "num_of_HH_byTypeDwelling",
+    "original_label": "# of HH_byTypeDwelling",
+    "category": "household_structure",
+    "display_name": "Number of of HH byTypeDwelling",
+    "tier": 2
+  },
+  "num_of_Institutional_Household": {
+    "raw_key": "num_of_Institutional_Household",
+    "original_label": "# of Institutional Household",
+    "category": "household_structure",
+    "display_name": "Number of of Institutional Household",
+    "tier": 2
+  },
+  "num_of_Institutional_Household_Rural": {
+    "raw_key": "num_of_Institutional_Household_Rural",
+    "original_label": "# of Institutional Household_Rural",
+    "category": "household_structure",
+    "display_name": "Number of of Institutional Household Rural",
+    "tier": 2
+  },
+  "num_of_Institutional_Household_Urban": {
+    "raw_key": "num_of_Institutional_Household_Urban",
+    "original_label": "# of Institutional Household_Urban",
+    "category": "household_structure",
+    "display_name": "Number of of Institutional Household Urban",
+    "tier": 2
+  },
+  "num_of_Other_Household": {
+    "raw_key": "num_of_Other_Household",
+    "original_label": "# of Other Household",
+    "category": "household_structure",
+    "display_name": "Number of of Other Household",
+    "tier": 2
+  },
+  "num_of_Other_Household_Rural": {
+    "raw_key": "num_of_Other_Household_Rural",
+    "original_label": "# of Other Household_Rural",
+    "category": "household_structure",
+    "display_name": "Number of of Other Household Rural",
+    "tier": 2
+  },
+  "num_of_Other_Household_Urban": {
+    "raw_key": "num_of_Other_Household_Urban",
+    "original_label": "# of Other Household_Urban",
+    "category": "household_structure",
+    "display_name": "Number of of Other Household Urban",
+    "tier": 2
+  },
+  "num_of_Slum_HH": {
+    "raw_key": "num_of_Slum_HH",
+    "original_label": "# of Slum HH",
+    "category": "household_structure",
+    "display_name": "Number of of Slum HH",
+    "tier": 2
+  },
+  "num_of_Slum_HH_rural": {
+    "raw_key": "num_of_Slum_HH_rural",
+    "original_label": "# of Slum HH _rural",
+    "category": "household_structure",
+    "display_name": "Number of of Slum HH rural",
+    "tier": 2
+  },
+  "num_of_Slum_HH_urban": {
+    "raw_key": "num_of_Slum_HH_urban",
+    "original_label": "# of Slum HH _urban",
+    "category": "household_structure",
+    "display_name": "Number of of Slum HH urban",
+    "tier": 2
+  },
+  "num_of_Urban_HH": {
+    "raw_key": "num_of_Urban_HH",
+    "original_label": "# of Urban HH",
+    "category": "household_structure",
+    "display_name": "Number of of Urban HH",
+    "tier": 2
+  },
+  "num_of_Urban_HH_byTypeDwelling": {
+    "raw_key": "num_of_Urban_HH_byTypeDwelling",
+    "original_label": "# of Urban HH_byTypeDwelling",
+    "category": "household_structure",
+    "display_name": "Number of of Urban HH byTypeDwelling",
+    "tier": 2
+  },
+  "num_population_10andAbove_yrs": {
+    "raw_key": "num_population_10andAbove_yrs",
+    "original_label": "# population_10andAbove_yrs",
+    "category": "household_structure",
+    "display_name": "Number of population 10andAbove yrs",
+    "tier": 2
+  },
+  "num_roof_Cement_Concrete_Tile": {
+    "raw_key": "num_roof_Cement_Concrete_Tile",
+    "original_label": "# roof_Cement/Concrete/Tile",
+    "category": "housing_quality",
+    "display_name": "Number of roof Cement/Concrete/Tile",
+    "tier": 2
+  },
+  "num_roof_Hand-made_Tiles_Tile": {
+    "raw_key": "num_roof_Hand-made_Tiles_Tile",
+    "original_label": "# roof_Hand-made Tiles/Tile",
+    "category": "housing_quality",
+    "display_name": "Number of roof Hand-made Tiles/Tile",
+    "tier": 2
+  },
+  "num_roof_Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet": {
+    "raw_key": "num_roof_Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet",
+    "original_label": "# roof_Metal Sheet/ CI Sheet/Corrugated Iron Sheet",
+    "category": "housing_quality",
+    "display_name": "Number of roof Metal Sheet/ CI Sheet/Corrugated Iron Sheet",
+    "tier": 2
+  },
+  "num_roof_Other_Materials": {
+    "raw_key": "num_roof_Other_Materials",
+    "original_label": "# roof_Other Materials",
+    "category": "housing_quality",
+    "display_name": "Number of roof Other Materials",
+    "tier": 2
+  },
+  "num_roof_Total": {
+    "raw_key": "num_roof_Total",
+    "original_label": "# roof_Total",
+    "category": "housing_quality",
+    "display_name": "Number of roof Total",
+    "tier": 2
+  },
+  "num_roof_Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan": {
+    "raw_key": "num_roof_Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan",
+    "original_label": "# roof_Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/",
+    "category": "housing_quality",
+    "display_name": "Number of roof Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene Mat/Straw/Chhan/",
+    "tier": 2
+  },
+  "numParticipants_in_Apprenticeship_Star_programme": {
+    "raw_key": "numParticipants_in_Apprenticeship_Star_programme",
+    "original_label": "#Participants in Apprenticeship/Star programme",
+    "category": "brac_programmes",
+    "display_name": "Number of Participants in Apprenticeship/Star programme",
+    "tier": 2
+  },
+  "numWall_Cement_Concrete_Brick_Terracotta": {
+    "raw_key": "numWall_Cement_Concrete_Brick_Terracotta",
+    "original_label": "#Wall_Cement/Concrete/Brick/Terracotta",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Cement/Concrete/Brick/Terracotta",
+    "tier": 2
+  },
+  "numWall_Ceramic_Tiles": {
+    "raw_key": "numWall_Ceramic_Tiles",
+    "original_label": "#Wall_Ceramic Tiles",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Ceramic Tiles",
+    "tier": 2
+  },
+  "numWall_Metal_sheet_CI_sheet_Corrugated_Iron_sheet": {
+    "raw_key": "numWall_Metal_sheet_CI_sheet_Corrugated_Iron_sheet",
+    "original_label": "#Wall_Metal sheet/CI sheet/Corrugated Iron sheet",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Metal sheet/CI sheet/Corrugated Iron sheet",
+    "tier": 2
+  },
+  "numWall_Other_Materials": {
+    "raw_key": "numWall_Other_Materials",
+    "original_label": "#Wall_Other Materials",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Other Materials",
+    "tier": 2
+  },
+  "numWall_Soil_Mud": {
+    "raw_key": "numWall_Soil_Mud",
+    "original_label": "#Wall_Soil/ Mud",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Soil/ Mud",
+    "tier": 2
+  },
+  "numWall_Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene": {
+    "raw_key": "numWall_Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene",
+    "original_label": "#Wall_Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene",
+    "tier": 2
+  },
+  "numWall_Total": {
+    "raw_key": "numWall_Total",
+    "original_label": "#Wall_Total",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Total",
+    "tier": 2
+  },
+  "numWall_Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk": {
+    "raw_key": "numWall_Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk",
+    "original_label": "#Wall_Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk",
+    "category": "housing_quality",
+    "display_name": "Number of Wall Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk",
+    "tier": 2
+  },
+  "num_Jhupri": {
+    "raw_key": "num_Jhupri",
+    "original_label": "#_Jhupri",
+    "category": "household_structure",
+    "display_name": "Number of Jhupri",
+    "tier": 2
+  },
+  "num_Kancha": {
+    "raw_key": "num_Kancha",
+    "original_label": "#_Kancha",
+    "category": "household_structure",
+    "display_name": "Number of Kancha",
+    "tier": 2
+  },
+  "num_Pucca": {
+    "raw_key": "num_Pucca",
+    "original_label": "#_Pucca",
+    "category": "household_structure",
+    "display_name": "Number of Pucca",
+    "tier": 2
+  },
+  "num_Semi-pucca": {
+    "raw_key": "num_Semi-pucca",
+    "original_label": "#_Semi-pucca",
+    "category": "household_structure",
+    "display_name": "Number of Semi-pucca",
+    "tier": 2
+  },
+  "num_Total": {
+    "raw_key": "num_Total",
+    "original_label": "#_Total",
+    "category": "household_structure",
+    "display_name": "Number of Total",
+    "tier": 2
+  },
+  "pct_Female_Bangladeshi_National": {
+    "raw_key": "pct_Female_Bangladeshi_National",
+    "original_label": "% Female_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "(%) Female Bangladeshi National",
+    "tier": 2
+  },
+  "pct_Female_Ethnic_Population": {
+    "raw_key": "pct_Female_Ethnic_Population",
+    "original_label": "% Female_Ethnic Population",
+    "category": "religion_ethnicity",
+    "display_name": "(%) Female Ethnic Population",
+    "tier": 2
+  },
+  "pct_Hizra_Bangladeshi_National": {
+    "raw_key": "pct_Hizra_Bangladeshi_National",
+    "original_label": "% Hizra_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "(%) Hizra Bangladeshi National",
+    "tier": 2
+  },
+  "pct_Male_Bangladeshi_National": {
+    "raw_key": "pct_Male_Bangladeshi_National",
+    "original_label": "% Male_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "(%) Male Bangladeshi National",
+    "tier": 2
+  },
+  "pct_Male_Ethnic_Population": {
+    "raw_key": "pct_Male_Ethnic_Population",
+    "original_label": "% Male_Ethnic Population",
+    "category": "religion_ethnicity",
+    "display_name": "(%) Male Ethnic Population",
+    "tier": 2
+  },
+  "pct_Overall_Bangladeshi_National": {
+    "raw_key": "pct_Overall_Bangladeshi_National",
+    "original_label": "% Overall_Bangladeshi_National",
+    "category": "religion_ethnicity",
+    "display_name": "(%) Overall Bangladeshi National",
+    "tier": 2
+  },
+  "pct_Population_General_HH": {
+    "raw_key": "pct_Population_General_HH",
+    "original_label": "% Population_General HH",
+    "category": "population_demography",
+    "display_name": "(%) Population General HH",
+    "tier": 2
+  },
+  "pct_Population_General_HH_Rural": {
+    "raw_key": "pct_Population_General_HH_Rural",
+    "original_label": "% Population_General HH_Rural",
+    "category": "population_demography",
+    "display_name": "(%) Population General HH Rural",
+    "tier": 2
+  },
+  "pct_Population_General_HH_Urban": {
+    "raw_key": "pct_Population_General_HH_Urban",
+    "original_label": "% Population_General HH_Urban",
+    "category": "population_demography",
+    "display_name": "(%) Population General HH Urban",
+    "tier": 2
+  },
+  "pct_Population_Institutional_HH": {
+    "raw_key": "pct_Population_Institutional_HH",
+    "original_label": "% Population_Institutional HH",
+    "category": "population_demography",
+    "display_name": "(%) Population Institutional HH",
+    "tier": 2
+  },
+  "pct_Population_Institutional_HH_Rural": {
+    "raw_key": "pct_Population_Institutional_HH_Rural",
+    "original_label": "% Population_Institutional HH_Rural",
+    "category": "population_demography",
+    "display_name": "(%) Population Institutional HH Rural",
+    "tier": 2
+  },
+  "pct_Population_Institutional_HH_Urban": {
+    "raw_key": "pct_Population_Institutional_HH_Urban",
+    "original_label": "% Population_Institutional HH_Urban",
+    "category": "population_demography",
+    "display_name": "(%) Population Institutional HH Urban",
+    "tier": 2
+  },
+  "pct_Population_other_HH": {
+    "raw_key": "pct_Population_other_HH",
+    "original_label": "% Population_other HH",
+    "category": "population_demography",
+    "display_name": "(%) Population other HH",
+    "tier": 2
+  },
+  "pct_Population_other_HH_Rural": {
+    "raw_key": "pct_Population_other_HH_Rural",
+    "original_label": "% Population_other HH_Rural",
+    "category": "population_demography",
+    "display_name": "(%) Population other HH Rural",
+    "tier": 2
+  },
+  "pct_Population_other_HH_Urban": {
+    "raw_key": "pct_Population_other_HH_Urban",
+    "original_label": "% Population_other HH_Urban",
+    "category": "population_demography",
+    "display_name": "(%) Population other HH Urban",
+    "tier": 2
+  },
+  "10-14_Years_Female_Student": {
+    "raw_key": "10-14_Years_Female_Student",
+    "original_label": "10-14 Years_Female_Student",
+    "category": "literacy_education",
+    "display_name": "10-14 Years Female Student",
+    "tier": 2
+  },
+  "10-14_Years_Male_Student": {
+    "raw_key": "10-14_Years_Male_Student",
+    "original_label": "10-14 Years_Male_Student",
+    "category": "literacy_education",
+    "display_name": "10-14 Years Male Student",
+    "tier": 2
+  },
+  "15-19_Years_Female_Student": {
+    "raw_key": "15-19_Years_Female_Student",
+    "original_label": "15-19 Years_Female_Student",
+    "category": "literacy_education",
+    "display_name": "15-19 Years Female Student",
+    "tier": 2
+  },
+  "15-19_Years_Male_Student": {
+    "raw_key": "15-19_Years_Male_Student",
+    "original_label": "15-19 Years_Male_Student",
+    "category": "literacy_education",
+    "display_name": "15-19 Years Male Student",
+    "tier": 2
+  },
+  "20-24_Years_Female_Student": {
+    "raw_key": "20-24_Years_Female_Student",
+    "original_label": "20-24 Years_Female_Student",
+    "category": "literacy_education",
+    "display_name": "20-24 Years Female Student",
+    "tier": 2
+  },
+  "20-24_Years_Male_Student": {
+    "raw_key": "20-24_Years_Male_Student",
+    "original_label": "20-24 Years_Male_Student",
+    "category": "literacy_education",
+    "display_name": "20-24 Years Male Student",
+    "tier": 2
+  },
+  "25-29_Years_Female_Student": {
+    "raw_key": "25-29_Years_Female_Student",
+    "original_label": "25-29 Years_Female_Student",
+    "category": "literacy_education",
+    "display_name": "25-29 Years Female Student",
+    "tier": 2
+  },
+  "25-29_Years_Male_Student": {
+    "raw_key": "25-29_Years_Male_Student",
+    "original_label": "25-29 Years_Male_Student",
+    "category": "literacy_education",
+    "display_name": "25-29 Years Male Student",
+    "tier": 2
+  },
+  "5-9_Year_Female_Student": {
+    "raw_key": "5-9_Year_Female_Student",
+    "original_label": "5-9 Year_Female_Student",
+    "category": "literacy_education",
+    "display_name": "5-9 Year Female Student",
+    "tier": 2
+  },
+  "5-9_Year_Male_Student": {
+    "raw_key": "5-9_Year_Male_Student",
+    "original_label": "5-9 Year_Male_Student",
+    "category": "literacy_education",
+    "display_name": "5-9 Year Male Student",
+    "tier": 2
+  },
+  "A": {
+    "raw_key": "A",
+    "original_label": "A",
+    "category": "population_demography",
+    "display_name": "A",
+    "tier": 2
+  },
+  "A_Lower_95pct_CI": {
+    "raw_key": "A_Lower_95pct_CI",
+    "original_label": "A Lower 95% CI",
+    "category": "population_demography",
+    "display_name": "A Lower 95 (%) CI",
+    "tier": 2
+  },
+  "A_Upper_95pct_CI": {
+    "raw_key": "A_Upper_95pct_CI",
+    "original_label": "A Upper 95% CI",
+    "category": "population_demography",
+    "display_name": "A Upper 95 (%) CI",
+    "tier": 2
+  },
+  "Autism_or_Autism_Spectrum_Disorders": {
+    "raw_key": "Autism_or_Autism_Spectrum_Disorders",
+    "original_label": "Autism or Autism Spectrum Disorders",
+    "category": "disability",
+    "display_name": "Autism or Autism Spectrum Disorders",
+    "tier": 2
+  },
+  "Average_Household_Size": {
+    "raw_key": "Average_Household_Size",
+    "original_label": "Average Household Size",
+    "category": "household_structure",
+    "display_name": "Average Household Size",
+    "tier": 2
+  },
+  "Average_Rate_of_Child_marriage_pct": {
+    "raw_key": "Average_Rate_of_Child_marriage_pct",
+    "original_label": "Average Rate of Child marriage (%)",
+    "category": "marriage_child_marriage",
+    "display_name": "Child marriage rate (%)",
+    "tier": 1
+  },
+  "BEP": {
+    "raw_key": "BEP",
+    "original_label": "BEP",
+    "category": "brac_programmes",
+    "display_name": "BRAC Education Programme",
+    "tier": 1
+  },
+  "BHP": {
+    "raw_key": "BHP",
+    "original_label": "BHP",
+    "category": "brac_programmes",
+    "display_name": "BRAC Humanitarian Programme",
+    "tier": 1
+  },
+  "BYP": {
+    "raw_key": "BYP",
+    "original_label": "BYP",
+    "category": "brac_programmes",
+    "display_name": "BRAC Youth Programme",
+    "tier": 3
+  },
+  "Biogas_pct": {
+    "raw_key": "Biogas_pct",
+    "original_label": "Biogas_%",
+    "category": "energy_fuel",
+    "display_name": "Biogas (%)",
+    "tier": 2
+  },
+  "Bottled_Jar_Water_pct": {
+    "raw_key": "Bottled_Jar_Water_pct",
+    "original_label": "Bottled/Jar Water_%",
+    "category": "wash",
+    "display_name": "Bottled/Jar Water (%)",
+    "tier": 2
+  },
+  "CCP": {
+    "raw_key": "CCP",
+    "original_label": "CCP",
+    "category": "brac_programmes",
+    "display_name": "Climate Change Programme",
+    "tier": 3
+  },
+  "CVI": {
+    "raw_key": "CVI",
+    "original_label": "CVI",
+    "category": "poverty_vulnerability",
+    "display_name": "Climate Vulnerability Index (CVI)",
+    "tier": 1
+  },
+  "Cement_Concrete_Brick_Terracotta_Wall_pct": {
+    "raw_key": "Cement_Concrete_Brick_Terracotta_Wall_pct",
+    "original_label": "Cement/Concrete/Brick/Terracotta_Wall_%",
+    "category": "housing_quality",
+    "display_name": "Cement/Concrete/Brick/Terracotta Wall (%)",
+    "tier": 2
+  },
+  "Cement_Concrete_Brick_Terracotta_floor_pct": {
+    "raw_key": "Cement_Concrete_Brick_Terracotta_floor_pct",
+    "original_label": "Cement/Concrete/Brick/Terracotta_floor_%",
+    "category": "housing_quality",
+    "display_name": "Cement/Concrete/Brick/Terracotta floor (%)",
+    "tier": 2
+  },
+  "Cement_Concrete_Tile_roof_pct": {
+    "raw_key": "Cement_Concrete_Tile_roof_pct",
+    "original_label": "Cement/Concrete/Tile_roof_%",
+    "category": "housing_quality",
+    "display_name": "Cement/Concrete/Tile roof (%)",
+    "tier": 2
+  },
+  "Ceramic_Tiles_Wall_pct": {
+    "raw_key": "Ceramic_Tiles_Wall_pct",
+    "original_label": "Ceramic Tiles_Wall_%",
+    "category": "housing_quality",
+    "display_name": "Ceramic Tiles Wall (%)",
+    "tier": 2
+  },
+  "Cerebral_Palsy": {
+    "raw_key": "Cerebral_Palsy",
+    "original_label": "Cerebral Palsy",
+    "category": "disability",
+    "display_name": "Cerebral Palsy",
+    "tier": 2
+  },
+  "Child_marriages_prevented": {
+    "raw_key": "Child_marriages_prevented",
+    "original_label": "Child marriages prevented",
+    "category": "brac_programmes",
+    "display_name": "Child marriages prevented (count)",
+    "tier": 1
+  },
+  "DRMP": {
+    "raw_key": "DRMP",
+    "original_label": "DRMP",
+    "category": "brac_programmes",
+    "display_name": "Disaster Risk Management Programme",
+    "tier": 3
+  },
+  "Deaf-_Blindness": {
+    "raw_key": "Deaf-_Blindness",
+    "original_label": "Deaf- Blindness",
+    "category": "disability",
+    "display_name": "Deaf- Blindness",
+    "tier": 2
+  },
+  "Down_Syndrome": {
+    "raw_key": "Down_Syndrome",
+    "original_label": "Down Syndrome",
+    "category": "disability",
+    "display_name": "Down Syndrome",
+    "tier": 2
+  },
+  "Electricty_pct": {
+    "raw_key": "Electricty_pct",
+    "original_label": "Electricty_%",
+    "category": "energy_fuel",
+    "display_name": "Electricty (%)",
+    "tier": 2
+  },
+  "Female_Agriculture": {
+    "raw_key": "Female_Agriculture",
+    "original_label": "Female_Agriculture",
+    "category": "employment_work",
+    "display_name": "Female Agriculture",
+    "tier": 2
+  },
+  "Female_Apprenticeship": {
+    "raw_key": "Female_Apprenticeship",
+    "original_label": "Female_Apprenticeship",
+    "category": "employment_work",
+    "display_name": "Female Apprenticeship",
+    "tier": 2
+  },
+  "Female_Employed_Population": {
+    "raw_key": "Female_Employed_Population",
+    "original_label": "Female_Employed_Population",
+    "category": "employment_work",
+    "display_name": "Female employed population (count)",
+    "tier": 1
+  },
+  "Female_Employed_Population_WorkType": {
+    "raw_key": "Female_Employed_Population_WorkType",
+    "original_label": "Female_Employed_Population_WorkType",
+    "category": "employment_work",
+    "display_name": "Female Employed Population WorkType",
+    "tier": 2
+  },
+  "Female_Household_Use_Consumption": {
+    "raw_key": "Female_Household_Use_Consumption",
+    "original_label": "Female_Household Use/Consumption",
+    "category": "employment_work",
+    "display_name": "Female Household Use/Consumption",
+    "tier": 2
+  },
+  "Female_Industry": {
+    "raw_key": "Female_Industry",
+    "original_label": "Female_Industry",
+    "category": "employment_work",
+    "display_name": "Female Industry",
+    "tier": 2
+  },
+  "Female_Profit": {
+    "raw_key": "Female_Profit",
+    "original_label": "Female_Profit",
+    "category": "employment_work",
+    "display_name": "Female Profit",
+    "tier": 2
+  },
+  "Female_Service": {
+    "raw_key": "Female_Service",
+    "original_label": "Female_Service",
+    "category": "employment_work",
+    "display_name": "Female Service",
+    "tier": 2
+  },
+  "Female_Salary_Wage": {
+    "raw_key": "Female_Salary_Wage",
+    "original_label": "Female__Salary/Wage",
+    "category": "employment_work",
+    "display_name": "Female Salary/Wage",
+    "tier": 2
+  },
+  "H_Harmonised_National_MPI": {
+    "raw_key": "H_Harmonised_National_MPI",
+    "original_label": "H (Harmonised National  MPI)",
+    "category": "poverty_vulnerability",
+    "display_name": "Poverty incidence — H, harmonised national MPI",
+    "tier": 1
+  },
+  "HCR_Upper_pct_HIES_22": {
+    "raw_key": "HCR_Upper_pct_HIES_22",
+    "original_label": "HCR Upper (%) HIES_22",
+    "category": "poverty_vulnerability",
+    "display_name": "Poverty headcount rate, upper line (%)",
+    "tier": 1
+  },
+  "H_Lower_95pct_CI": {
+    "raw_key": "H_Lower_95pct_CI",
+    "original_label": "H_Lower 95% CI",
+    "category": "poverty_vulnerability",
+    "display_name": "H Lower 95 (%) CI",
+    "tier": 2
+  },
+  "H_Upper_95pct_CI": {
+    "raw_key": "H_Upper_95pct_CI",
+    "original_label": "H_Upper 95% CI",
+    "category": "poverty_vulnerability",
+    "display_name": "H Upper 95 (%) CI",
+    "tier": 2
+  },
+  "Hand-made_Tiles_Tile_roof_pct": {
+    "raw_key": "Hand-made_Tiles_Tile_roof_pct",
+    "original_label": "Hand-made Tiles/Tile_roof_%",
+    "category": "housing_quality",
+    "display_name": "Hand-made Tiles/Tile roof (%)",
+    "tier": 2
+  },
+  "Have_financial_account_Female": {
+    "raw_key": "Have_financial_account_Female",
+    "original_label": "Have financial account_Female",
+    "category": "financial_inclusion",
+    "display_name": "Women with a financial account (%)",
+    "tier": 1
+  },
+  "Have_financial_account_Male": {
+    "raw_key": "Have_financial_account_Male",
+    "original_label": "Have financial account_Male",
+    "category": "financial_inclusion",
+    "display_name": "Have financial account Male",
+    "tier": 2
+  },
+  "Have_financial_account_Overall": {
+    "raw_key": "Have_financial_account_Overall",
+    "original_label": "Have financial account_Overall",
+    "category": "financial_inclusion",
+    "display_name": "Adults with a financial account (%)",
+    "tier": 1
+  },
+  "Have_financial_account_Rural": {
+    "raw_key": "Have_financial_account_Rural",
+    "original_label": "Have financial account_Rural",
+    "category": "financial_inclusion",
+    "display_name": "Have financial account Rural",
+    "tier": 2
+  },
+  "Have_financial_account_Rural_Female": {
+    "raw_key": "Have_financial_account_Rural_Female",
+    "original_label": "Have financial account_Rural_Female",
+    "category": "financial_inclusion",
+    "display_name": "Have financial account Rural Female",
+    "tier": 2
+  },
+  "Have_financial_account_Rural_Male": {
+    "raw_key": "Have_financial_account_Rural_Male",
+    "original_label": "Have financial account_Rural_Male",
+    "category": "financial_inclusion",
+    "display_name": "Have financial account Rural Male",
+    "tier": 2
+  },
+  "Have_financial_account_Urban": {
+    "raw_key": "Have_financial_account_Urban",
+    "original_label": "Have financial account_Urban",
+    "category": "financial_inclusion",
+    "display_name": "Have financial account Urban",
+    "tier": 2
+  },
+  "Have_financial_account_Urban_Female": {
+    "raw_key": "Have_financial_account_Urban_Female",
+    "original_label": "Have financial account_Urban_Female",
+    "category": "financial_inclusion",
+    "display_name": "Have financial account Urban Female",
+    "tier": 2
+  },
+  "Have_financial_account_Urban_Male": {
+    "raw_key": "Have_financial_account_Urban_Male",
+    "original_label": "Have financial account_Urban_Male",
+    "category": "financial_inclusion",
+    "display_name": "Have financial account Urban Male",
+    "tier": 2
+  },
+  "Hearing_Disability": {
+    "raw_key": "Hearing_Disability",
+    "original_label": "Hearing Disability",
+    "category": "disability",
+    "display_name": "Hearing Disability",
+    "tier": 2
+  },
+  "IDP": {
+    "raw_key": "IDP",
+    "original_label": "IDP",
+    "category": "brac_programmes",
+    "display_name": "Integrated Development Programme",
+    "tier": 3
+  },
+  "Inernet_Female_15_yearplus": {
+    "raw_key": "Inernet_Female_15_yearplus",
+    "original_label": "Inernet_Female_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet Female 15 year+",
+    "tier": 2
+  },
+  "Inernet_Female_5yearplus": {
+    "raw_key": "Inernet_Female_5yearplus",
+    "original_label": "Inernet_Female_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet Female 5year+",
+    "tier": 2
+  },
+  "Inernet_Male_15_yearplus": {
+    "raw_key": "Inernet_Male_15_yearplus",
+    "original_label": "Inernet_Male_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet Male 15 year+",
+    "tier": 2
+  },
+  "Inernet_Male_5yearplus": {
+    "raw_key": "Inernet_Male_5yearplus",
+    "original_label": "Inernet_Male_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet Male 5year+",
+    "tier": 2
+  },
+  "Inernet_Rural_Male_15_yearplus": {
+    "raw_key": "Inernet_Rural_Male_15_yearplus",
+    "original_label": "Inernet_Rural_Male_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet Rural Male 15 year+",
+    "tier": 2
+  },
+  "Inernet_Rural_Male_5yearplus": {
+    "raw_key": "Inernet_Rural_Male_5yearplus",
+    "original_label": "Inernet_Rural_Male_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet Rural Male 5year+",
+    "tier": 2
+  },
+  "Inernet_Rural_Total_15_yearplus": {
+    "raw_key": "Inernet_Rural_Total_15_yearplus",
+    "original_label": "Inernet_Rural_Total_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet Rural Total 15 year+",
+    "tier": 2
+  },
+  "Inernet_Rural_Total_5yearplus": {
+    "raw_key": "Inernet_Rural_Total_5yearplus",
+    "original_label": "Inernet_Rural_Total_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet Rural Total 5year+",
+    "tier": 2
+  },
+  "Inernet_Rural_female_15_yearplus": {
+    "raw_key": "Inernet_Rural_female_15_yearplus",
+    "original_label": "Inernet_Rural_female_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet Rural female 15 year+",
+    "tier": 2
+  },
+  "Inernet_Rural_female_5yearplus": {
+    "raw_key": "Inernet_Rural_female_5yearplus",
+    "original_label": "Inernet_Rural_female_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet Rural female 5year+",
+    "tier": 2
+  },
+  "Inernet_Total_15_yearplus": {
+    "raw_key": "Inernet_Total_15_yearplus",
+    "original_label": "Inernet_Total_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet Total 15 year+",
+    "tier": 2
+  },
+  "Inernet_Total_5yearplus": {
+    "raw_key": "Inernet_Total_5yearplus",
+    "original_label": "Inernet_Total_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet Total 5year+",
+    "tier": 2
+  },
+  "Inernet_urban_Male_15_yearplus": {
+    "raw_key": "Inernet_urban_Male_15_yearplus",
+    "original_label": "Inernet_urban_Male_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet urban Male 15 year+",
+    "tier": 2
+  },
+  "Inernet_urban_Male_5yearplus": {
+    "raw_key": "Inernet_urban_Male_5yearplus",
+    "original_label": "Inernet_urban_Male_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet urban Male 5year+",
+    "tier": 2
+  },
+  "Inernet_urban_Total_15_yearplus": {
+    "raw_key": "Inernet_urban_Total_15_yearplus",
+    "original_label": "Inernet_urban_Total_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet urban Total 15 year+",
+    "tier": 2
+  },
+  "Inernet_urban_Total_5yearplus": {
+    "raw_key": "Inernet_urban_Total_5yearplus",
+    "original_label": "Inernet_urban_Total_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet urban Total 5year+",
+    "tier": 2
+  },
+  "Inernet_urban_female_15_yearplus": {
+    "raw_key": "Inernet_urban_female_15_yearplus",
+    "original_label": "Inernet_urban_female_15 year+",
+    "category": "digital_access",
+    "display_name": "Inernet urban female 15 year+",
+    "tier": 2
+  },
+  "Inernet_urban_female_5yearplus": {
+    "raw_key": "Inernet_urban_female_5yearplus",
+    "original_label": "Inernet_urban_female_5year+",
+    "category": "digital_access",
+    "display_name": "Inernet urban female 5year+",
+    "tier": 2
+  },
+  "Intellectual_Disability": {
+    "raw_key": "Intellectual_Disability",
+    "original_label": "Intellectual Disability",
+    "category": "disability",
+    "display_name": "Intellectual Disability",
+    "tier": 2
+  },
+  "Jhupri_pct": {
+    "raw_key": "Jhupri_pct",
+    "original_label": "Jhupri_%",
+    "category": "housing_quality",
+    "display_name": "Jhupri (%)",
+    "tier": 2
+  },
+  "Kancha_pct": {
+    "raw_key": "Kancha_pct",
+    "original_label": "Kancha_%",
+    "category": "housing_quality",
+    "display_name": "Kancha (temporary) houses (%)",
+    "tier": 1
+  },
+  "Kerosene_Paraffin_pct": {
+    "raw_key": "Kerosene_Paraffin_pct",
+    "original_label": "Kerosene/ Paraffin_%",
+    "category": "energy_fuel",
+    "display_name": "Kerosene/ Paraffin (%)",
+    "tier": 2
+  },
+  "LP_Gas_pct": {
+    "raw_key": "LP_Gas_pct",
+    "original_label": "LP Gas_%",
+    "category": "energy_fuel",
+    "display_name": "LP Gas (%)",
+    "tier": 2
+  },
+  "Literacy_Rate_5yearplus_Female": {
+    "raw_key": "Literacy_Rate_5yearplus_Female",
+    "original_label": "Literacy Rate_5year+_Female",
+    "category": "literacy_education",
+    "display_name": "Literacy Rate 5year+ Female",
+    "tier": 2
+  },
+  "Literacy_Rate_5yearplus_Male": {
+    "raw_key": "Literacy_Rate_5yearplus_Male",
+    "original_label": "Literacy Rate_5year+_Male",
+    "category": "literacy_education",
+    "display_name": "Literacy Rate 5year+ Male",
+    "tier": 2
+  },
+  "Literacy_Rate_5yearplus_Overall": {
+    "raw_key": "Literacy_Rate_5yearplus_Overall",
+    "original_label": "Literacy Rate_5year+_Overall",
+    "category": "literacy_education",
+    "display_name": "Literacy Rate 5year+ Overall",
+    "tier": 2
+  },
+  "Literacy_Rate_7yearplus_Female": {
+    "raw_key": "Literacy_Rate_7yearplus_Female",
+    "original_label": "Literacy Rate_7year+_Female",
+    "category": "literacy_education",
+    "display_name": "Female literacy rate, age 7+ (%)",
+    "tier": 1
+  },
+  "Literacy_Rate_7yearplus_Male": {
+    "raw_key": "Literacy_Rate_7yearplus_Male",
+    "original_label": "Literacy Rate_7year+_Male",
+    "category": "literacy_education",
+    "display_name": "Male literacy rate, age 7+ (%)",
+    "tier": 1
+  },
+  "Literacy_Rate_7yearplus_Overall": {
+    "raw_key": "Literacy_Rate_7yearplus_Overall",
+    "original_label": "Literacy Rate_7year+_Overall",
+    "category": "literacy_education",
+    "display_name": "Literacy rate, age 7+ (%)",
+    "tier": 1
+  },
+  "MEP": {
+    "raw_key": "MEP",
+    "original_label": "MEP",
+    "category": "brac_programmes",
+    "display_name": "Migration & Employment Programme",
+    "tier": 3
+  },
+  "MF": {
+    "raw_key": "MF",
+    "original_label": "MF",
+    "category": "population_demography",
+    "display_name": "Microfinance Programme",
+    "tier": 1
+  },
+  "MPI": {
+    "raw_key": "MPI",
+    "original_label": "MPI",
+    "category": "poverty_vulnerability",
+    "display_name": "Multidimensional Poverty Index (MPI)",
+    "tier": 1
+  },
+  "MPI_Lower_95pct_CI": {
+    "raw_key": "MPI_Lower_95pct_CI",
+    "original_label": "MPI Lower 95% CI",
+    "category": "poverty_vulnerability",
+    "display_name": "MPI Lower 95 (%) CI",
+    "tier": 2
+  },
+  "MPI_Upper_95pct_CI": {
+    "raw_key": "MPI_Upper_95pct_CI",
+    "original_label": "MPI Upper 95% CI",
+    "category": "poverty_vulnerability",
+    "display_name": "MPI Upper 95 (%) CI",
+    "tier": 2
+  },
+  "Male_Agriculture": {
+    "raw_key": "Male_Agriculture",
+    "original_label": "Male_Agriculture",
+    "category": "employment_work",
+    "display_name": "Male Agriculture",
+    "tier": 2
+  },
+  "Male_Apprenticeship": {
+    "raw_key": "Male_Apprenticeship",
+    "original_label": "Male_Apprenticeship",
+    "category": "employment_work",
+    "display_name": "Male Apprenticeship",
+    "tier": 2
+  },
+  "Male_Employed_Population": {
+    "raw_key": "Male_Employed_Population",
+    "original_label": "Male_Employed_Population",
+    "category": "employment_work",
+    "display_name": "Male Employed Population",
+    "tier": 2
+  },
+  "Male_Employed_Population_WorkType": {
+    "raw_key": "Male_Employed_Population_WorkType",
+    "original_label": "Male_Employed_Population_WorkType",
+    "category": "employment_work",
+    "display_name": "Male Employed Population WorkType",
+    "tier": 2
+  },
+  "Male_Household_Use_Consumption": {
+    "raw_key": "Male_Household_Use_Consumption",
+    "original_label": "Male_Household Use/Consumption",
+    "category": "employment_work",
+    "display_name": "Male Household Use/Consumption",
+    "tier": 2
+  },
+  "Male_Industry": {
+    "raw_key": "Male_Industry",
+    "original_label": "Male_Industry",
+    "category": "employment_work",
+    "display_name": "Male Industry",
+    "tier": 2
+  },
+  "Male_Profit": {
+    "raw_key": "Male_Profit",
+    "original_label": "Male_Profit",
+    "category": "employment_work",
+    "display_name": "Male Profit",
+    "tier": 2
+  },
+  "Male_Salary_Wage": {
+    "raw_key": "Male_Salary_Wage",
+    "original_label": "Male_Salary/Wage",
+    "category": "employment_work",
+    "display_name": "Male Salary/Wage",
+    "tier": 2
+  },
+  "Male_Service": {
+    "raw_key": "Male_Service",
+    "original_label": "Male_Service",
+    "category": "employment_work",
+    "display_name": "Male Service",
+    "tier": 2
+  },
+  "Mental_Illness_Leading_to_Disability": {
+    "raw_key": "Mental_Illness_Leading_to_Disability",
+    "original_label": "Mental Illness Leading to Disability",
+    "category": "disability",
+    "display_name": "Mental Illness Leading to Disability",
+    "tier": 2
+  },
+  "Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet_roof_pct": {
+    "raw_key": "Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet_roof_pct",
+    "original_label": "Metal Sheet/ CI Sheet/Corrugated Iron Sheet_roof_%",
+    "category": "housing_quality",
+    "display_name": "Metal Sheet/ CI Sheet/Corrugated Iron Sheet roof (%)",
+    "tier": 2
+  },
+  "Metal_sheet_CI_sheet_Corrugated_Iron_sheet_Wall_pct": {
+    "raw_key": "Metal_sheet_CI_sheet_Corrugated_Iron_sheet_Wall_pct",
+    "original_label": "Metal sheet/CI sheet/Corrugated Iron sheet_Wall_%",
+    "category": "housing_quality",
+    "display_name": "Metal sheet/CI sheet/Corrugated Iron sheet Wall (%)",
+    "tier": 2
+  },
+  "Migration": {
+    "raw_key": "Migration",
+    "original_label": "Migration",
+    "category": "remittance_migration",
+    "display_name": "Migration",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Female": {
+    "raw_key": "Mobile_Bank_Account_Female",
+    "original_label": "Mobile Bank Account_Female",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Female",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Male": {
+    "raw_key": "Mobile_Bank_Account_Male",
+    "original_label": "Mobile Bank Account_Male",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Male",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Overall": {
+    "raw_key": "Mobile_Bank_Account_Overall",
+    "original_label": "Mobile Bank Account_Overall",
+    "category": "financial_inclusion",
+    "display_name": "Adults with a mobile bank account (%)",
+    "tier": 1
+  },
+  "Mobile_Bank_Account_Rural": {
+    "raw_key": "Mobile_Bank_Account_Rural",
+    "original_label": "Mobile Bank Account_Rural",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Rural",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Rural_Female": {
+    "raw_key": "Mobile_Bank_Account_Rural_Female",
+    "original_label": "Mobile Bank Account_Rural_Female",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Rural Female",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Rural_Male": {
+    "raw_key": "Mobile_Bank_Account_Rural_Male",
+    "original_label": "Mobile Bank Account_Rural_Male",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Rural Male",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Urban": {
+    "raw_key": "Mobile_Bank_Account_Urban",
+    "original_label": "Mobile Bank Account_Urban",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Urban",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Urban_Female": {
+    "raw_key": "Mobile_Bank_Account_Urban_Female",
+    "original_label": "Mobile Bank Account_Urban_Female",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Urban Female",
+    "tier": 2
+  },
+  "Mobile_Bank_Account_Urban_Male": {
+    "raw_key": "Mobile_Bank_Account_Urban_Male",
+    "original_label": "Mobile Bank Account_Urban_Male",
+    "category": "financial_inclusion",
+    "display_name": "Mobile Bank Account Urban Male",
+    "tier": 2
+  },
+  "Mobile_Phone_Female_15_yearplus": {
+    "raw_key": "Mobile_Phone_Female_15_yearplus",
+    "original_label": "Mobile Phone_Female_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Female 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Female_5yearplus": {
+    "raw_key": "Mobile_Phone_Female_5yearplus",
+    "original_label": "Mobile Phone_Female_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Female 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Male_15_yearplus": {
+    "raw_key": "Mobile_Phone_Male_15_yearplus",
+    "original_label": "Mobile Phone_Male_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Male 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Male_5yearplus": {
+    "raw_key": "Mobile_Phone_Male_5yearplus",
+    "original_label": "Mobile Phone_Male_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Male 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Rural_Male_15_yearplus": {
+    "raw_key": "Mobile_Phone_Rural_Male_15_yearplus",
+    "original_label": "Mobile Phone_Rural_Male_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Rural Male 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Rural_Male_5yearplus": {
+    "raw_key": "Mobile_Phone_Rural_Male_5yearplus",
+    "original_label": "Mobile Phone_Rural_Male_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Rural Male 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Rural_Total_15_yearplus": {
+    "raw_key": "Mobile_Phone_Rural_Total_15_yearplus",
+    "original_label": "Mobile Phone_Rural_Total_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Rural Total 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Rural_Total_5yearplus": {
+    "raw_key": "Mobile_Phone_Rural_Total_5yearplus",
+    "original_label": "Mobile Phone_Rural_Total_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Rural Total 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Rural_female_15_yearplus": {
+    "raw_key": "Mobile_Phone_Rural_female_15_yearplus",
+    "original_label": "Mobile Phone_Rural_female_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Rural female 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Rural_female_5yearplus": {
+    "raw_key": "Mobile_Phone_Rural_female_5yearplus",
+    "original_label": "Mobile Phone_Rural_female_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Rural female 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Total_15_yearplus": {
+    "raw_key": "Mobile_Phone_Total_15_yearplus",
+    "original_label": "Mobile Phone_Total_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Total 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_Total_5yearplus": {
+    "raw_key": "Mobile_Phone_Total_5yearplus",
+    "original_label": "Mobile Phone_Total_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone Total 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_urban_Male_15_yearplus": {
+    "raw_key": "Mobile_Phone_urban_Male_15_yearplus",
+    "original_label": "Mobile Phone_urban_Male_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone urban Male 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_urban_Male_5yearplus": {
+    "raw_key": "Mobile_Phone_urban_Male_5yearplus",
+    "original_label": "Mobile Phone_urban_Male_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone urban Male 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_urban_Total_15_yearplus": {
+    "raw_key": "Mobile_Phone_urban_Total_15_yearplus",
+    "original_label": "Mobile Phone_urban_Total_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone urban Total 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_urban_Total_5yearplus": {
+    "raw_key": "Mobile_Phone_urban_Total_5yearplus",
+    "original_label": "Mobile Phone_urban_Total_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone urban Total 5year+",
+    "tier": 2
+  },
+  "Mobile_Phone_urban_female_15_yearplus": {
+    "raw_key": "Mobile_Phone_urban_female_15_yearplus",
+    "original_label": "Mobile Phone_urban_female_15 year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone urban female 15 year+",
+    "tier": 2
+  },
+  "Mobile_Phone_urban_female_5yearplus": {
+    "raw_key": "Mobile_Phone_urban_female_5yearplus",
+    "original_label": "Mobile Phone_urban_female_5year+",
+    "category": "digital_access",
+    "display_name": "Mobile Phone urban female 5year+",
+    "tier": 2
+  },
+  "Multiple_Disabilities": {
+    "raw_key": "Multiple_Disabilities",
+    "original_label": "Multiple Disabilities",
+    "category": "disability",
+    "display_name": "Multiple Disabilities",
+    "tier": 2
+  },
+  "National_Grid_pct": {
+    "raw_key": "National_Grid_pct",
+    "original_label": "National Grid_%",
+    "category": "energy_fuel",
+    "display_name": "National Grid (%)",
+    "tier": 2
+  },
+  "No_Electricity_Connection_pct": {
+    "raw_key": "No_Electricity_Connection_pct",
+    "original_label": "No Electricity Connection_%",
+    "category": "energy_fuel",
+    "display_name": "No Electricity Connection (%)",
+    "tier": 2
+  },
+  "No_Separate_Arrangement_pct": {
+    "raw_key": "No_Separate_Arrangement_pct",
+    "original_label": "No Separate Arrangement_%",
+    "category": "wash",
+    "display_name": "No Separate Arrangement (%)",
+    "tier": 2
+  },
+  "No_of_Borrower_Dabi": {
+    "raw_key": "No_of_Borrower_Dabi",
+    "original_label": "No of Borrower (Dabi)",
+    "category": "brac_programmes",
+    "display_name": "No of Borrower (Dabi)",
+    "tier": 2
+  },
+  "No_of_Borrower_Progoti": {
+    "raw_key": "No_of_Borrower_Progoti",
+    "original_label": "No of Borrower (Progoti)",
+    "category": "brac_programmes",
+    "display_name": "No of Borrower (Progoti)",
+    "tier": 2
+  },
+  "No_wall_pct": {
+    "raw_key": "No_wall_pct",
+    "original_label": "No wall %",
+    "category": "housing_quality",
+    "display_name": "No wall (%)",
+    "tier": 2
+  },
+  "No_roof_pct": {
+    "raw_key": "No_roof_pct",
+    "original_label": "No_roof_%",
+    "category": "housing_quality",
+    "display_name": "No roof (%)",
+    "tier": 2
+  },
+  "Number_of_Poor_000": {
+    "raw_key": "Number_of_Poor_000",
+    "original_label": "Number of Poor ('000)",
+    "category": "poverty_vulnerability",
+    "display_name": "Number of poor people (thousands)",
+    "tier": 1
+  },
+  "Number_Returned_Migrant": {
+    "raw_key": "Number_Returned_Migrant",
+    "original_label": "Number_Returned_Migrant",
+    "category": "remittance_migration",
+    "display_name": "Number Returned Migrant",
+    "tier": 2
+  },
+  "Only_Soap_pct": {
+    "raw_key": "Only_Soap_pct",
+    "original_label": "Only Soap_%",
+    "category": "wash",
+    "display_name": "Only Soap (%)",
+    "tier": 2
+  },
+  "Only_Water_pct": {
+    "raw_key": "Only_Water_pct",
+    "original_label": "Only Water_%",
+    "category": "wash",
+    "display_name": "Only Water (%)",
+    "tier": 2
+  },
+  "Open_Defecation_No_Latrine_Available_pct": {
+    "raw_key": "Open_Defecation_No_Latrine_Available_pct",
+    "original_label": "Open Defecation/ No Latrine Available_%",
+    "category": "wash",
+    "display_name": "Open defecation / no latrine (%)",
+    "tier": 1
+  },
+  "Other_Disability": {
+    "raw_key": "Other_Disability",
+    "original_label": "Other Disability",
+    "category": "disability",
+    "display_name": "Other Disability",
+    "tier": 2
+  },
+  "Other_Materials_Wall_pct": {
+    "raw_key": "Other_Materials_Wall_pct",
+    "original_label": "Other Materials__Wall_%",
+    "category": "housing_quality",
+    "display_name": "Other Materials Wall (%)",
+    "tier": 2
+  },
+  "Other_Materials_floor_pct": {
+    "raw_key": "Other_Materials_floor_pct",
+    "original_label": "Other Materials_floor_%",
+    "category": "housing_quality",
+    "display_name": "Other Materials floor (%)",
+    "tier": 2
+  },
+  "Other_Materials_roof_pct": {
+    "raw_key": "Other_Materials_roof_pct",
+    "original_label": "Other Materials_roof_%",
+    "category": "housing_quality",
+    "display_name": "Other Materials roof (%)",
+    "tier": 2
+  },
+  "Others_pct_source_cooking_fuel": {
+    "raw_key": "Others_pct_source_cooking_fuel",
+    "original_label": "Others_%_source_cooking_fuel",
+    "category": "energy_fuel",
+    "display_name": "Others (%) source cooking fuel",
+    "tier": 2
+  },
+  "Others_pct_source_electricity": {
+    "raw_key": "Others_pct_source_electricity",
+    "original_label": "Others_%_source_electricity",
+    "category": "energy_fuel",
+    "display_name": "Others (%) source electricity",
+    "tier": 2
+  },
+  "Others_pct_source_of_drinkingwater": {
+    "raw_key": "Others_pct_source_of_drinkingwater",
+    "original_label": "Others_%_source_of_drinkingwater",
+    "category": "population_demography",
+    "display_name": "Others (%) source of drinkingwater",
+    "tier": 2
+  },
+  "Overall_Avg._Population_Growth": {
+    "raw_key": "Overall_Avg._Population_Growth",
+    "original_label": "Overall_Avg._Population Growth",
+    "category": "population_demography",
+    "display_name": "Overall Avg. Population Growth",
+    "tier": 2
+  },
+  "Overall_Child-Woman_Ratio": {
+    "raw_key": "Overall_Child-Woman_Ratio",
+    "original_label": "Overall_Child-Woman Ratio",
+    "category": "population_demography",
+    "display_name": "Overall Child-Woman Ratio",
+    "tier": 2
+  },
+  "Overall_Dependeny_Ratio": {
+    "raw_key": "Overall_Dependeny_Ratio",
+    "original_label": "Overall_Dependeny_Ratio",
+    "category": "population_demography",
+    "display_name": "Overall Dependeny Ratio",
+    "tier": 2
+  },
+  "Overall_Do_not_Work_Working_Status_5_Yearplus": {
+    "raw_key": "Overall_Do_not_Work_Working_Status_5_Yearplus",
+    "original_label": "Overall_Do not Work_Working_Status_5 Year+",
+    "category": "employment_work",
+    "display_name": "Overall Do not Work Working Status 5 Year+",
+    "tier": 2
+  },
+  "Overall_Do_not_Work_Working_Status_5_Yearplus_Female": {
+    "raw_key": "Overall_Do_not_Work_Working_Status_5_Yearplus_Female",
+    "original_label": "Overall_Do not Work_Working_Status_5 Year+_Female",
+    "category": "employment_work",
+    "display_name": "Overall Do not Work Working Status 5 Year+ Female",
+    "tier": 2
+  },
+  "Overall_Do_not_Work_Working_Status_5_Yearplus_Male": {
+    "raw_key": "Overall_Do_not_Work_Working_Status_5_Yearplus_Male",
+    "original_label": "Overall_Do not Work_Working_Status_5 Year+_Male",
+    "category": "employment_work",
+    "display_name": "Overall Do not Work Working Status 5 Year+ Male",
+    "tier": 2
+  },
+  "Overall_Employed_Working_Status_5_Yearplus": {
+    "raw_key": "Overall_Employed_Working_Status_5_Yearplus",
+    "original_label": "Overall_Employed_Working_Status_5 Year+",
+    "category": "employment_work",
+    "display_name": "Overall Employed Working Status 5 Year+",
+    "tier": 2
+  },
+  "Overall_Employed_Working_Status_5_Yearplus_Female": {
+    "raw_key": "Overall_Employed_Working_Status_5_Yearplus_Female",
+    "original_label": "Overall_Employed_Working_Status_5 Year+_Female",
+    "category": "employment_work",
+    "display_name": "Overall Employed Working Status 5 Year+ Female",
+    "tier": 2
+  },
+  "Overall_Employed_Working_Status_5_Yearplus_Male": {
+    "raw_key": "Overall_Employed_Working_Status_5_Yearplus_Male",
+    "original_label": "Overall_Employed_Working_Status_5 Year+_Male",
+    "category": "employment_work",
+    "display_name": "Overall Employed Working Status 5 Year+ Male",
+    "tier": 2
+  },
+  "Overall_Household_Work_Working_Status_5_Yearplus": {
+    "raw_key": "Overall_Household_Work_Working_Status_5_Yearplus",
+    "original_label": "Overall_Household Work_Working_Status_5 Year+",
+    "category": "employment_work",
+    "display_name": "Overall Household Work Working Status 5 Year+",
+    "tier": 2
+  },
+  "Overall_Household_Work_Working_Status_5_Yearplus_Female": {
+    "raw_key": "Overall_Household_Work_Working_Status_5_Yearplus_Female",
+    "original_label": "Overall_Household Work_Working_Status_5 Year+_Female",
+    "category": "employment_work",
+    "display_name": "Overall Household Work Working Status 5 Year+ Female",
+    "tier": 2
+  },
+  "Overall_Household_Work_Working_Status_5_Yearplus_Male": {
+    "raw_key": "Overall_Household_Work_Working_Status_5_Yearplus_Male",
+    "original_label": "Overall_Household Work_Working_Status_5 Year+_Male",
+    "category": "employment_work",
+    "display_name": "Overall Household Work Working Status 5 Year+ Male",
+    "tier": 2
+  },
+  "Overall_Looking_for_work_Working_Status_5_Yearplus": {
+    "raw_key": "Overall_Looking_for_work_Working_Status_5_Yearplus",
+    "original_label": "Overall_Looking for work_Working_Status_5 Year+",
+    "category": "employment_work",
+    "display_name": "Overall Looking for work Working Status 5 Year+",
+    "tier": 2
+  },
+  "Overall_Looking_for_work_Working_Status_5_Yearplus_Female": {
+    "raw_key": "Overall_Looking_for_work_Working_Status_5_Yearplus_Female",
+    "original_label": "Overall_Looking for work_Working_Status_5 Year+_Female",
+    "category": "employment_work",
+    "display_name": "Overall Looking for work Working Status 5 Year+ Female",
+    "tier": 2
+  },
+  "Overall_Looking_for_work_Working_Status_5_Yearplus_Male": {
+    "raw_key": "Overall_Looking_for_work_Working_Status_5_Yearplus_Male",
+    "original_label": "Overall_Looking for work_Working_Status_5 Year+_Male",
+    "category": "employment_work",
+    "display_name": "Overall Looking for work Working Status 5 Year+ Male",
+    "tier": 2
+  },
+  "Overall_Sex_Ratio": {
+    "raw_key": "Overall_Sex_Ratio",
+    "original_label": "Overall_Sex_Ratio",
+    "category": "population_demography",
+    "display_name": "Sex ratio (males per 100 females)",
+    "tier": 1
+  },
+  "Overall_Working_Status_5_Yearplus": {
+    "raw_key": "Overall_Working_Status_5_Yearplus",
+    "original_label": "Overall_Working_Status_5 Year+",
+    "category": "employment_work",
+    "display_name": "Overall Working Status 5 Year+",
+    "tier": 2
+  },
+  "Overall_Working_Status_5_Yearplus_Female": {
+    "raw_key": "Overall_Working_Status_5_Yearplus_Female",
+    "original_label": "Overall_Working_Status_5 Year+_Female",
+    "category": "employment_work",
+    "display_name": "Overall Working Status 5 Year+ Female",
+    "tier": 2
+  },
+  "Overall_Working_Status_5_Yearplus_Male": {
+    "raw_key": "Overall_Working_Status_5_Yearplus_Male",
+    "original_label": "Overall_Working_Status_5 Year+_Male",
+    "category": "employment_work",
+    "display_name": "Overall Working Status 5 Year+ Male",
+    "tier": 2
+  },
+  "Own_dwelling_unit_pct": {
+    "raw_key": "Own_dwelling_unit_pct",
+    "original_label": "Own dwelling unit_%",
+    "category": "housing_quality",
+    "display_name": "Own dwelling unit (%)",
+    "tier": 2
+  },
+  "Percent_Returned_Migrant": {
+    "raw_key": "Percent_Returned_Migrant",
+    "original_label": "Percent_Returned_Migrant",
+    "category": "remittance_migration",
+    "display_name": "Percent Returned Migrant",
+    "tier": 2
+  },
+  "Petrol_Diesel_pct": {
+    "raw_key": "Petrol_Diesel_pct",
+    "original_label": "Petrol/ Diesel_%",
+    "category": "energy_fuel",
+    "display_name": "Petrol/ Diesel (%)",
+    "tier": 2
+  },
+  "Physical_Disability": {
+    "raw_key": "Physical_Disability",
+    "original_label": "Physical Disability",
+    "category": "disability",
+    "display_name": "Physical Disability",
+    "tier": 2
+  },
+  "Pit_Latrine_Without_Slab_Open_Pit_pct": {
+    "raw_key": "Pit_Latrine_Without_Slab_Open_Pit_pct",
+    "original_label": "Pit Latrine   Without   Slab/ Open Pit_%",
+    "category": "wash",
+    "display_name": "Pit Latrine Without Slab/ Open Pit (%)",
+    "tier": 2
+  },
+  "Pit_Latrine_with_Slab_Ventilated_Improved_Latrine_Composting_Latrine_pct": {
+    "raw_key": "Pit_Latrine_with_Slab_Ventilated_Improved_Latrine_Composting_Latrine_pct",
+    "original_label": "Pit Latrine with  Slab/ Ventilated  Improved Latrine/  Composting Latrine_%",
+    "category": "wash",
+    "display_name": "Pit Latrine with Slab/ Ventilated Improved Latrine/ Composting Latrine (%)",
+    "tier": 2
+  },
+  "Pond_River_Canal_Lake_pct": {
+    "raw_key": "Pond_River_Canal_Lake_pct",
+    "original_label": "Pond/River/Canal/Lake_%",
+    "category": "wash",
+    "display_name": "Pond/River/Canal/Lake (%)",
+    "tier": 2
+  },
+  "Population_Excluding_Slum_Floating_Female": {
+    "raw_key": "Population_Excluding_Slum_Floating_Female",
+    "original_label": "Population_Excluding_Slum_Floating_Female",
+    "category": "population_demography",
+    "display_name": "Population Excluding Slum Floating Female",
+    "tier": 2
+  },
+  "Population_Excluding_Slum_Floating_Hijra": {
+    "raw_key": "Population_Excluding_Slum_Floating_Hijra",
+    "original_label": "Population_Excluding_Slum_Floating_Hijra",
+    "category": "population_demography",
+    "display_name": "Population Excluding Slum Floating Hijra",
+    "tier": 2
+  },
+  "Population_Excluding_Slum_Floating_Male": {
+    "raw_key": "Population_Excluding_Slum_Floating_Male",
+    "original_label": "Population_Excluding_Slum_Floating_Male",
+    "category": "population_demography",
+    "display_name": "Population Excluding Slum Floating Male",
+    "tier": 2
+  },
+  "Population_Excluding_Slum_Floating_Total": {
+    "raw_key": "Population_Excluding_Slum_Floating_Total",
+    "original_label": "Population_Excluding_Slum_Floating_Total",
+    "category": "population_demography",
+    "display_name": "Population Excluding Slum Floating Total",
+    "tier": 2
+  },
+  "Population_Female": {
+    "raw_key": "Population_Female",
+    "original_label": "Population_Female",
+    "category": "population_demography",
+    "display_name": "Population Female",
+    "tier": 2
+  },
+  "Population_Female_pop": {
+    "raw_key": "Population_Female_pop",
+    "original_label": "Population_Female_pop",
+    "category": "population_demography",
+    "display_name": "Population Female pop",
+    "tier": 2
+  },
+  "Population_Floating_Female": {
+    "raw_key": "Population_Floating_Female",
+    "original_label": "Population_Floating_Female",
+    "category": "population_demography",
+    "display_name": "Population Floating Female",
+    "tier": 2
+  },
+  "Population_Floating_Hijra": {
+    "raw_key": "Population_Floating_Hijra",
+    "original_label": "Population_Floating_Hijra",
+    "category": "population_demography",
+    "display_name": "Population Floating Hijra",
+    "tier": 2
+  },
+  "Population_Floating_Male": {
+    "raw_key": "Population_Floating_Male",
+    "original_label": "Population_Floating_Male",
+    "category": "population_demography",
+    "display_name": "Population Floating Male",
+    "tier": 2
+  },
+  "Population_Floating_Total": {
+    "raw_key": "Population_Floating_Total",
+    "original_label": "Population_Floating_Total",
+    "category": "population_demography",
+    "display_name": "Population Floating Total",
+    "tier": 2
+  },
+  "Population_HIES_22": {
+    "raw_key": "Population_HIES_22",
+    "original_label": "Population_HIES_22",
+    "category": "poverty_vulnerability",
+    "display_name": "Population",
+    "tier": 2
+  },
+  "Population_Hijra": {
+    "raw_key": "Population_Hijra",
+    "original_label": "Population_Hijra",
+    "category": "population_demography",
+    "display_name": "Population Hijra",
+    "tier": 2
+  },
+  "Population_Hijra_pop": {
+    "raw_key": "Population_Hijra_pop",
+    "original_label": "Population_Hijra_pop",
+    "category": "population_demography",
+    "display_name": "Population Hijra pop",
+    "tier": 2
+  },
+  "Population_Male": {
+    "raw_key": "Population_Male",
+    "original_label": "Population_Male",
+    "category": "population_demography",
+    "display_name": "Population Male",
+    "tier": 2
+  },
+  "Population_Male_pop": {
+    "raw_key": "Population_Male_pop",
+    "original_label": "Population_Male_pop",
+    "category": "population_demography",
+    "display_name": "Population Male pop",
+    "tier": 2
+  },
+  "Population_Slum_Female": {
+    "raw_key": "Population_Slum_Female",
+    "original_label": "Population_Slum_Female",
+    "category": "population_demography",
+    "display_name": "Population Slum Female",
+    "tier": 2
+  },
+  "Population_Slum_Hijra": {
+    "raw_key": "Population_Slum_Hijra",
+    "original_label": "Population_Slum_Hijra",
+    "category": "population_demography",
+    "display_name": "Population Slum Hijra",
+    "tier": 2
+  },
+  "Population_Slum_Male": {
+    "raw_key": "Population_Slum_Male",
+    "original_label": "Population_Slum_Male",
+    "category": "population_demography",
+    "display_name": "Population Slum Male",
+    "tier": 2
+  },
+  "Population_Slum_Total": {
+    "raw_key": "Population_Slum_Total",
+    "original_label": "Population_Slum_Total",
+    "category": "population_demography",
+    "display_name": "Population Slum Total",
+    "tier": 2
+  },
+  "Population_Total": {
+    "raw_key": "Population_Total",
+    "original_label": "Population_Total",
+    "category": "population_demography",
+    "display_name": "Total population (count)",
+    "tier": 1
+  },
+  "Population_Total_pop": {
+    "raw_key": "Population_Total_pop",
+    "original_label": "Population_Total_pop",
+    "category": "population_demography",
+    "display_name": "Population Total pop",
+    "tier": 2
+  },
+  "Population_Urban_Female": {
+    "raw_key": "Population_Urban_Female",
+    "original_label": "Population_Urban_Female",
+    "category": "population_demography",
+    "display_name": "Population Urban Female",
+    "tier": 2
+  },
+  "Population_Urban_Hijra": {
+    "raw_key": "Population_Urban_Hijra",
+    "original_label": "Population_Urban_Hijra",
+    "category": "population_demography",
+    "display_name": "Population Urban Hijra",
+    "tier": 2
+  },
+  "Population_Urban_Male": {
+    "raw_key": "Population_Urban_Male",
+    "original_label": "Population_Urban_Male",
+    "category": "population_demography",
+    "display_name": "Population Urban Male",
+    "tier": 2
+  },
+  "Population_Urban_Total": {
+    "raw_key": "Population_Urban_Total",
+    "original_label": "Population_Urban_Total",
+    "category": "population_demography",
+    "display_name": "Population Urban Total",
+    "tier": 2
+  },
+  "Population_rural_Female": {
+    "raw_key": "Population_rural_Female",
+    "original_label": "Population_rural_Female",
+    "category": "population_demography",
+    "display_name": "Population rural Female",
+    "tier": 2
+  },
+  "Population_rural_Hijra": {
+    "raw_key": "Population_rural_Hijra",
+    "original_label": "Population_rural_Hijra",
+    "category": "population_demography",
+    "display_name": "Population rural Hijra",
+    "tier": 2
+  },
+  "Population_rural_Male": {
+    "raw_key": "Population_rural_Male",
+    "original_label": "Population_rural_Male",
+    "category": "population_demography",
+    "display_name": "Population rural Male",
+    "tier": 2
+  },
+  "Population_rural_Total": {
+    "raw_key": "Population_rural_Total",
+    "original_label": "Population_rural_Total",
+    "category": "population_demography",
+    "display_name": "Population rural Total",
+    "tier": 2
+  },
+  "Pucca_pct": {
+    "raw_key": "Pucca_pct",
+    "original_label": "Pucca_%",
+    "category": "housing_quality",
+    "display_name": "Pucca (permanent) houses (%)",
+    "tier": 1
+  },
+  "Quintile_HIES_22": {
+    "raw_key": "Quintile_HIES_22",
+    "original_label": "Quintile HIES_22",
+    "category": "poverty_vulnerability",
+    "display_name": "Quintile",
+    "tier": 2
+  },
+  "Rain_Water_pct": {
+    "raw_key": "Rain_Water_pct",
+    "original_label": "Rain Water_%",
+    "category": "wash",
+    "display_name": "Rain Water (%)",
+    "tier": 2
+  },
+  "Raw_Open_Hanging_Latrine_Permanent_Temporary_pct": {
+    "raw_key": "Raw_Open_Hanging_Latrine_Permanent_Temporary_pct",
+    "original_label": "Raw/Open/ Hanging Latrine (Permanent/ Temporary)_%",
+    "category": "wash",
+    "display_name": "Raw/Open/ Hanging Latrine (Permanent/ Temporary) (%)",
+    "tier": 2
+  },
+  "Rent_free_and_having_no_own_dwelling_unit_elsewhere_pct": {
+    "raw_key": "Rent_free_and_having_no_own_dwelling_unit_elsewhere_pct",
+    "original_label": "Rent free and having no own dwelling unit elsewhere_%",
+    "category": "housing_quality",
+    "display_name": "Rent free and having no own dwelling unit elsewhere (%)",
+    "tier": 2
+  },
+  "Rent_free_but_having_own_dwelling_unit_elsewhere_pct": {
+    "raw_key": "Rent_free_but_having_own_dwelling_unit_elsewhere_pct",
+    "original_label": "Rent free but having own dwelling unit elsewhere_%",
+    "category": "housing_quality",
+    "display_name": "Rent free but having own dwelling unit elsewhere (%)",
+    "tier": 2
+  },
+  "Rented_and_having_no_own_dwelling_unit_pct": {
+    "raw_key": "Rented_and_having_no_own_dwelling_unit_pct",
+    "original_label": "Rented and having no own dwelling unit_%",
+    "category": "housing_quality",
+    "display_name": "Rented and having no own dwelling unit (%)",
+    "tier": 2
+  },
+  "Rented_but_having_own_dwelling_unit_elsewhere_pct": {
+    "raw_key": "Rented_but_having_own_dwelling_unit_elsewhere_pct",
+    "original_label": "Rented but having own dwelling unit elsewhere_%",
+    "category": "housing_quality",
+    "display_name": "Rented but having own dwelling unit elsewhere (%)",
+    "tier": 2
+  },
+  "Rural_Avg._Population_Growth": {
+    "raw_key": "Rural_Avg._Population_Growth",
+    "original_label": "Rural_Avg._Population Growth",
+    "category": "population_demography",
+    "display_name": "Rural Avg. Population Growth",
+    "tier": 2
+  },
+  "Rural_Child-Woman_Ratio": {
+    "raw_key": "Rural_Child-Woman_Ratio",
+    "original_label": "Rural_Child-Woman Ratio",
+    "category": "population_demography",
+    "display_name": "Rural Child-Woman Ratio",
+    "tier": 2
+  },
+  "Rural_Dependeny_Ratio": {
+    "raw_key": "Rural_Dependeny_Ratio",
+    "original_label": "Rural_Dependeny_Ratio",
+    "category": "population_demography",
+    "display_name": "Rural Dependeny Ratio",
+    "tier": 2
+  },
+  "Rural_HH_Remittance_num": {
+    "raw_key": "Rural_HH_Remittance_num",
+    "original_label": "Rural_HH_Remittance #",
+    "category": "remittance_migration",
+    "display_name": "Rural HH Remittance #",
+    "tier": 2
+  },
+  "Rural_Literacy_Rate_5yearplus_Female": {
+    "raw_key": "Rural_Literacy_Rate_5yearplus_Female",
+    "original_label": "Rural_Literacy Rate_5year+_Female",
+    "category": "literacy_education",
+    "display_name": "Rural Literacy Rate 5year+ Female",
+    "tier": 2
+  },
+  "Rural_Literacy_Rate_5yearplus_Male": {
+    "raw_key": "Rural_Literacy_Rate_5yearplus_Male",
+    "original_label": "Rural_Literacy Rate_5year+_Male",
+    "category": "literacy_education",
+    "display_name": "Rural Literacy Rate 5year+ Male",
+    "tier": 2
+  },
+  "Rural_Literacy_Rate_5yearplus_Overall": {
+    "raw_key": "Rural_Literacy_Rate_5yearplus_Overall",
+    "original_label": "Rural_Literacy Rate_5year+_Overall",
+    "category": "literacy_education",
+    "display_name": "Rural Literacy Rate 5year+ Overall",
+    "tier": 2
+  },
+  "Rural_Literacy_Rate_7yearplus_Female": {
+    "raw_key": "Rural_Literacy_Rate_7yearplus_Female",
+    "original_label": "Rural_Literacy Rate_7year+_Female",
+    "category": "literacy_education",
+    "display_name": "Rural Literacy Rate 7year+ Female",
+    "tier": 2
+  },
+  "Rural_Literacy_Rate_7yearplus_Male": {
+    "raw_key": "Rural_Literacy_Rate_7yearplus_Male",
+    "original_label": "Rural_Literacy Rate_7year+_Male",
+    "category": "literacy_education",
+    "display_name": "Rural Literacy Rate 7year+ Male",
+    "tier": 2
+  },
+  "Rural_Literacy_Rate_7yearplus_Overall": {
+    "raw_key": "Rural_Literacy_Rate_7yearplus_Overall",
+    "original_label": "Rural_Literacy Rate_7year+_Overall",
+    "category": "literacy_education",
+    "display_name": "Rural Literacy Rate 7year+ Overall",
+    "tier": 2
+  },
+  "Rural_Sex_Ratio": {
+    "raw_key": "Rural_Sex_Ratio",
+    "original_label": "Rural_Sex_Ratio",
+    "category": "population_demography",
+    "display_name": "Rural Sex Ratio",
+    "tier": 2
+  },
+  "Rural_Toilet_Not-Toilet_Shared_pct": {
+    "raw_key": "Rural_Toilet_Not-Toilet_Shared_pct",
+    "original_label": "Rural_Toilet_Not-Toilet_Shared_%",
+    "category": "wash",
+    "display_name": "Rural Toilet Not-Toilet Shared (%)",
+    "tier": 2
+  },
+  "Rural_Toilet_Shared_pct": {
+    "raw_key": "Rural_Toilet_Shared_pct",
+    "original_label": "Rural_Toilet_Shared_%",
+    "category": "wash",
+    "display_name": "Rural Toilet Shared (%)",
+    "tier": 2
+  },
+  "SCP": {
+    "raw_key": "SCP",
+    "original_label": "SCP",
+    "category": "brac_programmes",
+    "display_name": "Social Community Programme",
+    "tier": 3
+  },
+  "SDP": {
+    "raw_key": "SDP",
+    "original_label": "SDP",
+    "category": "brac_programmes",
+    "display_name": "Skills Development Programme",
+    "tier": 3
+  },
+  "SELP": {
+    "raw_key": "SELP",
+    "original_label": "SELP",
+    "category": "brac_programmes",
+    "display_name": "Social Empowerment & Legal Protection",
+    "tier": 1
+  },
+  "Safe_Disposal_with_Flushing_Pouring_Water_pct": {
+    "raw_key": "Safe_Disposal_with_Flushing_Pouring_Water_pct",
+    "original_label": "Safe Disposal with Flushing/ Pouring Water_%",
+    "category": "wash",
+    "display_name": "Safe sanitation, flushing/pouring water (%)",
+    "tier": 1
+  },
+  "Semi-pucca_pct": {
+    "raw_key": "Semi-pucca_pct",
+    "original_label": "Semi-pucca_%",
+    "category": "housing_quality",
+    "display_name": "Semi-pucca (%)",
+    "tier": 2
+  },
+  "Soap_and_Water_pct": {
+    "raw_key": "Soap_and_Water_pct",
+    "original_label": "Soap & Water_%",
+    "category": "wash",
+    "display_name": "Soap & Water (%)",
+    "tier": 2
+  },
+  "Soil_Mud_Wall_pct": {
+    "raw_key": "Soil_Mud_Wall_pct",
+    "original_label": "Soil/ Mud_Wall_%",
+    "category": "housing_quality",
+    "display_name": "Soil/ Mud Wall (%)",
+    "tier": 2
+  },
+  "Soil_Sand_Mud_floor_pct": {
+    "raw_key": "Soil_Sand_Mud_floor_pct",
+    "original_label": "Soil/Sand/Mud_floor_%",
+    "category": "housing_quality",
+    "display_name": "Soil/Sand/Mud floor (%)",
+    "tier": 2
+  },
+  "Solar_Power_pct": {
+    "raw_key": "Solar_Power_pct",
+    "original_label": "Solar Power_%",
+    "category": "energy_fuel",
+    "display_name": "Solar Power (%)",
+    "tier": 2
+  },
+  "Speech_Disability": {
+    "raw_key": "Speech_Disability",
+    "original_label": "Speech Disability",
+    "category": "disability",
+    "display_name": "Speech Disability",
+    "tier": 2
+  },
+  "Spring_pct": {
+    "raw_key": "Spring_pct",
+    "original_label": "Spring_%",
+    "category": "wash",
+    "display_name": "Spring (%)",
+    "tier": 2
+  },
+  "Std_Error_pct_HIES_22": {
+    "raw_key": "Std_Error_pct_HIES_22",
+    "original_label": "Std_Error (%) HIES_22",
+    "category": "poverty_vulnerability",
+    "display_name": "Std Error ( (%))",
+    "tier": 2
+  },
+  "Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene_Wall_pct": {
+    "raw_key": "Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene_Wall_pct",
+    "original_label": "Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene_Wall_%",
+    "category": "housing_quality",
+    "display_name": "Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene Wall (%)",
+    "tier": 2
+  },
+  "Straw_Leaf_Bran_Husk_pct": {
+    "raw_key": "Straw_Leaf_Bran_Husk_pct",
+    "original_label": "Straw/ Leaf/ Bran/ Husk_%",
+    "category": "energy_fuel",
+    "display_name": "Straw/ Leaf/ Bran/ Husk (%)",
+    "tier": 2
+  },
+  "Supply_Gas_pct": {
+    "raw_key": "Supply_Gas_pct",
+    "original_label": "Supply Gas_%",
+    "category": "energy_fuel",
+    "display_name": "Supply Gas (%)",
+    "tier": 2
+  },
+  "TBCP": {
+    "raw_key": "TBCP",
+    "original_label": "TBCP",
+    "category": "brac_programmes",
+    "display_name": "Tuberculosis Control Programme",
+    "tier": 1
+  },
+  "Tap_pipe_Supply_pct": {
+    "raw_key": "Tap_pipe_Supply_pct",
+    "original_label": "Tap/pipe (Supply)_%",
+    "category": "wash",
+    "display_name": "Tap/pipe (Supply) (%)",
+    "tier": 2
+  },
+  "Tiles_Mosaic_floor_pct": {
+    "raw_key": "Tiles_Mosaic_floor_pct",
+    "original_label": "Tiles/Mosaic_floor_%",
+    "category": "housing_quality",
+    "display_name": "Tiles/Mosaic floor (%)",
+    "tier": 2
+  },
+  "Toilet_Not-Toilet_Shared_pct": {
+    "raw_key": "Toilet_Not-Toilet_Shared_pct",
+    "original_label": "Toilet_Not-Toilet_Shared_%",
+    "category": "wash",
+    "display_name": "Toilet Not-Toilet Shared (%)",
+    "tier": 2
+  },
+  "Toilet_Shared_pct": {
+    "raw_key": "Toilet_Shared_pct",
+    "original_label": "Toilet_Shared_%",
+    "category": "wash",
+    "display_name": "Toilet Shared (%)",
+    "tier": 2
+  },
+  "Total_pct": {
+    "raw_key": "Total_pct",
+    "original_label": "Total_%",
+    "category": "population_demography",
+    "display_name": "Total (%)",
+    "tier": 2
+  },
+  "Total_Agriculture": {
+    "raw_key": "Total_Agriculture",
+    "original_label": "Total_Agriculture",
+    "category": "employment_work",
+    "display_name": "Total Agriculture",
+    "tier": 2
+  },
+  "Total_Apprenticeship": {
+    "raw_key": "Total_Apprenticeship",
+    "original_label": "Total_Apprenticeship",
+    "category": "employment_work",
+    "display_name": "Total Apprenticeship",
+    "tier": 2
+  },
+  "Total_Brac_Reach": {
+    "raw_key": "Total_Brac_Reach",
+    "original_label": "Total_Brac_Reach",
+    "category": "brac_programmes",
+    "display_name": "Total BRAC reach (people)",
+    "tier": 1
+  },
+  "Total_Employed_Population": {
+    "raw_key": "Total_Employed_Population",
+    "original_label": "Total_Employed_Population",
+    "category": "employment_work",
+    "display_name": "Total Employed Population",
+    "tier": 2
+  },
+  "Total_Employed_Population_WorkType": {
+    "raw_key": "Total_Employed_Population_WorkType",
+    "original_label": "Total_Employed_Population_WorkType",
+    "category": "employment_work",
+    "display_name": "Total Employed Population WorkType",
+    "tier": 2
+  },
+  "Total_Female_Student_5-29_years": {
+    "raw_key": "Total_Female_Student_5-29_years",
+    "original_label": "Total_Female_Student_5-29 years",
+    "category": "literacy_education",
+    "display_name": "Total Female Student 5-29 years",
+    "tier": 2
+  },
+  "Total_HH_num": {
+    "raw_key": "Total_HH_num",
+    "original_label": "Total_HH #",
+    "category": "household_structure",
+    "display_name": "Total HH #",
+    "tier": 2
+  },
+  "Total_HH_Remittance_num": {
+    "raw_key": "Total_HH_Remittance_num",
+    "original_label": "Total_HH_Remittance #",
+    "category": "household_structure",
+    "display_name": "Total HH Remittance #",
+    "tier": 2
+  },
+  "Total_Household_Use_Consumption": {
+    "raw_key": "Total_Household_Use_Consumption",
+    "original_label": "Total_Household Use/Consumption",
+    "category": "employment_work",
+    "display_name": "Total Household Use/Consumption",
+    "tier": 2
+  },
+  "Total_Industry": {
+    "raw_key": "Total_Industry",
+    "original_label": "Total_Industry",
+    "category": "employment_work",
+    "display_name": "Total Industry",
+    "tier": 2
+  },
+  "Total_Male_Student_5-29_years": {
+    "raw_key": "Total_Male_Student_5-29_years",
+    "original_label": "Total_Male_Student_5-29 years",
+    "category": "literacy_education",
+    "display_name": "Total Male Student 5-29 years",
+    "tier": 2
+  },
+  "Total_Persons_With_Disability": {
+    "raw_key": "Total_Persons_With_Disability",
+    "original_label": "Total_Persons_With_Disability",
+    "category": "disability",
+    "display_name": "Persons with disability (count)",
+    "tier": 1
+  },
+  "Total_Profit": {
+    "raw_key": "Total_Profit",
+    "original_label": "Total_Profit",
+    "category": "employment_work",
+    "display_name": "Total Profit",
+    "tier": 2
+  },
+  "Total_Salary_Wage": {
+    "raw_key": "Total_Salary_Wage",
+    "original_label": "Total_Salary/Wage",
+    "category": "employment_work",
+    "display_name": "Total Salary/Wage",
+    "tier": 2
+  },
+  "Total_Service": {
+    "raw_key": "Total_Service",
+    "original_label": "Total_Service",
+    "category": "employment_work",
+    "display_name": "Total Service",
+    "tier": 2
+  },
+  "Tube-well_Deep_Shallow_pct": {
+    "raw_key": "Tube-well_Deep_Shallow_pct",
+    "original_label": "Tube-well (Deep/Shallow)_%",
+    "category": "wash",
+    "display_name": "Tube-well (Deep/Shallow) (%)",
+    "tier": 2
+  },
+  "UDP": {
+    "raw_key": "UDP",
+    "original_label": "UDP",
+    "category": "brac_programmes",
+    "display_name": "Urban Development Programme",
+    "tier": 3
+  },
+  "UPGP": {
+    "raw_key": "UPGP",
+    "original_label": "UPGP",
+    "category": "brac_programmes",
+    "display_name": "Ultra-Poor Graduation Programme",
+    "tier": 1
+  },
+  "Unemployment_Rate_Overall_calculated": {
+    "raw_key": "Unemployment_Rate_Overall_calculated",
+    "original_label": "Unemployment Rate_Overall_calculated*",
+    "category": "employment_work",
+    "display_name": "Unemployment rate (%)",
+    "tier": 1
+  },
+  "Unsafe_Disposal_with_Flushing_Pouring_Water_pct": {
+    "raw_key": "Unsafe_Disposal_with_Flushing_Pouring_Water_pct",
+    "original_label": "Unsafe Disposal   with Flushing/   Pouring Water_%",
+    "category": "wash",
+    "display_name": "Unsafe Disposal with Flushing/ Pouring Water (%)",
+    "tier": 2
+  },
+  "Urban_Avg._Population_Growth": {
+    "raw_key": "Urban_Avg._Population_Growth",
+    "original_label": "Urban_Avg._Population Growth",
+    "category": "population_demography",
+    "display_name": "Urban Avg. Population Growth",
+    "tier": 2
+  },
+  "Urban_Child-Woman_Ratio": {
+    "raw_key": "Urban_Child-Woman_Ratio",
+    "original_label": "Urban_Child-Woman Ratio",
+    "category": "population_demography",
+    "display_name": "Urban Child-Woman Ratio",
+    "tier": 2
+  },
+  "Urban_Dependeny_Ratio": {
+    "raw_key": "Urban_Dependeny_Ratio",
+    "original_label": "Urban_Dependeny_Ratio",
+    "category": "population_demography",
+    "display_name": "Urban Dependeny Ratio",
+    "tier": 2
+  },
+  "Urban_HH_Remittance_num": {
+    "raw_key": "Urban_HH_Remittance_num",
+    "original_label": "Urban_HH_Remittance #",
+    "category": "remittance_migration",
+    "display_name": "Urban HH Remittance #",
+    "tier": 2
+  },
+  "Urban_Literacy_Rate_5yearplus_Female": {
+    "raw_key": "Urban_Literacy_Rate_5yearplus_Female",
+    "original_label": "Urban_Literacy Rate_5year+_Female",
+    "category": "literacy_education",
+    "display_name": "Urban Literacy Rate 5year+ Female",
+    "tier": 2
+  },
+  "Urban_Literacy_Rate_5yearplus_Male": {
+    "raw_key": "Urban_Literacy_Rate_5yearplus_Male",
+    "original_label": "Urban_Literacy Rate_5year+_Male",
+    "category": "literacy_education",
+    "display_name": "Urban Literacy Rate 5year+ Male",
+    "tier": 2
+  },
+  "Urban_Literacy_Rate_5yearplus_Overall": {
+    "raw_key": "Urban_Literacy_Rate_5yearplus_Overall",
+    "original_label": "Urban_Literacy Rate_5year+_Overall",
+    "category": "literacy_education",
+    "display_name": "Urban Literacy Rate 5year+ Overall",
+    "tier": 2
+  },
+  "Urban_Literacy_Rate_7yearplus_Female": {
+    "raw_key": "Urban_Literacy_Rate_7yearplus_Female",
+    "original_label": "Urban_Literacy Rate_7year+_Female",
+    "category": "literacy_education",
+    "display_name": "Urban Literacy Rate 7year+ Female",
+    "tier": 2
+  },
+  "Urban_Literacy_Rate_7yearplus_Male": {
+    "raw_key": "Urban_Literacy_Rate_7yearplus_Male",
+    "original_label": "Urban_Literacy Rate_7year+_Male",
+    "category": "literacy_education",
+    "display_name": "Urban Literacy Rate 7year+ Male",
+    "tier": 2
+  },
+  "Urban_Literacy_Rate_7yearplus_Overall": {
+    "raw_key": "Urban_Literacy_Rate_7yearplus_Overall",
+    "original_label": "Urban_Literacy Rate_7year+_Overall",
+    "category": "literacy_education",
+    "display_name": "Urban Literacy Rate 7year+ Overall",
+    "tier": 2
+  },
+  "Urban_Sex_Ratio": {
+    "raw_key": "Urban_Sex_Ratio",
+    "original_label": "Urban_Sex_Ratio",
+    "category": "population_demography",
+    "display_name": "Urban Sex Ratio",
+    "tier": 2
+  },
+  "Visual_Disability": {
+    "raw_key": "Visual_Disability",
+    "original_label": "Visual Disability",
+    "category": "disability",
+    "display_name": "Visual Disability",
+    "tier": 2
+  },
+  "WASH": {
+    "raw_key": "WASH",
+    "original_label": "WASH",
+    "category": "population_demography",
+    "display_name": "Water, Sanitation & Hygiene Programme",
+    "tier": 1
+  },
+  "Weighted_avg_composite_score_vulnerability": {
+    "raw_key": "Weighted_avg_composite_score_vulnerability",
+    "original_label": "Weighted_avg_composite_score (vulnerability)",
+    "category": "poverty_vulnerability",
+    "display_name": "Composite vulnerability score",
+    "tier": 1
+  },
+  "Well_pct": {
+    "raw_key": "Well_pct",
+    "original_label": "Well_%",
+    "category": "wash",
+    "display_name": "Well (%)",
+    "tier": 2
+  },
+  "Wood-coal_Charcoal_Dried_Dung_pct": {
+    "raw_key": "Wood-coal_Charcoal_Dried_Dung_pct",
+    "original_label": "Wood-coal/ Charcoal/ Dried Dung_%",
+    "category": "energy_fuel",
+    "display_name": "Wood-coal/ Charcoal/ Dried Dung (%)",
+    "tier": 2
+  },
+  "Wood_Chalk_Chopped_Wood_pct": {
+    "raw_key": "Wood_Chalk_Chopped_Wood_pct",
+    "original_label": "Wood/ Chalk/ Chopped Wood_%",
+    "category": "energy_fuel",
+    "display_name": "Wood/ Chalk/ Chopped Wood (%)",
+    "tier": 2
+  },
+  "Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan_roof_pct": {
+    "raw_key": "Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan_roof_pct",
+    "original_label": "Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/_roof_%",
+    "category": "housing_quality",
+    "display_name": "Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene Mat/Straw/Chhan/ roof (%)",
+    "tier": 2
+  },
+  "Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk_Wall_pct": {
+    "raw_key": "Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk_Wall_pct",
+    "original_label": "Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk_Wall_%",
+    "category": "housing_quality",
+    "display_name": "Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk Wall (%)",
+    "tier": 2
+  },
+  "Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk_floor_pct": {
+    "raw_key": "Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk_floor_pct",
+    "original_label": "Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk_floor_%",
+    "category": "housing_quality",
+    "display_name": "Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk floor (%)",
+    "tier": 2
+  },
+  "urban_Toilet_Not-Toilet_Shared_pct": {
+    "raw_key": "urban_Toilet_Not-Toilet_Shared_pct",
+    "original_label": "urban_Toilet_Not-Toilet_Shared_%",
+    "category": "wash",
+    "display_name": "Urban Toilet Not-Toilet Shared (%)",
+    "tier": 2
+  },
+  "urban_Toilet_Shared_pct": {
+    "raw_key": "urban_Toilet_Shared_pct",
+    "original_label": "urban_Toilet_Shared_%",
+    "category": "wash",
+    "display_name": "Urban Toilet Shared (%)",
+    "tier": 2
+  }
+}
