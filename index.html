@@ -201,21 +201,15 @@
     background:none; pointer-events:none; -webkit-appearance:none; appearance:none;
   }
   .dual .track{position:absolute; left:0; top:8px; width:100%; height:4px; border-radius:999px; background:var(--border);}
-  .dual .fill{position:absolute; top:8px; height:4px; border-radius:999px; background:var(--magenta);}
+  .dual .fill{position:absolute; top:8px; height:4px; border-radius:999px; background:#A6A89F;}
   .dual input[type=range]::-webkit-slider-thumb{
     -webkit-appearance:none; pointer-events:auto; width:16px; height:16px; border-radius:50%;
-    background:var(--bg); border:2px solid var(--magenta); cursor:pointer; margin-top:0;
+    background:var(--bg); border:2px solid #A6A89F; cursor:pointer; margin-top:0;
   }
   .dual input[type=range]::-moz-range-thumb{
     pointer-events:auto; width:16px; height:16px; border-radius:50%;
-    background:var(--bg); border:2px solid var(--magenta); cursor:pointer;
+    background:var(--bg); border:2px solid #A6A89F; cursor:pointer;
   }
-  .dual.accent-amber .fill{background:var(--amber);}
-  .dual.accent-amber input[type=range]::-webkit-slider-thumb{border-color:var(--amber);}
-  .dual.accent-amber input[type=range]::-moz-range-thumb{border-color:var(--amber);}
-  .dual.accent-teal .fill{background:var(--teal);}
-  .dual.accent-teal input[type=range]::-webkit-slider-thumb{border-color:var(--teal);}
-  .dual.accent-teal input[type=range]::-moz-range-thumb{border-color:var(--teal);}
   .btn-primary{
     width:100%; padding:12px; border:none; border-radius:var(--radius);
     background:var(--magenta); color:#fff; font-size:14px; font-weight:600; cursor:pointer;

@@ -1,0 +1,430 @@
+﻿field_name,display_label,group,category,category_label,source,data_type,unit,nullable,required,observed_min,observed_max,example_value,null_meaning,description
+code,Geo code,identity,,,geo registry,text,code,no,yes,,,BD4001,,"Unique ID for the geo unit, e.g. BD4001. Must be stable and never reused."
+name,Geo name,identity,,,geo registry,text,name,no,yes,,,Bagerhat,,Official English name of the district/upazila/union.
+name_google,Name (map match),identity,,,geo registry,text,name,no,yes,,,Bagerhat,,Name used to match the map boundary. Usually identical to 'name'.
+geo_level,Geo level,identity,,,geo registry,text,category,no,yes,,,district,,One of: district | upazila | union. Same schema supports all three.
+parent,Parent code,identity,,,geo registry,text,code,yes,no,,,,blank = not applicable,"Code of the parent geo unit (blank for districts; district code for upazilas, etc.)."
+climate_zone,Climate zone,identity,,,geo registry,text,category,no,yes,,,Coastal,,"One of: Barind, CHT, Coastal, Haor, Other, River & Char, River-Char"
+lat,Latitude,identity,,,geo registry,decimal,degrees,no,yes,,,22.3288,,Centroid latitude in decimal degrees (e.g. 22.3288).
+lon,Longitude,identity,,,geo registry,decimal,degrees,no,yes,,,89.744,,Centroid longitude in decimal degrees (e.g. 89.7440).
+num_Currently_married_population,# Currently married population,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,224704,8084754,900137,,# Currently married population
+num_Currently_married_population_female,# Currently married population_female,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,111155,3910477,465363,,# Currently married population_female
+num_Currently_married_population_male,# Currently married population_male,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,113549,4174277,434774,,# Currently married population_male
+num_Divorced_population,# Divorced population,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,1147,46181,6944,,# Divorced population
+num_Divorced_population_female,# Divorced population_female,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,827,35139,4988,,# Divorced population_female
+num_Divorced_population_male,# Divorced population_male,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,320,11042,1956,,# Divorced population_male
+num_Female_Bangladeshi_National,# Female_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,231109,4038340,890448,,# Female_Bangladeshi_National
+num_Female_Buddhist,# Female_Buddhist,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,8,183905,31,,# Female_Buddhist
+num_Female_Christian,# Female_Christian,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,33,31965,3010,,# Female_Christian
+num_Female_Ethnic_Population,# Female_Ethnic Population,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,56,184898,478,,# Female_Ethnic Population
+num_Female_Hindu,# Female_Hindu,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,4288,493564,130521,,# Female_Hindu
+num_Female_Muslim,# Female_Muslim,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,110058,6478776,677122,,# Female_Muslim
+num_Female_Others,# Female_Others,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,2,11246,7,,# Female_Others
+num_Hizra_Bangladeshi_National,# Hizra_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,12,380,90,,# Hizra_Bangladeshi_National
+num_Male,# Male,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,190298,6744075,659593,,# Male
+num_Male_Ethnic_Population,# Male _Ethnic Population,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,42,187977,568,,# Male _Ethnic Population
+num_Male_Bangladeshi_National,# Male_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,236095,3895742,889266,,# Male_Bangladeshi_National
+num_Male_Buddhist,# Male_Buddhist,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,5,186879,50,,# Male_Buddhist
+num_Male_Christian,# Male_Christian,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,51,31437,2880,,# Male_Christian
+num_Male_Hindu,# Male_Hindu,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,4209,489004,133701,,# Male_Hindu
+num_Male_Muslim,# Male_Muslim,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,124764,7501571,665650,,# Male_Muslim
+num_Male_Others,# Male_Others,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,6,11223,33,,# Male_Others
+num_Never_married_population,# Never married population,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,124454,3880879,335700,,# Never married population
+num_Never_married_population_female,# Never married population_female,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,49940,1377226,124214,,# Never married population_female
+num_Never_married_population_male,# Never married population_male,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,72710,2503653,211486,,# Never married population_male
+num_No_Roof,# No Roof,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,3,1819,56,,# No Roof
+num_No_Wall,# No Wall,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,5,922,89,,# No Wall
+num_Overall_Bangladeshi_National,# Overall_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,467216,7934348,1779804,,# Overall_Bangladeshi_National
+num_Overall_Ethnic_Population,# Overall_Ethnic Population,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,118,372875,1046,,# Overall_Ethnic Population
+num_Population_General_HH,# Population_ General HH,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,450692,13514349,1582590,,# Population_ General HH
+num_Population_General_HH_Rural,# Population_ General HH_Rural,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,277077,4831593,1207533,,# Population_ General HH_Rural
+num_Population_General_HH_Urban,# Population_ General HH_Urban,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,155696,10181361,375057,,# Population_ General HH_Urban
+num_Population_Institutional_HH,# Population_ Institutional HH,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,4072,337668,23705,,# Population_ Institutional HH
+num_Population_Institutional_HH_Rural,# Population_Institutional HH_Rural,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,2032,76896,16788,,# Population_Institutional HH_Rural
+num_Population_Institutional_HH_Urban,# Population_Institutional HH_Urban,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,2040,271583,6917,,# Population_Institutional HH_Urban
+num_Population_Rural,# Population_Rural,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,286657,4942740,1227793,,# Population_Rural
+num_Population_TypeOf_HH,# Population_TypeOf_HH,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,481016,14728224,1612889,,# Population_TypeOf_HH
+num_Population_Urban,# Population_Urban,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,158885,11231274,385096,,# Population_Urban
+num_Population_other_HH,# Population_other HH,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,1807,876207,6594,,# Population_other HH
+num_Population_other_HH_Rural,# Population_other HH_Rural,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,658,97877,3472,,# Population_other HH_Rural
+num_Population_other_HH_Urban,# Population_other HH_Urban,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,1149,778330,3122,,# Population_other HH_Urban
+num_Rural_HH,# Rural HH,indicator,household_structure,Household Structure,BBS,integer,count,no,no,63290,1133294,310750,,# Rural HH
+num_Rural_HH_byTypeDwelling,# Rural HH_byTypeDwelling,indicator,household_structure,Household Structure,BBS,integer,count,no,no,63320,1133417,310839,,# Rural HH_byTypeDwelling
+num_Separated_population,# Separated population,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,decimal,percent,no,no,1984,42304,7985,,# Separated population
+num_Separated_population_female,# Separated population_female,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,decimal,percent,no,no,1385,31805,5341,,# Separated population_female
+num_Separated_population_male,# Separated population_male,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,decimal,percent,no,no,575,10499,2644,,# Separated population_male
+num_Total_Buddhist,# Total_Buddhist,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,16,370784,81,,# Total_Buddhist
+num_Total_Christian,# Total_Christian,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,90,63402,5890,,# Total_Christian
+num_Total_Hindu,# Total_Hindu,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,8497,982568,264222,,# Total_Hindu
+num_Total_Muslim,# Total_Muslim,indicator,religion_ethnicity,Religion & Ethnicity,BBS,integer,count,no,no,234822,13980347,1342772,,# Total_Muslim
+num_Total_Others,# Total_Others,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,8,22469,40,,# Total_Others
+num_Widow_Widower_population,# Widow/Widower population,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,16989,448727,82488,,# Widow/Widower population
+num_Widow_Widower_population_female,# Widow/Widower population_female,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,14170,404123,73755,,# Widow/Widower population_female
+num_Widow_Widower_population_male,# Widow/Widower population_male,indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,integer,count,no,no,2819,44604,8733,,# Widow/Widower population_male
+num_female,# female,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,180170,5758770,673661,,# female
+num_floor_Cement_Concrete_Brick_Terracotta,# floor_Cement/Concrete/Brick/Terracotta,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,26648,2722079,113360,,# floor_Cement/Concrete/Brick/Terracotta
+num_floor_Other_Materials,# floor_Other Materials,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,26,9068,51,,# floor_Other Materials
+num_floor_Soil_Sand_Mud,# floor_Soil/Sand/Mud,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,40088,926941,280032,,# floor_Soil/Sand/Mud
+num_floor_Tiles_Mosaic,# floor_Tiles/Mosaic,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,1606,842508,8357,,# floor_Tiles/Mosaic
+num_floor_Total,# floor_Total,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,102289,3737085,406373,,# floor_Total
+num_floor_Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk,# floor_Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,191,102040,4573,,# floor_Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk
+num_of_Floating_HH,# of Floating HH,indicator,household_structure,Household Structure,BBS,integer,count,yes,no,15,5970,177,blank = value not collected / not available for this geo unit,# of Floating HH
+num_of_Floating_HH_rural,# of Floating HH _rural,indicator,household_structure,Household Structure,BBS,integer,count,yes,no,2,515,89,blank = value not collected / not available for this geo unit,# of Floating HH _rural
+num_of_Floating_HH_urban,# of Floating HH _urban,indicator,household_structure,Household Structure,BBS,integer,count,yes,no,10,5455,88,blank = value not collected / not available for this geo unit,# of Floating HH _urban
+num_of_General_HH,# of General HH,indicator,household_structure,Household Structure,BBS,integer,count,no,no,102289,3737085,406373,,# of General HH
+num_of_General_HH_Rural,# of General HH_Rural,indicator,household_structure,Household Structure,BBS,integer,count,no,no,62108,1125963,309484,,# of General HH_Rural
+num_of_General_HH_Urban,# of General HH_Urban,indicator,household_structure,Household Structure,BBS,integer,count,no,no,40181,2759299,96889,,# of General HH_Urban
+num_of_HH,# of HH,indicator,household_structure,Household Structure,BBS,integer,count,no,no,106065,4029271,408663,,# of HH
+num_of_HH_excluding_slum_and_floating,# of HH excluding slum and floating,indicator,household_structure,Household Structure,BBS,integer,count,no,no,106065,3822371,406058,,# of HH excluding slum and floating
+num_of_HH_excluding_slum_and_floating_rural,# of HH excluding slum and floating_rural,indicator,household_structure,Household Structure,BBS,integer,count,no,no,63290,1132581,310554,,# of HH excluding slum and floating_rural
+num_of_HH_excluding_slum_and_floating_urban,# of HH excluding slum and floating_urban,indicator,household_structure,Household Structure,BBS,integer,count,no,no,42775,2819745,95504,,# of HH excluding slum and floating_urban
+num_of_HH_with_1-Person,# of HH with 1-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,3946,244661,19185,,# of HH with 1-Person
+num_of_HH_with_10-Person,# of HH with 10-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,342,15625,1324,,# of HH with 10-Person
+num_of_HH_with_10-Person_plus,# of HH with 10-Person +,indicator,household_structure,Household Structure,BBS,integer,count,no,no,252,25295,1236,,# of HH with 10-Person +
+num_of_HH_with_2-Person,# of HH with 2-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,11000,715735,57195,,# of HH with 2-Person
+num_of_HH_with_3-Person,# of HH with 3-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,19346,914430,96057,,# of HH with 3-Person
+num_of_HH_with_4-Person,# of HH with 4-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,24439,969773,109638,,# of HH with 4-Person
+num_of_HH_with_5-Person,# of HH with 5-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,19101,504971,68442,,# of HH with 5-Person
+num_of_HH_with_6-Person,# of HH with 6-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,11631,211944,32081,,# of HH with 6-Person
+num_of_HH_with_7-Person,# of HH with 7-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,4149,89097,12933,,# of HH with 7-Person
+num_of_HH_with_8-Person,# of HH with 8-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,1557,44943,5722,,# of HH with 8-Person
+num_of_HH_with_9-Person,# of HH with 9-Person,indicator,household_structure,Household Structure,BBS,integer,count,no,no,688,24934,2560,,# of HH with 9-Person
+num_of_HH_byTypeDwelling,# of HH_byTypeDwelling,indicator,household_structure,Household Structure,BBS,integer,count,no,no,106155,4035241,408840,,# of HH_byTypeDwelling
+num_of_Institutional_Household,# of Institutional Household,indicator,household_structure,Household Structure,BBS,integer,count,no,no,124,4753,534,,# of Institutional Household
+num_of_Institutional_Household_Rural,# of Institutional Household_Rural,indicator,household_structure,Household Structure,BBS,integer,count,no,no,67,1667,372,,# of Institutional Household_Rural
+num_of_Institutional_Household_Urban,# of Institutional Household_Urban,indicator,household_structure,Household Structure,BBS,integer,count,no,no,57,3964,162,,# of Institutional Household_Urban
+num_of_Other_Household,# of Other Household,indicator,household_structure,Household Structure,BBS,integer,count,no,no,449,287433,1756,,# of Other Household
+num_of_Other_Household_Rural,# of Other Household_Rural,indicator,household_structure,Household Structure,BBS,integer,count,no,no,175,36354,894,,# of Other Household_Rural
+num_of_Other_Household_Urban,# of Other Household_Urban,indicator,household_structure,Household Structure,BBS,integer,count,no,no,274,251079,862,,# of Other Household_Urban
+num_of_Slum_HH,# of Slum HH,indicator,household_structure,Household Structure,BBS,integer,count,yes,no,11,206900,2605,blank = value not collected / not available for this geo unit,# of Slum HH
+num_of_Slum_HH_rural,# of Slum HH _rural,indicator,household_structure,Household Structure,BBS,integer,count,yes,no,5,12303,196,blank = value not collected / not available for this geo unit,# of Slum HH _rural
+num_of_Slum_HH_urban,# of Slum HH _urban,indicator,household_structure,Household Structure,BBS,integer,count,yes,no,11,194597,2409,blank = value not collected / not available for this geo unit,# of Slum HH _urban
+num_of_Urban_HH,# of Urban HH,indicator,household_structure,Household Structure,BBS,integer,count,no,no,42775,3014342,97913,,# of Urban HH
+num_of_Urban_HH_byTypeDwelling,# of Urban HH_byTypeDwelling,indicator,household_structure,Household Structure,BBS,integer,count,no,no,42835,3019797,98001,,# of Urban HH_byTypeDwelling
+num_population_10andAbove_yrs,# population_10andAbove_yrs,indicator,household_structure,Household Structure,BBS,integer,count,no,no,370468,12502845,1333254,,# population_10andAbove_yrs
+num_roof_Cement_Concrete_Tile,# roof_Cement/Concrete/Tile,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,7402,2547780,49646,,# roof_Cement/Concrete/Tile
+num_roof_Hand-made_Tiles_Tile,# roof_Hand-made Tiles/Tile,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,30,64013,118,,# roof_Hand-made Tiles/Tile
+num_roof_Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet,# roof_Metal Sheet/ CI Sheet/Corrugated Iron Sheet,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,79513,1296865,341133,,# roof_Metal Sheet/ CI Sheet/Corrugated Iron Sheet
+num_roof_Other_Materials,# roof_Other Materials,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,9,2537,50,,# roof_Other Materials
+num_roof_Total,# roof_Total,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,102289,3737085,406373,,# roof_Total
+num_roof_Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan,# roof_Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,1011,86592,15370,,# roof_Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/
+numParticipants_in_Apprenticeship_Star_programme,#Participants in Apprenticeship/Star programme,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,0,2387,50,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",#Participants in Apprenticeship/Star programme
+numWall_Cement_Concrete_Brick_Terracotta,#Wall_Cement/Concrete/Brick/Terracotta,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,21028,3133904,114737,,#Wall_Cement/Concrete/Brick/Terracotta
+numWall_Ceramic_Tiles,#Wall_Ceramic Tiles,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,107,113018,1142,,#Wall_Ceramic Tiles
+numWall_Metal_sheet_CI_sheet_Corrugated_Iron_sheet,#Wall_Metal sheet/CI sheet/Corrugated Iron sheet,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,14574,870799,205153,,#Wall_Metal sheet/CI sheet/Corrugated Iron sheet
+numWall_Other_Materials,#Wall_Other Materials,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,40,2317,102,,#Wall_Other Materials
+numWall_Soil_Mud,#Wall_Soil/ Mud,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,46,334026,3078,,#Wall_Soil/ Mud
+numWall_Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene,#Wall_Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,287,9767,6639,,#Wall_Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene
+numWall_Total,#Wall_Total,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,102289,3737085,406373,,#Wall_Total
+numWall_Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk,#Wall_Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk,indicator,housing_quality,Housing Quality,BBS,integer,count,no,no,1299,185026,75433,,#Wall_Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk
+num_Jhupri,#_Jhupri,indicator,household_structure,Household Structure,BBS,integer,count,no,no,240,46078,11304,,#_Jhupri
+num_Kancha,#_Kancha,indicator,household_structure,Household Structure,BBS,integer,count,no,no,81809,1040131,295670,,#_Kancha
+num_Pucca,#_Pucca,indicator,household_structure,Household Structure,BBS,integer,count,no,no,7160,2534764,46964,,#_Pucca
+num_Semi-pucca,#_Semi-pucca,indicator,household_structure,Household Structure,BBS,integer,count,no,no,12667,714515,52435,,#_Semi-pucca
+num_Total,#_Total,indicator,household_structure,Household Structure,BBS,integer,count,no,no,102289,3737085,406373,,#_Total
+pct_Female_Bangladeshi_National,% Female_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,decimal,percent,no,no,0.28,4.84,1.07,,% Female_Bangladeshi_National
+pct_Female_Ethnic_Population,% Female_Ethnic Population,indicator,religion_ethnicity,Religion & Ethnicity,BBS,decimal,percent,no,no,35.65,73.91,45.7,,% Female_Ethnic Population
+pct_Hizra_Bangladeshi_National,% Hizra_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,decimal,percent,no,no,0.15,4.68,1.11,,% Hizra_Bangladeshi_National
+pct_Male_Bangladeshi_National,% Male_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,decimal,percent,no,no,0.29,4.77,1.09,,% Male_Bangladeshi_National
+pct_Male_Ethnic_Population,% Male_Ethnic Population,indicator,religion_ethnicity,Religion & Ethnicity,BBS,decimal,percent,no,no,26.09,64.35,54.3,,% Male_Ethnic Population
+pct_Overall_Bangladeshi_National,% Overall_Bangladeshi_National,indicator,religion_ethnicity,Religion & Ethnicity,BBS,decimal,percent,no,no,0.28,4.8,1.08,,% Overall_Bangladeshi_National
+pct_Population_General_HH,% Population_General HH,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,91.76,99.25,98.12,,% Population_General HH
+pct_Population_General_HH_Rural,% Population_General HH_Rural,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,95.31,99.51,98.35,,% Population_General HH_Rural
+pct_Population_General_HH_Urban,% Population_General HH_Urban,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,89.33,98.33,97.39,,% Population_General HH_Urban
+pct_Population_Institutional_HH,% Population_Institutional HH,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.37,4.19,1.47,,% Population_Institutional HH
+pct_Population_Institutional_HH_Rural,% Population_Institutional HH_Rural,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.3,2.3,1.37,,% Population_Institutional HH_Rural
+pct_Population_Institutional_HH_Urban,% Population_Institutional HH_Urban,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.77,7.18,1.8,,% Population_Institutional HH_Urban
+pct_Population_other_HH,% Population_other HH,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.26,5.95,0.41,,% Population_other HH
+pct_Population_other_HH_Rural,% Population_other HH_Rural,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.12,2.8,0.28,,% Population_other HH_Rural
+pct_Population_other_HH_Urban,% Population_other HH_Urban,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.45,6.93,0.81,,% Population_other HH_Urban
+10-14_Years_Female_Student,10-14 Years_Female_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,21037,471178,62357,,10-14 Years_Female_Student
+10-14_Years_Male_Student,10-14 Years_Male_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,21900,531616,63910,,10-14 Years_Male_Student
+15-19_Years_Female_Student,15-19 Years_Female_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,12860,362924,43270,,15-19 Years_Female_Student
+15-19_Years_Male_Student,15-19 Years_Male_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,13181,428173,46866,,15-19 Years_Male_Student
+20-24_Years_Female_Student,20-24 Years_Female_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,5515,345298,20774,,20-24 Years_Female_Student
+20-24_Years_Male_Student,20-24 Years_Male_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,4215,245842,15103,,20-24 Years_Male_Student
+25-29_Years_Female_Student,25-29 Years_Female_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,1191,65842,4083,,25-29 Years_Female_Student
+25-29_Years_Male_Student,25-29 Years_Male_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,2149,120427,6136,,25-29 Years_Male_Student
+5-9_Year_Female_Student,5-9 Year_Female_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,20612,412324,55533,,5-9 Year_Female_Student
+5-9_Year_Male_Student,5-9 Year_Male_Student,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,21931,449279,57420,,5-9 Year_Male_Student
+A,A,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,0.401,0.497,0.423,,A
+A_Lower_95pct_CI,A Lower 95% CI,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.387,0.478,0.411,,A Lower 95% CI
+A_Upper_95pct_CI,A Upper 95% CI,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,0.415,0.516,0.435,,A Upper 95% CI
+Autism_or_Autism_Spectrum_Disorders,Autism or Autism Spectrum Disorders,indicator,disability,Disability,BBS,integer,count,no,no,209,7390,847,,Autism or Autism Spectrum Disorders
+Average_Household_Size,Average Household Size,indicator,household_structure,Household Structure,BBS,decimal,index/ratio,no,no,3.29,5.13,3.89,,Average Household Size
+Average_Rate_of_Child_marriage_pct,Average Rate of Child marriage (%),indicator,marriage_child_marriage,Marriage & Child Marriage,BBS,decimal,percent,no,no,39.83,64.46,61.16,,Average Rate of Child marriage (%)
+BEP,BEP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,67,10887,774,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",BEP
+BHP,BHP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,1208,158006,100174,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",BHP
+BYP,BYP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,8,125,92,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",BYP
+Biogas_pct,Biogas_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,0.01,0.2,0.04,,Biogas_%
+Bottled_Jar_Water_pct,Bottled/Jar Water_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,yes,no,0.01,14.78,4.46,blank = value not collected / not available for this geo unit,Bottled/Jar Water_%
+CCP,CCP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,208,5807,4251,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",CCP
+CVI,CVI,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,index/ratio,no,no,0.41,0.57,0.52,,CVI
+Cement_Concrete_Brick_Terracotta_Wall_pct,Cement/Concrete/Brick/Terracotta_Wall_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,16.35,83.86,28.23,,Cement/Concrete/Brick/Terracotta_Wall_%
+Cement_Concrete_Brick_Terracotta_floor_pct,Cement/Concrete/Brick/Terracotta_floor_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,17.86,80.37,27.9,,Cement/Concrete/Brick/Terracotta_floor_%
+Cement_Concrete_Tile_roof_pct,Cement/Concrete/Tile_roof_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,2.36,68.18,12.22,,Cement/Concrete/Tile_roof_%
+Ceramic_Tiles_Wall_pct,Ceramic Tiles_Wall_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.07,3.02,0.28,,Ceramic Tiles_Wall_%
+Cerebral_Palsy,Cerebral Palsy,indicator,disability,Disability,BBS,integer,count,no,no,113,1348,204,,Cerebral Palsy
+Child_marriages_prevented,Child marriages prevented,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,0,332,50,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",Child marriages prevented
+DRMP,DRMP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,231,620690,231,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",DRMP
+Deaf-_Blindness,Deaf- Blindness,indicator,disability,Disability,BBS,integer,count,no,no,51,624,95,,Deaf- Blindness
+Down_Syndrome,Down Syndrome,indicator,disability,Disability,BBS,integer,count,no,no,98,1815,231,,Down Syndrome
+Electricty_pct,Electricty_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,0.01,2.44,0.11,,Electricty_%
+Female_Agriculture,Female_Agriculture,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,13789,151488,40287,,Female_Agriculture
+Female_Apprenticeship,Female_Apprenticeship,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,2425,40613,10052,,Female_Apprenticeship
+Female_Employed_Population,Female_Employed_Population,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,22518,1253952,65093,,Female_Employed_Population
+Female_Employed_Population_WorkType,Female_Employed_Population_WorkType,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,22518,1253952,65093,,Female_Employed_Population_WorkType
+Female_Household_Use_Consumption,Female_Household Use/Consumption,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,3886,43033,11533,,Female_Household Use/Consumption
+Female_Industry,Female_Industry,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,436,524046,6472,,Female_Industry
+Female_Profit,Female_Profit,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,4308,79881,12288,,Female_Profit
+Female_Service,Female_Service,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,6091,649310,18334,,Female_Service
+Female_Salary_Wage,Female__Salary/Wage,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,10215,1100281,31220,,Female__Salary/Wage
+H_Harmonised_National_MPI,H (Harmonised National  MPI),indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,index/ratio,no,no,0.087,0.654,0.253,,H (Harmonised National  MPI)
+HCR_Upper_pct_HIES_22,HCR Upper (%) HIES_22,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,percent,no,no,6.1,54.4,13.7,,HCR Upper (%) HIES_22
+H_Lower_95pct_CI,H_Lower 95% CI,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,percent,no,no,0.065,0.526,0.217,,H_Lower 95% CI
+H_Upper_95pct_CI,H_Upper 95% CI,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,percent,no,no,0.108,0.781,0.29,,H_Upper 95% CI
+Hand-made_Tiles_Tile_roof_pct,Hand-made Tiles/Tile_roof_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.01,11.35,0.03,,Hand-made Tiles/Tile_roof_%
+Have_financial_account_Female,Have financial account_Female,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,8.87,27.86,19.77,,Have financial account_Female
+Have_financial_account_Male,Have financial account_Male,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,16.59,40.4,32.1,,Have financial account_Male
+Have_financial_account_Overall,Have financial account_Overall,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,12.58,34.63,25.84,,Have financial account_Overall
+Have_financial_account_Rural,Have financial account_Rural,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,11.16,28.59,25.14,,Have financial account_Rural
+Have_financial_account_Rural_Female,Have financial account_Rural_Female,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,7.96,27.04,19.09,,Have financial account_Rural_Female
+Have_financial_account_Rural_Male,Have financial account_Rural_Male,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,14.63,34.36,31.37,,Have financial account_Rural_Male
+Have_financial_account_Urban,Have financial account_Urban,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,20.24,36.92,28.07,,Have financial account_Urban
+Have_financial_account_Urban_Female,Have financial account_Urban_Female,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,13.83,29.86,21.95,,Have financial account_Urban_Female
+Have_financial_account_Urban_Male,Have financial account_Urban_Male,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,27.1,43.34,34.48,,Have financial account_Urban_Male
+Hearing_Disability,Hearing Disability,indicator,disability,Disability,BBS,integer,count,no,no,574,4351,1572,,Hearing Disability
+IDP,IDP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,494,77460,1969,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",IDP
+Inernet_Female_15_yearplus,Inernet_Female_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,9.16,52.1,19.21,,Inernet_Female_15 year+
+Inernet_Female_5yearplus,Inernet_Female_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,7.78,45.45,16.36,,Inernet_Female_5year+
+Inernet_Male_15_yearplus,Inernet_Male_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,28.06,68.53,38.26,,Inernet_Male_15 year+
+Inernet_Male_5yearplus,Inernet_Male_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,22.6,59.44,31.68,,Inernet_Male_5year+
+Inernet_Rural_Male_15_yearplus,Inernet_Rural_Male_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,25.61,59.92,36.77,,Inernet_Rural_Male_15 year+
+Inernet_Rural_Male_5yearplus,Inernet_Rural_Male_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,20.55,50.95,30.52,,Inernet_Rural_Male_5year+
+Inernet_Rural_Total_15_yearplus,Inernet_Rural_Total_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,16.23,50.35,26.97,,Inernet_Rural_Total_15 year+
+Inernet_Rural_Total_5yearplus,Inernet_Rural_Total_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,13.23,43.07,22.66,,Inernet_Rural_Total_5year+
+Inernet_Rural_female_15_yearplus,Inernet_Rural_female_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,7.14,44.36,17.46,,Inernet_Rural_female_15 year+
+Inernet_Rural_female_5yearplus,Inernet_Rural_female_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,5.99,37.58,14.9,,Inernet_Rural_female_5year+
+Inernet_Total_15_yearplus,Inernet_Total_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,18.45,60.97,28.58,,Inernet_Total_15 year+
+Inernet_Total_5yearplus,Inernet_Total_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,15.16,52.98,23.97,,Inernet_Total_5year+
+Inernet_urban_Male_15_yearplus,Inernet_urban_Male_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,36.71,71,43.11,,Inernet_urban_Male_15 year+
+Inernet_urban_Male_5yearplus,Inernet_urban_Male_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,29.77,61.93,35.41,,Inernet_urban_Male_5year+
+Inernet_urban_Total_15_yearplus,Inernet_urban_Total_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,25.81,64.21,33.76,,Inernet_urban_Total_15 year+
+Inernet_urban_Total_5yearplus,Inernet_urban_Total_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,21.25,56.04,28.14,,Inernet_urban_Total_5year+
+Inernet_urban_female_15_yearplus,Inernet_urban_female_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,15.24,56,24.82,,Inernet_urban_female_15 year+
+Inernet_urban_female_5yearplus,Inernet_urban_female_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,12.83,48.99,21.03,,Inernet_urban_female_5year+
+Intellectual_Disability,Intellectual Disability,indicator,disability,Disability,BBS,integer,count,no,no,256,7597,1826,,Intellectual Disability
+Jhupri_pct,Jhupri_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.07,7.99,2.78,,Jhupri_%
+Kancha_pct,Kancha_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,12.85,84.5,72.76,,Kancha_%
+Kerosene_Paraffin_pct,Kerosene/ Paraffin_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,yes,no,0.01,0.22,0.01,blank = value not collected / not available for this geo unit,Kerosene/ Paraffin_%
+LP_Gas_pct,LP Gas_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,2.99,32.71,7.41,,LP Gas_%
+Literacy_Rate_5yearplus_Female,Literacy Rate_5year+_Female,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,57.54,84.51,79.79,,Literacy Rate_5year+_Female
+Literacy_Rate_5yearplus_Male,Literacy Rate_5year+_Male,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,63.73,85.71,81.71,,Literacy Rate_5year+_Male
+Literacy_Rate_5yearplus_Overall,Literacy Rate_5year+_Overall,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,61.32,84.86,80.74,,Literacy Rate_5year+_Overall
+Literacy_Rate_7yearplus_Female,Literacy Rate_7year+_Female,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,58.22,85.09,80.37,,Literacy Rate_7year+_Female
+Literacy_Rate_7yearplus_Male,Literacy Rate_7year+_Male,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,64.27,86.45,82.49,,Literacy Rate_7year+_Male
+Literacy_Rate_7yearplus_Overall,Literacy Rate_7year+_Overall,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,61.7,85.53,81.42,,Literacy Rate_7year+_Overall
+MEP,MEP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,105814,293731,228527,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",MEP
+MF,MF,indicator,population_demography,Population & Demography,BRAC Bangladesh,integer,count,no,no,40459,643075,183333,,MF
+MPI,MPI,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,index/ratio,no,no,0.035,0.325,0.107,,MPI
+MPI_Lower_95pct_CI,MPI Lower 95% CI,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,percent,no,no,0.026,0.253,0.091,,MPI Lower 95% CI
+MPI_Upper_95pct_CI,MPI Upper 95% CI,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,percent,no,no,0.044,0.397,0.123,,MPI Upper 95% CI
+Male_Agriculture,Male_Agriculture,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,41587,618026,207196,,Male_Agriculture
+Male_Apprenticeship,Male_Apprenticeship,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,2606,42004,11694,,Male_Apprenticeship
+Male_Employed_Population,Male_Employed_Population,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,130799,4780285,426882,,Male_Employed_Population
+Male_Employed_Population_WorkType,Male_Employed_Population_WorkType,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,130799,4780285,426882,,Male_Employed_Population_WorkType
+Male_Household_Use_Consumption,Male_Household Use/Consumption,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,18794,268906,59064,,Male_Household Use/Consumption
+Male_Industry,Male_Industry,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,6996,1458863,54570,,Male_Industry
+Male_Profit,Male_Profit,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,23340,1036866,109310,,Male_Profit
+Male_Salary_Wage,Male_Salary/Wage,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,70330,3617442,246814,,Male_Salary/Wage
+Male_Service,Male_Service,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,54742,3136521,165116,,Male_Service
+Mental_Illness_Leading_to_Disability,Mental Illness Leading to Disability,indicator,disability,Disability,BBS,integer,count,no,no,830,12584,2489,,Mental Illness Leading to Disability
+Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet_roof_pct,Metal Sheet/ CI Sheet/Corrugated Iron Sheet_roof_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,31.17,96.89,83.95,,Metal Sheet/ CI Sheet/Corrugated Iron Sheet_roof_%
+Metal_sheet_CI_sheet_Corrugated_Iron_sheet_Wall_pct,Metal sheet/CI sheet/Corrugated Iron sheet_Wall_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,7.02,80.54,50.48,,Metal sheet/CI sheet/Corrugated Iron sheet_Wall_%
+Migration,Migration,indicator,remittance_migration,Remittance & Migration,BRAC Bangladesh,decimal,index/ratio,no,no,4,70199,24,,Migration
+Mobile_Bank_Account_Female,Mobile Bank Account_Female,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,15.16,36.85,28.2,,Mobile Bank Account_Female
+Mobile_Bank_Account_Male,Mobile Bank Account_Male,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,37.08,64.76,53,,Mobile Bank Account_Male
+Mobile_Bank_Account_Overall,Mobile Bank Account_Overall,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,26.43,51.35,40.4,,Mobile Bank Account_Overall
+Mobile_Bank_Account_Rural,Mobile Bank Account_Rural,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,25.36,46.25,40.12,,Mobile Bank Account_Rural
+Mobile_Bank_Account_Rural_Female,Mobile Bank Account_Rural_Female,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,14.47,36.11,27.76,,Mobile Bank Account_Rural_Female
+Mobile_Bank_Account_Rural_Male,Mobile Bank Account_Rural_Male,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,35.39,62.93,52.86,,Mobile Bank Account_Rural_Male
+Mobile_Bank_Account_Urban,Mobile Bank Account_Urban,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,30.62,55.03,41.28,,Mobile Bank Account_Urban
+Mobile_Bank_Account_Urban_Female,Mobile Bank Account_Urban_Female,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,18.94,40.26,29.62,,Mobile Bank Account_Urban_Female
+Mobile_Bank_Account_Urban_Male,Mobile Bank Account_Urban_Male,indicator,financial_inclusion,Financial Inclusion,BBS,decimal,index/ratio,no,no,41.4,68.11,53.48,,Mobile Bank Account_Urban_Male
+Mobile_Phone_Female_15_yearplus,Mobile Phone_Female_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,38.08,77.15,57.45,,Mobile Phone_Female_15 year+
+Mobile_Phone_Female_5yearplus,Mobile Phone_Female_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,28.91,64.54,47.35,,Mobile Phone_Female_5year+
+Mobile_Phone_Male_15_yearplus,Mobile Phone_Male_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,77.6,91.12,83.28,,Mobile Phone_Male_15 year+
+Mobile_Phone_Male_5yearplus,Mobile Phone_Male_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,55.3,76.85,67.73,,Mobile Phone_Male_5year+
+Mobile_Phone_Rural_Male_15_yearplus,Mobile Phone_Rural_Male_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,76.51,88.79,82.8,,Mobile Phone_Rural_Male_15 year+
+Mobile_Phone_Rural_Male_5yearplus,Mobile Phone_Rural_Male_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,54.34,73.79,67.52,,Mobile Phone_Rural_Male_5year+
+Mobile_Phone_Rural_Total_15_yearplus,Mobile Phone_Rural_Total_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,55.61,79.63,69.24,,Mobile Phone_Rural_Total_15 year+
+Mobile_Phone_Rural_Total_5yearplus,Mobile Phone_Rural_Total_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,41.39,66.29,56.82,,Mobile Phone_Rural_Total_5year+
+Mobile_Phone_Rural_female_15_yearplus,Mobile Phone_Rural_female_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,36.2,69.91,56.06,,Mobile Phone_Rural_female_15 year+
+Mobile_Phone_Rural_female_5yearplus,Mobile Phone_Rural_female_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,27.36,58.27,46.25,,Mobile Phone_Rural_female_5year+
+Mobile_Phone_Total_15_yearplus,Mobile Phone_Total_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,57.03,84.69,70.15,,Mobile Phone_Total_15 year+
+Mobile_Phone_Total_5yearplus,Mobile Phone_Total_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,42.67,71.16,57.46,,Mobile Phone_Total_5year+
+Mobile_Phone_urban_Male_15_yearplus,Mobile Phone_urban_Male_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,81.45,91.79,84.81,,Mobile Phone_urban_Male_15 year+
+Mobile_Phone_urban_Male_5yearplus,Mobile Phone_urban_Male_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,58.77,77.74,68.41,,Mobile Phone_urban_Male_5year+
+Mobile_Phone_urban_Total_15_yearplus,Mobile Phone_urban_Total_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,64.7,86.23,73.08,,Mobile Phone_urban_Total_15 year+
+Mobile_Phone_urban_Total_5yearplus,Mobile Phone_urban_Total_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,49.82,72.67,59.51,,Mobile Phone_urban_Total_5year+
+Mobile_Phone_urban_female_15_yearplus,Mobile Phone_urban_female_15 year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,48.34,79.52,61.86,,Mobile Phone_urban_female_15 year+
+Mobile_Phone_urban_female_5yearplus,Mobile Phone_urban_female_5year+,indicator,digital_access,Digital Access,BBS,decimal,index/ratio,no,no,37.63,66.6,50.82,,Mobile Phone_urban_female_5year+
+Multiple_Disabilities,Multiple Disabilities,indicator,disability,Disability,BBS,integer,count,no,no,890,13569,2779,,Multiple Disabilities
+National_Grid_pct,National Grid_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,47.54,99.66,97.85,,National Grid_%
+No_Electricity_Connection_pct,No Electricity Connection_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,0.09,11.23,1.03,,No Electricity Connection_%
+No_Separate_Arrangement_pct,No Separate Arrangement_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,3.52,32.03,9.61,,No Separate Arrangement_%
+No_of_Borrower_Dabi,No of Borrower (Dabi),indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,no,no,17484,341676,68767,,No of Borrower (Dabi)
+No_of_Borrower_Progoti,No of Borrower (Progoti),indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,no,no,984,112527,10176,,No of Borrower (Progoti)
+No_wall_pct,No wall %,indicator,housing_quality,Housing Quality,BBS,decimal,percent,yes,no,0.01,0.07,0.02,blank = value not collected / not available for this geo unit,No wall %
+No_roof_pct,No_roof_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,yes,no,0.01,0.11,0.01,blank = value not collected / not available for this geo unit,No_roof_%
+Number_of_Poor_000,Number of Poor ('000),indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,integer,count,no,no,78,2080,407,,Number of Poor ('000)
+Number_Returned_Migrant,Number_Returned_Migrant,indicator,remittance_migration,Remittance & Migration,BBS,integer,count,no,no,838,39139,2949,,Number_Returned_Migrant
+Only_Soap_pct,Only Soap_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,0.33,4.66,3.61,,Only Soap_%
+Only_Water_pct,Only Water_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,6.68,40.01,17.24,,Only Water_%
+Open_Defecation_No_Latrine_Available_pct,Open Defecation/ No Latrine Available_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,0.04,20.21,0.15,,Open Defecation/ No Latrine Available_%
+Other_Disability,Other Disability,indicator,disability,Disability,BBS,integer,count,no,no,294,12248,1414,,Other Disability
+Other_Materials_Wall_pct,Other Materials__Wall_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.01,0.28,0.03,,Other Materials__Wall_%
+Other_Materials_floor_pct,Other Materials_floor_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.01,0.27,0.01,,Other Materials_floor_%
+Other_Materials_roof_pct,Other Materials_roof_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,yes,no,0.01,0.15,0.01,blank = value not collected / not available for this geo unit,Other Materials_roof_%
+Others_pct_source_cooking_fuel,Others_%_source_cooking_fuel,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,yes,no,0.01,0.21,0.01,blank = value not collected / not available for this geo unit,Others_%_source_cooking_fuel
+Others_pct_source_electricity,Others_%_source_electricity,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,0.01,1.89,0.15,,Others_%_source_electricity
+Others_pct_source_of_drinkingwater,Others_%_source_of_drinkingwater,indicator,population_demography,Population & Demography,BBS,decimal,percent,yes,no,0.01,0.17,0.01,blank = value not collected / not available for this geo unit,Others_%_source_of_drinkingwater
+Overall_Avg._Population_Growth,Overall_Avg._Population Growth,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,-0.28,3.87,0.79,,Overall_Avg._Population Growth
+Overall_Child-Woman_Ratio,Overall_Child-Woman Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,249.19,460.91,321.41,,Overall_Child-Woman Ratio
+Overall_Dependeny_Ratio,Overall_Dependeny_Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,37.08,72.39,50.65,,Overall_Dependeny_Ratio
+Overall_Do_not_Work_Working_Status_5_Yearplus,Overall_Do not Work_Working_Status_5 Year+,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,156396,4869961,494206,,Overall_Do not Work_Working_Status_5 Year+
+Overall_Do_not_Work_Working_Status_5_Yearplus_Female,Overall_Do not Work_Working_Status_5 Year+_Female,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,77172,2494084,239412,,Overall_Do not Work_Working_Status_5 Year+_Female
+Overall_Do_not_Work_Working_Status_5_Yearplus_Male,Overall_Do not Work_Working_Status_5 Year+_Male,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,79224,2375877,254794,,Overall_Do not Work_Working_Status_5 Year+_Male
+Overall_Employed_Working_Status_5_Yearplus,Overall_Employed_Working_Status_5 Year+,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,164770,6034237,491975,,Overall_Employed_Working_Status_5 Year+
+Overall_Employed_Working_Status_5_Yearplus_Female,Overall_Employed_Working_Status_5 Year+_Female,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,22518,1253952,65093,,Overall_Employed_Working_Status_5 Year+_Female
+Overall_Employed_Working_Status_5_Yearplus_Male,Overall_Employed_Working_Status_5 Year+_Male,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,130799,4780285,426882,,Overall_Employed_Working_Status_5 Year+_Male
+Overall_Household_Work_Working_Status_5_Yearplus,Overall_Household Work_Working_Status_5 Year+,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,95751,2554393,456934,,Overall_Household Work_Working_Status_5 Year+
+Overall_Household_Work_Working_Status_5_Yearplus_Female,Overall_Household Work_Working_Status_5 Year+_Female,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,90400,2502105,428561,,Overall_Household Work_Working_Status_5 Year+_Female
+Overall_Household_Work_Working_Status_5_Yearplus_Male,Overall_Household Work_Working_Status_5 Year+_Male,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,5351,99610,28373,,Overall_Household Work_Working_Status_5 Year+_Male
+Overall_Looking_for_work_Working_Status_5_Yearplus,Overall_Looking for work_Working_Status_5 Year+,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,5226,164153,26458,,Overall_Looking for work_Working_Status_5 Year+
+Overall_Looking_for_work_Working_Status_5_Yearplus_Female,Overall_Looking for work_Working_Status_5 Year+_Female,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,1373,40875,6933,,Overall_Looking for work_Working_Status_5 Year+_Female
+Overall_Looking_for_work_Working_Status_5_Yearplus_Male,Overall_Looking for work_Working_Status_5 Year+_Male,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,3853,123278,19525,,Overall_Looking for work_Working_Status_5 Year+_Male
+Overall_Sex_Ratio,Overall_Sex_Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,87,115.6,98.97,,Overall_Sex_Ratio
+Overall_Working_Status_5_Yearplus,Overall_Working_Status_5 Year+,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,426433,13622744,1469573,,Overall_Working_Status_5 Year+
+Overall_Working_Status_5_Yearplus_Female,Overall_Working_Status_5 Year+_Female,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,207206,6291016,739999,,Overall_Working_Status_5 Year+_Female
+Overall_Working_Status_5_Yearplus_Male,Overall_Working_Status_5 Year+_Male,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,219227,7331728,729574,,Overall_Working_Status_5 Year+_Male
+Own_dwelling_unit_pct,Own dwelling unit_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,27.51,96.88,91.57,,Own dwelling unit_%
+Percent_Returned_Migrant,Percent_Returned_Migrant,indicator,remittance_migration,Remittance & Migration,BBS,decimal,index/ratio,no,no,0.18,8.39,0.63,,Percent_Returned_Migrant
+Petrol_Diesel_pct,Petrol/ Diesel_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,yes,no,0.01,0.04,0.03,blank = value not collected / not available for this geo unit,Petrol/ Diesel_%
+Physical_Disability,Physical Disability,indicator,disability,Disability,BBS,integer,count,no,no,2241,26991,9948,,Physical Disability
+Pit_Latrine_Without_Slab_Open_Pit_pct,Pit Latrine   Without   Slab/ Open Pit_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,0.47,18.82,4.63,,Pit Latrine   Without   Slab/ Open Pit_%
+Pit_Latrine_with_Slab_Ventilated_Improved_Latrine_Composting_Latrine_pct,Pit Latrine with  Slab/ Ventilated  Improved Latrine/  Composting Latrine_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,4.89,55.57,46.67,,Pit Latrine with  Slab/ Ventilated  Improved Latrine/  Composting Latrine_%
+Pond_River_Canal_Lake_pct,Pond/River/Canal/Lake_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,yes,no,0.01,21.99,21.99,blank = value not collected / not available for this geo unit,Pond/River/Canal/Lake_%
+Population_Excluding_Slum_Floating_Female,Population_Excluding_Slum_Floating_Female,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,234118,6513385,805592,,Population_Excluding_Slum_Floating_Female
+Population_Excluding_Slum_Floating_Hijra,Population_Excluding_Slum_Floating_Hijra,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,13,596,70,,Population_Excluding_Slum_Floating_Hijra
+Population_Excluding_Slum_Floating_Male,Population_Excluding_Slum_Floating_Male,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,246885,7526709,797464,,Population_Excluding_Slum_Floating_Male
+Population_Excluding_Slum_Floating_Total,Population_Excluding_Slum_Floating_Total,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,481016,14040690,1603126,,Population_Excluding_Slum_Floating_Total
+Population_Female,Population_Female,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,234146,6833989,810691,,Population_Female
+Population_Female_pop,Population_Female_pop,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,234146,6833989,810691,,Population_Female_pop
+Population_Floating_Female,Population_Floating_Female,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,5,1222,61,blank = value not collected / not available for this geo unit,Population_Floating_Female
+Population_Floating_Hijra,Population_Floating_Hijra,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,1,16,1,blank = value not collected / not available for this geo unit,Population_Floating_Hijra
+Population_Floating_Male,Population_Floating_Male,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,10,5239,126,blank = value not collected / not available for this geo unit,Population_Floating_Male
+Population_Floating_Total,Population_Floating_Total,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,15,6477,187,blank = value not collected / not available for this geo unit,Population_Floating_Total
+Population_HIES_22,Population_HIES_22,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,integer,count,no,no,450692,13514349,1582590,,Population_HIES_22
+Population_Hijra,Population_Hijra,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,13,677,71,,Population_Hijra
+Population_Hijra_pop,Population_Hijra_pop,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,13,677,71,,Population_Hijra_pop
+Population_Male,Population_Male,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,246947,7900035,802314,,Population_Male
+Population_Male_pop,Population_Male_pop,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,246947,7900035,802314,,Population_Male_pop
+Population_Slum_Female,Population_Slum_Female,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,15,319382,5038,blank = value not collected / not available for this geo unit,Population_Slum_Female
+Population_Slum_Hijra,Population_Slum_Hijra,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,1,104,1,blank = value not collected / not available for this geo unit,Population_Slum_Hijra
+Population_Slum_Male,Population_Slum_Male,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,20,368087,4724,blank = value not collected / not available for this geo unit,Population_Slum_Male
+Population_Slum_Total,Population_Slum_Total,indicator,population_demography,Population & Demography,BBS,integer,count,yes,no,35,687534,9763,blank = value not collected / not available for this geo unit,Population_Slum_Total
+Population_Total,Population_Total,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,481106,14734701,1613076,,Population_Total
+Population_Total_pop,Population_Total_pop,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,481106,14734701,1613076,,Population_Total_pop
+Population_Urban_Female,Population_Urban_Female,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,81721,5142726,194312,,Population_Urban_Female
+Population_Urban_Hijra,Population_Urban_Hijra,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,3,412,26,,Population_Urban_Hijra
+Population_Urban_Male,Population_Urban_Male,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,77150,6094079,190848,,Population_Urban_Male
+Population_Urban_Total,Population_Urban_Total,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,158885,11237217,385186,,Population_Urban_Total
+Population_rural_Female,Population_rural_Female,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,142020,2661959,616379,,Population_rural_Female
+Population_rural_Hijra,Population_rural_Hijra,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,10,265,45,,Population_rural_Hijra
+Population_rural_Male,Population_rural_Male,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,144657,2280842,611466,,Population_rural_Male
+Population_rural_Total,Population_rural_Total,indicator,population_demography,Population & Demography,BBS,integer,count,no,no,286687,4942936,1227890,,Population_rural_Total
+Pucca_pct,Pucca_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,2.09,67.83,11.56,,Pucca_%
+Quintile_HIES_22,Quintile HIES_22,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,text,category,no,no,,,Low(Q2),,Quintile HIES_22
+Rain_Water_pct,Rain Water_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,yes,no,0.05,16.74,16.74,blank = value not collected / not available for this geo unit,Rain Water_%
+Raw_Open_Hanging_Latrine_Permanent_Temporary_pct,Raw/Open/ Hanging Latrine (Permanent/ Temporary)_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,0.17,16.74,1.7,,Raw/Open/ Hanging Latrine (Permanent/ Temporary)_%
+Rent_free_and_having_no_own_dwelling_unit_elsewhere_pct,Rent free and having no own dwelling unit elsewhere_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.45,9.82,1.56,,Rent free and having no own dwelling unit elsewhere_%
+Rent_free_but_having_own_dwelling_unit_elsewhere_pct,Rent free but having own dwelling unit elsewhere_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.19,1.34,0.62,,Rent free but having own dwelling unit elsewhere_%
+Rented_and_having_no_own_dwelling_unit_pct,Rented and having no own dwelling unit_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.28,13.39,1.4,,Rented and having no own dwelling unit_%
+Rented_but_having_own_dwelling_unit_elsewhere_pct,Rented but having own dwelling unit elsewhere_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,1.26,57.07,4.86,,Rented but having own dwelling unit elsewhere_%
+Rural_Avg._Population_Growth,Rural_Avg._Population Growth,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,-2.23,2.21,-0.37,,Rural_Avg._Population Growth
+Rural_Child-Woman_Ratio,Rural_Child-Woman Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,249.64,474.7,321.85,,Rural_Child-Woman Ratio
+Rural_Dependeny_Ratio,Rural_Dependeny_Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,40.15,74.29,50.77,,Rural_Dependeny_Ratio
+Rural_HH_Remittance_num,Rural_HH_Remittance #,indicator,remittance_migration,Remittance & Migration,BBS,integer,count,no,no,1543,375176,9102,,Rural_HH_Remittance #
+Rural_Literacy_Rate_5yearplus_Female,Rural_Literacy Rate_5year+_Female,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,48.66,83.92,79.47,,Rural_Literacy Rate_5year+_Female
+Rural_Literacy_Rate_5yearplus_Male,Rural_Literacy Rate_5year+_Male,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,59.32,84.41,81.57,,Rural_Literacy Rate_5year+_Male
+Rural_Literacy_Rate_5yearplus_Overall,Rural_Literacy Rate_5year+_Overall,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,54.03,84.16,80.51,,Rural_Literacy Rate_5year+_Overall
+Rural_Literacy_Rate_7yearplus_Female,Rural_Literacy Rate_7year+_Female,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,49.25,84.49,80.03,,Rural_Literacy Rate_7year+_Female
+Rural_Literacy_Rate_7yearplus_Male,Rural_Literacy Rate_7year+_Male,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,60.65,85.2,82.31,,Rural_Literacy Rate_7year+_Male
+Rural_Literacy_Rate_7yearplus_Overall,Rural_Literacy Rate_7year+_Overall,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,54.99,84.83,81.17,,Rural_Literacy Rate_7year+_Overall
+Rural_Sex_Ratio,Rural_Sex_Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,85.68,106.78,99.2,,Rural_Sex_Ratio
+Rural_Toilet_Not-Toilet_Shared_pct,Rural_Toilet_Not-Toilet_Shared_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,59.67,90.69,88.21,,Rural_Toilet_Not-Toilet_Shared_%
+Rural_Toilet_Shared_pct,Rural_Toilet_Shared_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,9.31,40.33,11.79,,Rural_Toilet_Shared_%
+SCP,SCP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,8,7198,4362,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",SCP
+SDP,SDP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,50,11717,419,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",SDP
+SELP,SELP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,20252,51806,45035,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",SELP
+Safe_Disposal_with_Flushing_Pouring_Water_pct,Safe Disposal with Flushing/ Pouring Water_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,23.4,86.67,36.39,,Safe Disposal with Flushing/ Pouring Water_%
+Semi-pucca_pct,Semi-pucca_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,6.83,43.29,12.9,,Semi-pucca_%
+Soap_and_Water_pct,Soap & Water_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,34.88,88.98,69.54,,Soap & Water_%
+Soil_Mud_Wall_pct,Soil/ Mud_Wall_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.02,43.85,0.76,,Soil/ Mud_Wall_%
+Soil_Sand_Mud_floor_pct,Soil/Sand/Mud_floor_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,3.23,77.73,68.91,,Soil/Sand/Mud_floor_%
+Solar_Power_pct,Solar Power_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,0.05,42.84,0.97,,Solar Power_%
+Speech_Disability,Speech Disability,indicator,disability,Disability,BBS,integer,count,no,no,627,9505,2305,,Speech Disability
+Spring_pct,Spring_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,yes,no,0.02,16.21,16.21,blank = value not collected / not available for this geo unit,Spring_%
+Std_Error_pct_HIES_22,Std_Error (%) HIES_22,indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,percent,no,no,0.7,5.9,1.8,,Std_Error (%) HIES_22
+Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene_Wall_pct,Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene_Wall_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.03,1.74,1.63,,Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene_Wall_%
+Straw_Leaf_Bran_Husk_pct,Straw/ Leaf/ Bran/ Husk_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,0.36,51.11,1.37,,Straw/ Leaf/ Bran/ Husk_%
+Supply_Gas_pct,Supply Gas_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,yes,no,0.01,69.17,1.11,blank = value not collected / not available for this geo unit,Supply Gas_%
+TBCP,TBCP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,11899,243885,37929,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",TBCP
+Tap_pipe_Supply_pct,Tap/pipe (Supply)_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,0.31,61.5,3.7,,Tap/pipe (Supply)_%
+Tiles_Mosaic_floor_pct,Tiles/Mosaic_floor_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.61,22.54,2.06,,Tiles/Mosaic_floor_%
+Toilet_Not-Toilet_Shared_pct,Toilet_Not-Toilet_Shared_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,55.44,90.65,87.32,,Toilet_Not-Toilet_Shared_%
+Toilet_Shared_pct,Toilet_Shared_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,9.35,44.56,12.68,,Toilet_Shared_%
+Total_pct,Total_%,indicator,population_demography,Population & Demography,BBS,decimal,percent,no,no,100,100,100,,Total_%
+Total_Agriculture,Total_Agriculture,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,55376,747681,247483,,Total_Agriculture
+Total_Apprenticeship,Total_Apprenticeship,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,5057,76537,21746,,Total_Apprenticeship
+Total_Brac_Reach,Total_Brac_Reach,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,no,no,93429,1380091,496767,,Total_Brac_Reach
+Total_Employed_Population,Total_Employed_Population,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,164770,6034237,491975,,Total_Employed_Population
+Total_Employed_Population_WorkType,Total_Employed_Population_WorkType,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,164770,6034237,491975,,Total_Employed_Population_WorkType
+Total_Female_Student_5-29_years,Total_Female_Student_5-29 years,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,59915,1558110,180346,,Total_Female_Student_5-29 years
+Total_HH_num,Total_HH #,indicator,household_structure,Household Structure,BBS,integer,count,no,no,102289,3737085,406373,,Total_HH #
+Total_HH_Remittance_num,Total_HH_Remittance #,indicator,household_structure,Household Structure,BBS,integer,count,no,no,2017,441125,13393,,Total_HH_Remittance #
+Total_Household_Use_Consumption,Total_Household Use/Consumption,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,22680,307741,70597,,Total_Household Use/Consumption
+Total_Industry,Total_Industry,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,8058,1967797,61042,,Total_Industry
+Total_Male_Student_5-29_years,Total_Male_Student_5-29 years,indicator,literacy_education,Literacy & Education,BBS,integer,count,no,no,65206,1874793,195106,,Total_Male_Student_5-29 years
+Total_Persons_With_Disability,Total_Persons_With_Disability,indicator,disability,Disability,BBS,integer,count,no,no,7357,107539,26728,,Total_Persons_With_Disability
+Total_Profit,Total_Profit,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,28936,1116747,121598,,Total_Profit
+Total_Salary_Wage,Total_Salary/Wage,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,84066,4717723,278034,,Total_Salary/Wage
+Total_Service,Total_Service,indicator,employment_work,Employment & Work,BBS,integer,count,no,no,63202,3785831,183450,,Total_Service
+Tube-well_Deep_Shallow_pct,Tube-well (Deep/Shallow)_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,37.75,99.64,53.08,,Tube-well (Deep/Shallow)_%
+UDP,UDP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,467,258536,5398,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",UDP
+UPGP,UPGP,indicator,brac_programmes,BRAC Programmes (Response),BRAC Bangladesh,integer,count,yes,no,1271,5423,3723,"blank = programme NOT active in this geo unit (not 'zero', not 'missing')",UPGP
+Unemployment_Rate_Overall_calculated,Unemployment Rate_Overall_calculated*,indicator,employment_work,Employment & Work,BBS,decimal,percent,no,no,1.6549,9.4839,5.1035,,Unemployment Rate_Overall_calculated*
+Unsafe_Disposal_with_Flushing_Pouring_Water_pct,Unsafe Disposal   with Flushing/   Pouring Water_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,3.94,21.81,10.46,,Unsafe Disposal   with Flushing/   Pouring Water_%
+Urban_Avg._Population_Growth,Urban_Avg._Population Growth,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,-0.16,10.51,6.04,,Urban_Avg._Population Growth
+Urban_Child-Woman_Ratio,Urban_Child-Woman Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,240.2,444.62,320.04,,Urban_Child-Woman Ratio
+Urban_Dependeny_Ratio,Urban_Dependeny_Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,33.9,65.45,50.25,,Urban_Dependeny_Ratio
+Urban_HH_Remittance_num,Urban_HH_Remittance #,indicator,remittance_migration,Remittance & Migration,BBS,integer,count,no,no,474,141358,4291,,Urban_HH_Remittance #
+Urban_Literacy_Rate_5yearplus_Female,Urban_Literacy Rate_5year+_Female,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,65.66,86.92,80.8,,Urban_Literacy Rate_5year+_Female
+Urban_Literacy_Rate_5yearplus_Male,Urban_Literacy Rate_5year+_Male,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,70.91,88.39,82.18,,Urban_Literacy Rate_5year+_Male
+Urban_Literacy_Rate_5yearplus_Overall,Urban_Literacy Rate_5year+_Overall,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,68.21,87.65,81.48,,Urban_Literacy Rate_5year+_Overall
+Urban_Literacy_Rate_7yearplus_Female,Urban_Literacy Rate_7year+_Female,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,65.95,87.53,81.44,,Urban_Literacy Rate_7year+_Female
+Urban_Literacy_Rate_7yearplus_Male,Urban_Literacy Rate_7year+_Male,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,71.57,89.14,83.05,,Urban_Literacy Rate_7year+_Male
+Urban_Literacy_Rate_7yearplus_Overall,Urban_Literacy Rate_7year+_Overall,indicator,literacy_education,Literacy & Education,BBS,decimal,percent,no,no,68.68,88.33,82.23,,Urban_Literacy Rate_7year+_Overall
+Urban_Sex_Ratio,Urban_Sex_Ratio,indicator,population_demography,Population & Demography,BBS,decimal,index/ratio,no,no,91.64,118.5,98.22,,Urban_Sex_Ratio
+Visual_Disability,Visual Disability,indicator,disability,Disability,BBS,integer,count,no,no,1148,13196,3018,,Visual Disability
+WASH,WASH,indicator,population_demography,Population & Demography,BRAC Bangladesh,integer,count,yes,no,2331,125069,115476,blank = value not collected / not available for this geo unit,WASH
+Weighted_avg_composite_score_vulnerability,Weighted_avg_composite_score (vulnerability),indicator,poverty_vulnerability,Poverty & Vulnerability,BBS,decimal,index/ratio,no,no,1.61,11.76,3.16,,Weighted_avg_composite_score (vulnerability)
+Well_pct,Well_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,yes,no,0.01,22.09,0.03,blank = value not collected / not available for this geo unit,Well_%
+Wood-coal_Charcoal_Dried_Dung_pct,Wood-coal/ Charcoal/ Dried Dung_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,0.88,18.67,8.15,,Wood-coal/ Charcoal/ Dried Dung_%
+Wood_Chalk_Chopped_Wood_pct,Wood/ Chalk/ Chopped Wood_%,indicator,energy_fuel,Energy & Fuel,BBS,decimal,percent,no,no,10.01,89.68,82.91,,Wood/ Chalk/ Chopped Wood_%
+Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan_roof_pct,Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/_roof_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.19,15.01,3.78,,Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/_roof_%
+Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk_Wall_pct,Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk_Wall_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.19,51.52,18.56,,Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk_Wall_%
+Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk_floor_pct,Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk_floor_%,indicator,housing_quality,Housing Quality,BBS,decimal,percent,no,no,0.04,33.13,1.13,,Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk_floor_%
+urban_Toilet_Not-Toilet_Shared_pct,urban_Toilet_Not-Toilet_Shared_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,49,90.87,84.48,,urban_Toilet_Not-Toilet_Shared_%
+urban_Toilet_Shared_pct,urban_Toilet_Shared_%,indicator,wash,WASH (Water & Sanitation),BBS,decimal,percent,no,no,9.13,51,15.52,,urban_Toilet_Shared_%
