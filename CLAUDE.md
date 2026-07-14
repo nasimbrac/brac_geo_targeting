@@ -371,6 +371,20 @@ it had hardcoded values and placeholder images, so we wrote a fresh compliant bu
     Verified after the split: CSS applied (magenta button), JS ran (KPIs computed, table
     rendered), page-tab switching works.
 
+18. **MVI results tweaks (2026-07-14, browser-verified)** —
+    - **Thinner weight sliders**: `.mvi-slider` was native `accent-color` (track too thick);
+      now a custom slim track (3px) + small magenta thumb (Chrome uniform grey track + thumb;
+      Firefox also fills left via `::-moz-range-progress`).
+    - **Map view is now the default MVI sub-view** (`state.mviResultView:'map'`). The toggle
+      relabelled **"Ranking view" | "Map view"** (was "Data grid | Map view"), Map active by
+      default; `#mvi-map-card` shown / `#mvi-grid-card` hidden by default in the markup.
+      `switchPage()` now calls `mviSwitchView(state.mviResultView)` on entering MVI so the
+      Leaflet map lazily inits + shows on first visit.
+    - **Ranking table trimmed to 5 core columns** (Rank / District / Division / MVI Score+tier /
+      Households) — the per-indicator raw-value columns (added in #12) were removed because
+      they forced horizontal scroll; ranking now fits one screen (verified scrollWidth==clientWidth).
+      Per-indicator detail still shows on the Map view tooltip; could return as a row-expand later.
+
 ## 6. Indicator naming — decision & approach
 Problem: dropdown labels were cryptic codes (e.g. `HCR_Upper_pct_HIES_22`, `Kancha_pct`,
 `BEP`) that a non-technical director can't read. Three tiers:

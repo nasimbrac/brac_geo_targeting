@@ -256,16 +256,16 @@
           </section>
 
           <div class="mvi-toolbar">
-            <div class="scale-toggle" id="mvi-view-toggle" role="tablist" aria-label="Data grid or map view">
-              <button class="scale-tab active" data-view="grid" role="tab" aria-selected="true">Data grid</button>
-              <button class="scale-tab" data-view="map" role="tab" aria-selected="false">Map view</button>
+            <div class="scale-toggle" id="mvi-view-toggle" role="tablist" aria-label="Ranking view or map view">
+              <button class="scale-tab" data-view="grid" role="tab" aria-selected="false">Ranking view</button>
+              <button class="scale-tab active" data-view="map" role="tab" aria-selected="true">Map view</button>
             </div>
             <input type="text" class="combobox-input" id="mvi-district-search" placeholder="Search district…" />
             <select id="mvi-division-filter"><option value="">All divisions</option></select>
           </div>
 
-          <!-- Data grid -->
-          <div class="card" id="mvi-grid-card">
+          <!-- Ranking view (data grid) -->
+          <div class="card" id="mvi-grid-card" style="display:none;">
             <div class="card-head">
               <div><h2>District vulnerability ranking</h2></div>
               <button class="btn-ghost" id="mvi-sort-btn">Sort by score
@@ -281,8 +281,8 @@
             <button class="link-btn" id="mvi-viewall-btn">View all 64 regions</button>
           </div>
 
-          <!-- Map -->
-          <div class="card" id="mvi-map-card" style="display:none;">
+          <!-- Map view (default sub-view) -->
+          <div class="card" id="mvi-map-card">
             <div class="card-head map-card-head">
               <h2>Composite Vulnerability Score — spatial distribution</h2>
             </div>

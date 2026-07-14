@@ -39,7 +39,7 @@ const state = {
   mviSortDir: 'desc',
   mviTableExpanded: false,
   mviSelectedDistrict: null,      // deliberately separate from state.selectedDistrict
-  mviResultView: 'grid',          // 'grid' | 'map' — Data grid / Map view toggle
+  mviResultView: 'map',           // 'grid' (Ranking view) | 'map' — Map view is the default
   mviDistrictSearch: '',          // results-header district search (display filter only)
   mviDivisionFilter: ''           // results-header division filter (display filter only)
 };
@@ -1465,15 +1465,10 @@ function bindFilters(){
     // shared "Filters" toggle button now controls whichever one the page shows.
     document.body.classList.toggle('mvi-page-active', isMvi);
     if(isCorrelation && scatterChart) scatterChart.resize();
-    // The MVI map only exists inside its own "Map view" sub-tab (mviSwitchView
-    // lazily creates it on first use). If the sub-tab was already 'map' from a
-    // prior visit, #page-mvi itself just went from display:none to visible, so
-    // Leaflet's cached container size is stale and needs the same nudge used
-    // elsewhere in this file after any hidden->visible transition.
-    if(isMvi && state.mviResultView === 'map' && mviMap){
-      mviMap.invalidateSize();
-      try{ if(mviGeoLayer) mviMap.fitBounds(mviGeoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
-    }
+    // Sync the MVI sub-view on entering the page: shows the right card and lazily
+    // creates the Leaflet map on first use (map is the default sub-view). Idempotent,
+    // and also handles the hidden->visible invalidateSize/fitBounds nudge.
+    if(isMvi) mviSwitchView(state.mviResultView);
   };
   $('page-tab-map').addEventListener('click', ()=>switchPage('map'));
   $('page-tab-correlation').addEventListener('click', ()=>switchPage('correlation'));
@@ -1826,10 +1821,11 @@ function renderMviTable(results){
   const rankByCode = {};
   descOrder.forEach((code,i) => { rankByCode[code] = i + 1; });
 
-  // Dynamic header: Rank / District / Division / MVI Score / Households + one column per selected indicator
+  // Core columns only (Rank / District / Division / MVI Score / Households) so the ranking
+  // fits one screen without horizontal scroll. Per-indicator raw values live on the Map
+  // view tooltip / could return as a row-expand later.
   const thead = $('mvi-table-head');
-  thead.innerHTML = '<th>Rank</th><th>District</th><th>Division</th><th class="num">MVI Score</th><th class="num">Households</th>' +
-    state.mviSelected.map(k => `<th class="num">${mviMetricMeta(k).label}</th>`).join('');
+  thead.innerHTML = '<th>Rank</th><th>District</th><th>Division</th><th class="num">MVI Score</th><th class="num">Households</th>';
 
   let rows = descOrder.filter(code => mviPassesDisplayFilter(results.byCode[code])).map(code => results.byCode[code]);
   if(state.mviSortDir === 'asc') rows = rows.slice().reverse();
@@ -1838,7 +1834,7 @@ function renderMviTable(results){
   const shown = state.mviTableExpanded ? rows : rows.slice(0,10);
   const tb = $('mvi-table-body');
   tb.innerHTML = '';
-  const colCount = 5 + state.mviSelected.length;
+  const colCount = 5;
   shown.forEach(r => {
     const tr = document.createElement('tr');
     tr.dataset.code = r.code;
@@ -1849,9 +1845,6 @@ function renderMviTable(results){
       `<td>${districtDivision(r.name) || '—'}</td>` +
       `<td class="num">${r.score.toFixed(3)} <span class="mvi-tier-pill mvi-tier-${r.tier}">${tierLabel}</span></td>` +
       `<td class="num">${hh}</td>`;
-    r.breakdown.forEach(b => {
-      cells += `<td class="num">${b.raw!=null ? Number(b.raw).toLocaleString('en-US',{maximumFractionDigits:2}) : '—'}</td>`;
-    });
     tr.innerHTML = cells;
     tr.addEventListener('click', ()=>mviSelectDistrict(r.code));
     tb.appendChild(tr);

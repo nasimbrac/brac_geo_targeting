@@ -476,7 +476,17 @@
   .mvi-weight-row:last-child{border-bottom:none;}
   .mvi-weight-top{display:flex; align-items:center; justify-content:space-between; gap:8px;}
   .mvi-weight-row .mvi-label{flex:1; min-width:0; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-  .mvi-weight-row .mvi-slider{width:100%; accent-color:var(--magenta);}
+  /* Thin custom track (native accent-color track rendered too thick). Chrome shows a
+     slim grey track + magenta thumb; Firefox additionally fills the left side magenta. */
+  .mvi-weight-row .mvi-slider{
+    -webkit-appearance:none; appearance:none; width:100%; height:14px;
+    background:transparent; cursor:pointer; margin:2px 0;
+  }
+  .mvi-weight-row .mvi-slider::-webkit-slider-runnable-track{ height:3px; border-radius:999px; background:var(--border); }
+  .mvi-weight-row .mvi-slider::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:12px; height:12px; margin-top:-4.5px; border-radius:50%; background:var(--magenta); }
+  .mvi-weight-row .mvi-slider::-moz-range-track{ height:3px; border-radius:999px; background:var(--border); }
+  .mvi-weight-row .mvi-slider::-moz-range-progress{ height:3px; border-radius:999px; background:var(--magenta); }
+  .mvi-weight-row .mvi-slider::-moz-range-thumb{ width:12px; height:12px; border:none; border-radius:50%; background:var(--magenta); }
   .mvi-weight-row .mvi-num{
     flex:0 0 52px; width:52px; padding:4px 6px; text-align:right;
     border:0.5px solid var(--border); border-radius:6px; font-size:13px; font-variant-numeric:tabular-nums;
