@@ -1,0 +1,520 @@
+  :root{
+    --magenta:#EC008C;            /* primary / choropleth high */
+    --teal:#007161;               /* data-viz (scatter quadrant) */
+    --blue:#3DB7E4; --amber:#FFA100; --purple:#80379B;
+    --text:#27281C; --text-muted:#4D4F53;
+    --bg:#FFFFFF; --surface:#F8F8F6; --page:#F4F2F7; --border:#D3D1C7;
+    --map-low:#FEEBF6;            /* choropleth low (light magenta tint) */
+    --nodata:#E8E8E4;             /* null fill */
+    --radius:8px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--page);
+    color:var(--text);
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:14px; line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  button,select,input{font-family:inherit;}
+
+  /* ---------- App shell ---------- */
+  .app{display:flex; min-height:100vh; align-items:flex-start;}
+
+  /* ---------- Sidebar (Data filters, fixed + collapsible, pushes content) ---------- */
+  .sidebar{
+    background:var(--surface);
+    border-right:0.5px solid var(--border);
+    padding:28px 24px;
+    display:flex; flex-direction:column;
+    flex:0 0 320px; width:320px; height:100vh; overflow-y:auto; overflow-x:hidden;
+    position:sticky; top:0;
+    transition:flex-basis 0.25s ease, width 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
+  }
+  .sidebar.collapsed{
+    flex-basis:0; width:0; padding-left:0; padding-right:0; border-right:none;
+    opacity:0; pointer-events:none;
+  }
+  .sidebar-close{background:none; border:none; color:var(--text-muted); cursor:pointer; padding:6px; line-height:0;}
+  .sidebar-close:hover{color:var(--text);}
+  .sidebar-head{
+    display:flex; align-items:center; justify-content:space-between;
+    background:transparent; color:var(--text);
+    border-bottom:0.5px solid var(--border);
+    margin:-28px -24px 18px; padding:18px 24px 14px;
+  }
+  .sidebar-head h2{color:var(--text); font-size:15px;}
+  .sidebar-head h2 svg{color:var(--magenta);}
+  .filter-divider{border-top:0.5px solid var(--border); margin:18px 0;}
+  .filter-section-label{font-size:13px; font-weight:700; color:var(--text); margin:0 0 12px;}
+  .field .filter-section-label{margin:0;}
+
+  .dashboard-title{font-size:20px; font-weight:700; color:var(--text); margin:0; text-align:center; justify-self:stretch; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis;}
+  .topbar-row{
+    display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:16px;
+    margin-bottom:12px; padding-bottom:12px; border-bottom:0.5px solid var(--border);
+  }
+  .topbar-left{display:flex; align-items:center; gap:20px; justify-self:start;}
+  .brand-logo-link{display:inline-flex; align-items:center; line-height:0; flex:0 0 auto;}
+  .brand-logo{height:26px; width:auto; display:block;}
+  .filters-toggle, .home-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    height:34px; padding:0 14px; flex:0 0 auto;
+    border-radius:999px; font-size:13px; font-weight:600; cursor:pointer;
+    text-decoration:none; white-space:nowrap;
+  }
+  .filters-toggle{border:0.5px solid var(--border); background:var(--bg); color:var(--text);}
+  .filters-toggle:hover{background:var(--surface);}
+  .home-btn{border:0.5px solid var(--border); background:var(--bg); color:var(--magenta);}
+  .home-btn:hover{background:var(--surface);}
+
+  /* Top-level page nav (Map View / Correlation View) */
+  .page-tabs{display:flex; gap:18px; justify-self:end;}
+  .page-tab-btn{
+    display:flex; align-items:center; gap:6px;
+    padding:6px 2px; background:none; border:none; cursor:pointer;
+    font-size:14px; font-weight:600; color:var(--text-muted);
+    border-bottom:2px solid transparent;
+  }
+  .page-tab-btn:hover{color:var(--text);}
+  .page-tab-btn.active{color:var(--magenta); border-bottom-color:var(--magenta);}
+
+  /* Right group of the single navbar: page tabs + BRAC logo (logo at the far right).
+     gap gives the logo its brand-mandated clear space (exclusion zone); the logo keeps
+     its natural aspect ratio (width:auto) and is never rotated/recoloured. */
+  .topbar-right{display:flex; align-items:center; gap:24px; justify-self:end;}
+  .topbar-right .page-tabs{justify-self:auto;}
+  .topbar-right .brand-logo-link{padding-left:4px;}
+
+  /* In-page Filters bar (above content, out of the navbar). */
+  .filter-bar{display:flex; align-items:center; margin-bottom:12px;}
+
+  /* ---------- Main ---------- */
+  .main{padding:14px 28px; min-width:0; flex:1;}
+  .topbar{display:none;}
+
+  .card{
+    background:var(--bg);
+    border:0.5px solid var(--border);
+    border-radius:var(--radius);
+    padding:12px 14px;
+  }
+  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+  .card-head h2{font-size:16px; font-weight:600; margin:0;}
+  .card-head .sub{font-size:13px; color:var(--text-muted); margin-top:2px;}
+
+  /* Spatial distribution card head: title (shows the selected metric name) is
+     truly centered regardless of the action-button cluster's width. */
+  .map-card-head{position:relative;}
+  .map-card-head h2{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    text-align:center; max-width:55%; white-space:nowrap; overflow:hidden;
+    text-overflow:ellipsis; pointer-events:none;
+  }
+  .map-head-actions{margin-left:auto; display:flex; gap:2px;}
+
+  /* Card title with leading icon + subtitle (correlation cards) */
+  .card-title{display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;}
+  .card-title-main{min-width:0;}
+  .card-title h2{font-size:16px; font-weight:700; margin:0;}
+  .card-title-icon{width:20px; height:20px; flex:0 0 auto; color:var(--magenta); margin-top:1px;}
+  .card-subtitle{font-size:12px; color:var(--text-muted); margin-top:2px;}
+  .title-line{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .pearson-stat{font-size:11.5px; font-weight:600; color:var(--text-muted); white-space:nowrap;}
+
+  /* Actual / Normalized scale toggle (scatter card) */
+  .scale-toggle{margin-left:auto; flex:0 0 auto; display:inline-flex; gap:2px;
+    background:var(--surface); border:0.5px solid var(--border); border-radius:999px; padding:2px;}
+  .scale-tab{padding:3px 9px; border:none; background:none; border-radius:999px;
+    font-size:10.5px; font-weight:600; color:var(--text-muted); cursor:pointer; white-space:nowrap;}
+  .scale-tab:hover{color:var(--text);}
+  .scale-tab.active{background:var(--magenta); color:#fff;}
+  .icon-btn{
+    background:none; border:none; color:var(--text-muted);
+    cursor:pointer; padding:6px; border-radius:6px; line-height:0;
+  }
+  .icon-btn:hover{background:var(--surface); color:var(--text);}
+  .icon-btn svg{width:18px;height:18px;}
+
+  /* KPI strip */
+  .kpi-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:10px;}
+  .kpi{position:relative; overflow:hidden; padding:12px 14px;}
+  .kpi::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:2px;
+    background-image:linear-gradient(to right, rgba(236,0,140,0.15) 60%, transparent 60%);
+    background-size:8px 2px; background-repeat:repeat-x;
+  }
+  .kpi .label{display:block; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted);}
+  .kpi .value{display:block; font-size:20px; font-weight:700; margin-top:5px; line-height:1.1;}
+  .kpi-dist{
+    display:block; font-size:12px; font-weight:600; color:var(--magenta);
+    margin-top:3px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .kpi-dist:empty{display:none;}
+  .kpi-dist:hover{text-decoration:underline;}
+
+  /* Grid rows */
+  .row-mid{display:grid; grid-template-columns:1.1fr 1fr; gap:10px; margin-bottom:10px;}
+  .row-mid.cols-equal{grid-template-columns:1.6fr 1fr;}
+  .row-bot{margin-bottom:10px;}
+
+  /* Map */
+  #map{height:420px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface);}
+  .map-msg{
+    padding:10px 14px; font-size:13px; color:var(--text-muted);
+    background:var(--surface); border:0.5px solid var(--border);
+    border-radius:6px; margin-bottom:10px; display:none;
+  }
+
+  /* Permanent short (3-letter) district labels on the choropleth */
+  .district-label-icon{ pointer-events:none; }
+  .district-label-icon span{
+    display:block; text-align:center; font-size:9.5px; font-weight:700;
+    color:#3a2140; letter-spacing:0.02em; white-space:nowrap;
+    text-shadow:0 0 2px #fff, 0 0 3px #fff, 0 0 3px #fff;
+  }
+
+  /* Full screen map: card breaks out to a fixed overlay that fills the viewport */
+  .card.map-fullscreen{
+    position:fixed; inset:16px; z-index:2000;
+    box-shadow:0 25px 70px rgba(0,0,0,.4);
+  }
+  .card.map-fullscreen #map{ flex:1; height:auto; }
+  body.map-fullscreen-active{ overflow:hidden; }
+  .legend{margin-top:10px;}
+  .legend-bar{height:8px; border-radius:999px; background:linear-gradient(to right,var(--map-low),var(--magenta));}
+  .legend-row{display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-bottom:6px;}
+  .legend-row .cap{font-weight:600; color:var(--text);}
+  .legend-row span:not(.cap){font-weight:700; color:var(--text);}
+
+  /* Filters */
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
+  .field label{font-size:13px; font-weight:600;}
+  .field select{
+    width:100%; padding:10px 12px; border:0.5px solid var(--border);
+    border-radius:var(--radius); background:var(--bg); color:var(--text); font-size:14px;
+  }
+  .field select:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 1px var(--magenta);}
+  .toggle-row{display:flex; align-items:center; gap:8px; margin:6px 0 16px; font-size:12px; color:var(--text-muted);}
+  .toggle-row input{accent-color:var(--magenta);}
+
+  /* Searchable metric combobox (sits in front of a hidden <select> that remains the source of truth) */
+  .combobox{position:relative;}
+  .combobox-input{
+    width:100%; padding:10px 12px; border:0.5px solid var(--border);
+    border-radius:var(--radius); background:var(--bg); color:var(--text); font-size:14px;
+  }
+  .combobox-input:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 1px var(--magenta);}
+  .combobox-list{
+    position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:50;
+    max-height:280px; overflow-y:auto;
+    background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius);
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  }
+  .combobox-group-label{
+    padding:8px 12px 4px; font-size:11px; font-weight:600; text-transform:uppercase;
+    letter-spacing:0.04em; color:var(--text-muted);
+  }
+  .combobox-option{padding:8px 12px; font-size:14px; cursor:pointer;}
+  .combobox-option:hover, .combobox-option.active{background:var(--surface);}
+
+  .range-head{display:flex; justify-content:space-between; align-items:center;}
+  .range-head .vals{font-size:12px; color:var(--text-muted);}
+  .dual{position:relative; height:28px;}
+  .dual input[type=range]{
+    position:absolute; left:0; top:8px; width:100%; margin:0; height:4px;
+    background:none; pointer-events:none; -webkit-appearance:none; appearance:none;
+  }
+  .dual .track{position:absolute; left:0; top:8px; width:100%; height:4px; border-radius:999px; background:var(--border);}
+  .dual .fill{position:absolute; top:8px; height:4px; border-radius:999px; background:#4D4F53;}
+  .dual input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; pointer-events:auto; width:16px; height:16px; border-radius:50%;
+    background:var(--bg); border:2px solid #4D4F53; cursor:pointer; margin-top:0;
+  }
+  .dual input[type=range]::-moz-range-thumb{
+    pointer-events:auto; width:16px; height:16px; border-radius:50%;
+    background:var(--bg); border:2px solid #4D4F53; cursor:pointer;
+  }
+  .btn-primary{
+    width:100%; padding:12px; border:none; border-radius:var(--radius);
+    background:var(--magenta); color:#fff; font-size:14px; font-weight:600; cursor:pointer;
+  }
+  .btn-primary:hover{opacity:0.92;}
+  .btn-primary:focus{outline:2px solid var(--purple); outline-offset:2px;}
+
+  /* Table */
+  .btn-ghost{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:7px 12px; border:0.5px solid var(--border); border-radius:var(--radius);
+    background:var(--bg); color:var(--text); font-size:13px; font-weight:500; cursor:pointer;
+  }
+  .btn-ghost:hover{background:var(--surface);}
+  .btn-ghost svg{width:16px;height:16px;}
+  table{width:100%; border-collapse:collapse;}
+  thead th{
+    background:var(--surface); text-align:left; font-size:13px; font-weight:600;
+    padding:11px 16px; border-bottom:0.5px solid var(--border);
+  }
+  thead th.num{text-align:right;}
+  tbody td{padding:11px 16px; border-bottom:0.5px solid var(--border); font-size:14px;}
+  tbody td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  tbody td.dist{color:var(--text); font-weight:500;}
+  tbody tr{cursor:pointer;}
+  tbody tr:hover{background:var(--surface);}
+  tbody tr.selected{background:rgba(236,0,140,0.08);}
+  tbody tr.selected td.dist{color:var(--magenta); font-weight:700;}
+  .row-mid > .card{display:flex; flex-direction:column; min-width:0;}
+  /* flex:1 (no max-height cap) lets the list fill the card down to the map
+     card's height instead of stopping short and leaving blank space below. */
+  .table-scroll{flex:1; overflow:auto;}
+  .table-scroll.expanded{flex:1; overflow:auto;}
+  .icon-btn[disabled]{opacity:.4; cursor:not-allowed;}
+  .link-btn{
+    width:100%; margin-top:12px; padding:9px; background:none;
+    border:0.5px solid var(--border); border-radius:var(--radius);
+    color:var(--magenta); font-weight:600; font-size:13px; cursor:pointer;
+  }
+  .link-btn:hover{background:var(--surface);}
+
+  /* Scatter — the main visual is the hero element: largest, with clean space */
+  .chart-wrap{position:relative; height:352px; margin:10px 4px 8px;}
+  .quad-legend{margin-top:8px;}
+  .quad-legend .qdot{width:10px; height:10px; border-radius:50%; flex:0 0 auto; display:inline-block;}
+  .quad-insight{border:0.5px solid var(--border); border-radius:var(--radius); background:var(--surface); padding:10px 12px;}
+  .quad-insight-empty{display:flex; align-items:center; padding:8px 12px;}
+  .quad-insight-head{display:flex; align-items:center; gap:8px; font-size:13.5px; margin-bottom:3px;}
+  .quad-insight-row{font-size:11.5px; color:var(--text); margin:0 0 3px;}
+  .qi-label{font-weight:600; color:var(--text-muted);}
+  .quad-insight-text{font-size:11.5px; color:var(--text-muted); margin:5px 0 0; line-height:1.4;}
+
+  /* Quadrant chips (clickable legend above the scatter chart) — single row, extra compact */
+  .quad-chips{display:flex; flex-wrap:wrap; gap:5px 6px; margin:7px 0;}
+  .qchip{
+    display:inline-flex; align-items:center; gap:5px;
+    padding:3px 8px; border:1px solid var(--border); border-radius:999px;
+    background:var(--bg); color:var(--text); font-size:10px; font-weight:500;
+    white-space:nowrap; cursor:pointer;
+  }
+  .qchip:hover{border-color:var(--qc, var(--magenta));}
+  .qchip.active{background:var(--qc, var(--magenta)); border-color:var(--qc, var(--magenta)); color:#fff;}
+  .qchip-dot{width:6px; height:6px; border-radius:50%; flex:0 0 auto;}
+  .qchip.active .qchip-dot{background:#fff !important;}
+
+  /* X/Y axis selectors — flat, icon + dropdown inline, no labels, minimal space */
+  .axis-row{display:flex; gap:10px; margin-bottom:8px;}
+  .axis-field{flex:1; min-width:0; display:flex; align-items:center; gap:6px;}
+  .axis-icon{width:15px; height:15px; flex:0 0 auto; color:var(--magenta);}
+  .axis-label{flex:0 0 auto; font-size:12px; font-weight:700; color:var(--magenta);}
+  .axis-field .combobox{flex:1; min-width:0;}
+  .axis-field .combobox-input{padding:5px 8px; font-size:12px; background:var(--bg);}
+  .axis-field select{padding:5px 8px; font-size:12px;}
+
+  /* Download Full List button (pinned to bottom of the table card) */
+  .download-btn{display:flex; align-items:center; justify-content:center; gap:8px;}
+  .download-btn svg{width:16px; height:16px; flex:0 0 auto;}
+
+  /* 4-quadrant district list (sortable table) — compact */
+  .quad-stack-wrap{overflow:auto; flex:1; min-height:0; max-height:430px;}
+  .quad-stack-wrap table{table-layout:fixed;}
+  .quad-stack-wrap th:first-child, .quad-stack-wrap td:first-child{width:36%;}
+  .quad-stack-wrap thead th{padding:9px 12px; font-size:12px;}
+  .quad-stack-wrap tbody td{padding:8px 12px; font-size:12.5px;}
+  .qt-sortable{cursor:pointer; user-select:none;}
+  .qt-sortable:hover{color:var(--magenta);}
+  .qt-dist{font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+  @media (max-width:1024px){
+    .main{padding:22px 20px;}
+    .kpi-strip{grid-template-columns:repeat(2,1fr);}
+    .row-mid, .row-mid.cols-equal{grid-template-columns:1fr;}
+    /* Below this width the MVI page flows/scrolls normally instead of locking to the
+       viewport height (a fixed height can't stack the sidebar + results sensibly). */
+    #page-mvi{height:auto;}
+    .mvi-results-col{height:auto; overflow:visible;}
+    #mvi-map{height:460px; flex:none;}
+    .topbar-row{display:flex; flex-wrap:wrap; row-gap:8px;}
+    .dashboard-title{order:3; width:100%; text-align:center; white-space:normal;}
+  }
+  @media (max-width:768px){
+    .app{display:block;}
+    .sidebar{
+      position:relative;
+      width:100%;
+      flex:0 0 100%;
+      height:auto;
+      max-height:none;
+      overflow:visible;
+    }
+    .sidebar.collapsed{display:none;}
+    .main{padding:16px 12px;}
+    .topbar-row{
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .page-tabs{width:100%; justify-content:space-between;}
+    .page-tab-btn{flex:1; justify-content:center;}
+    .kpi-strip{grid-template-columns:1fr 1fr; gap:12px;}
+    .card{padding:16px;}
+    .card-head{flex-wrap:wrap; gap:8px;}
+    .card-head h2{font-size:16px;}
+    .row-mid > .card{min-width:0;}
+    #map{height:420px;}
+    .chart-wrap{height:420px;}
+    .quad-stack-wrap{max-height:420px;}
+    thead th, tbody td{padding:10px 12px; font-size:12px;}
+  }
+  @media (max-width:480px){
+    .sidebar{flex-basis:100%; width:100%;}
+    .sidebar.collapsed{flex-basis:0; width:0;}
+    .main{padding:12px 10px;}
+    .kpi-strip{grid-template-columns:1fr;}
+    .page-tab-btn{font-size:13px;}
+    .card-head .sub{font-size:12px;}
+    #map{height:360px;}
+    .chart-wrap{height:360px;}
+    .axis-row{flex-direction:column;}
+    .legend-row{font-size:11px;}
+    .btn-primary, .link-btn{padding:10px;}
+  }
+
+  /* ---------- MVI (Composite Vulnerability Score tool) ---------- */
+  /* Each page has ONE left sidebar toggled by the same "Filters" button:
+     Map/Correlation show the Data-filters sidebar (#sidebar); MVI shows its own
+     Metric-repository sidebar (#mvi-sidebar). Only one is in the DOM flow at a time. */
+  body.mvi-page-active #sidebar{ display:none; }
+  body:not(.mvi-page-active) #mvi-sidebar{ display:none; }
+  @media (min-width:769px){ .mvi-sidebar{ flex-basis:360px; width:360px; } }
+
+  /* One-screen layout: the MVI results area owns the viewport height so its table
+     and map scroll INTERNALLY and the page itself never scrolls (matches the
+     Map/Correlation single-screen feel). The Metric-repository picker now lives in
+     the collapsible #mvi-sidebar, which scrolls on its own like the Data-filters
+     sidebar, so no per-region flex height juggling is needed here anymore. */
+  #page-mvi{ height:calc(100vh - 96px); }  /* navbar + main padding (Filters is back in the navbar) */
+  .mvi-results-col{ display:flex; flex-direction:column; height:100%; min-height:0; overflow:hidden; gap:10px; margin-bottom:0; }
+  /* Compact header so the KPI cards sit higher / closer to the top */
+  .mvi-results-head{ margin:0; }
+  .mvi-results-head h2{ font-size:14px; margin:0; line-height:1.2; }
+  .mvi-results-head .sub{ font-size:11px; color:var(--text-muted); }
+  .mvi-results-col{ gap:8px; }
+  /* Selected indicators already appear in the Weights list below, so the separate
+     chips row is redundant clutter — hidden (user request). Removal is via each
+     weight row's × or the metric-list checkbox. */
+  #mvi-chips{ display:none; }
+  /* More compact search box on the left */
+  #mvi-picker-search{ padding:7px 10px; font-size:13px; }
+  /* × control on each weight row (replaces the removed chips' × for deselecting) */
+  .mvi-weight-remove{ background:none; border:none; color:var(--text-muted); cursor:pointer;
+    font-size:16px; line-height:1; padding:0 2px; flex:0 0 auto; }
+  .mvi-weight-remove:hover{ color:var(--magenta); }
+  /* Caption removed (user request) — the search bar sits right under the title. */
+  #mvi-picker-sub{ display:none; }
+  /* Tighter weight rows + header so all 10 sliders + footer fit one screen. */
+  .mvi-weight-row{ padding:6px 0; gap:3px; }
+  #mvi-picker-search{ margin-bottom:6px !important; }
+  /* Extra compaction so the whole MVI page fits one screen: smaller KPI boxes, tighter
+     rows, drop the subtitle. (user: font choto, space komano, box choto) */
+  .mvi-results-head .sub{ display:none; }
+  .mvi-results-col .kpi{ padding:8px 12px; }
+  .mvi-results-col .kpi .label{ font-size:10px; }
+  .mvi-results-col .kpi .value{ font-size:20px; }
+  .mvi-metric-row{ padding:5px 10px; font-size:12px; }
+  .mvi-weight-row .mvi-label{ font-size:12px; }
+  .mvi-weight-sum{ margin-top:6px; padding:6px 10px; font-size:12px; }
+  .mvi-picker-actions{ margin-top:6px; }
+  #mvi-calc-btn{ margin-top:6px !important; }
+  .mvi-results-col .kpi-strip{ margin-bottom:0; flex:0 0 auto; }
+  .mvi-results-col .mvi-toolbar{ margin-bottom:0; flex:0 0 auto; }
+  #mvi-grid-card, #mvi-map-card{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; margin-bottom:0; }
+  #mvi-grid-card .table-scroll{ flex:1; }
+  #mvi-map{ flex:1; min-height:440px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface); }
+
+  .mvi-picker-scroll{
+    /* flex-shrink:0 so this scroll box never collapses to 0 height inside the
+       flex-column sidebar (a scroll-container flex item has min-height:auto = 0,
+       which the tall weight list would otherwise squeeze away — hiding search
+       results). Compact height: ~3-4 rows visible, then scroll to select. */
+    flex:0 0 auto;
+    max-height:150px; min-height:44px; overflow-y:auto; border:0.5px solid var(--border);
+    border-radius:var(--radius); margin-bottom:10px;
+  }
+  /* No height cap — up to 10 weight rows stack at natural height; the picker
+     card itself scrolls if the combined content is taller than the viewport. */
+  #mvi-weight-list{ margin-bottom:4px; }
+  .mvi-metric-group{
+    position:sticky; top:0; padding:7px 10px 5px; font-size:11px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); background:var(--surface);
+  }
+  .mvi-metric-row{display:flex; align-items:center; gap:8px; padding:7px 10px; font-size:13px; cursor:pointer;}
+  .mvi-metric-row:hover{background:var(--surface);}
+  .mvi-metric-row.selected{background:rgba(236,0,140,0.08);}
+  .mvi-metric-row .mvi-metric-label{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+  .mvi-polarity-tag{
+    flex:0 0 auto; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;
+    border:1px solid var(--border); color:var(--text-muted); cursor:pointer; white-space:nowrap;
+  }
+  .mvi-polarity-tag.inverse{color:#fff; background:var(--purple); border-color:var(--purple);}
+
+  .mvi-chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;}
+  .mvi-chip{
+    display:inline-flex; align-items:center; gap:6px; padding:4px 6px 4px 10px;
+    border-radius:999px; background:rgba(236,0,140,0.08); color:var(--magenta); font-size:12px; font-weight:600;
+  }
+  .mvi-chip button{background:none; border:none; color:var(--magenta); cursor:pointer; padding:2px; line-height:0; font-size:14px;}
+
+  .mvi-weight-row{
+    display:flex; flex-direction:column; gap:4px;
+    padding:8px 0; border-bottom:0.5px solid var(--border);
+  }
+  .mvi-weight-row:last-child{border-bottom:none;}
+  .mvi-weight-top{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .mvi-weight-row .mvi-label{flex:1; min-width:0; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .mvi-weight-row .mvi-slider{width:100%; accent-color:var(--magenta);}
+  .mvi-weight-row .mvi-num{
+    flex:0 0 52px; width:52px; padding:4px 6px; text-align:right;
+    border:0.5px solid var(--border); border-radius:6px; font-size:13px; font-variant-numeric:tabular-nums;
+  }
+
+  .mvi-weight-sum{
+    margin-top:10px; padding:8px 12px; border-radius:6px; font-size:13px; font-weight:700;
+    background:var(--surface); border:0.5px solid var(--border);
+  }
+  .mvi-weight-sum.ok{color:var(--teal); border-color:var(--teal);}
+  .mvi-weight-sum.warn{color:var(--magenta); border-color:var(--magenta);}
+
+  .mvi-picker-actions{display:flex; gap:8px; margin-top:10px;}
+  .mvi-picker-actions .btn-ghost{flex:1; justify-content:center;}
+
+  .mvi-toolbar{display:flex; gap:10px; align-items:center; margin-bottom:10px; flex-wrap:wrap;}
+  /* Keep the Data grid / Map view toggle on the left and push the compact
+     search + division controls to the right, so the bar no longer stretches
+     the search box across the whole width. */
+  .mvi-toolbar .scale-toggle{margin-right:auto;}
+  .mvi-toolbar .combobox-input{flex:0 0 200px; width:200px; max-width:45%; min-width:140px; padding:8px 10px; font-size:13px;}
+  .mvi-toolbar select{
+    flex:0 0 auto; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius);
+    font-size:13px; background:var(--bg); color:var(--text);
+  }
+  @media (max-width:640px){
+    .mvi-toolbar .scale-toggle{margin-right:0;}
+    .mvi-toolbar .combobox-input{flex:1 1 100%; width:auto; max-width:none;}
+    .mvi-toolbar select{flex:1 1 100%;}
+  }
+
+  .mvi-tier-pill{
+    display:inline-block; padding:2px 8px; border-radius:999px;
+    font-size:10px; font-weight:700; color:#fff; white-space:nowrap;
+  }
+  .mvi-tier-low{background:var(--teal);}
+  .mvi-tier-moderate{background:var(--blue);}
+  .mvi-tier-high{background:var(--amber);}
+  .mvi-tier-severe{background:var(--magenta);}
+  .mvi-tier-nodata{background:var(--text-muted);}
+  tr.mvi-excluded-row td{color:var(--text-muted); font-style:italic;}

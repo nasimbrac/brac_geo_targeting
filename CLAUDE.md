@@ -360,6 +360,17 @@ it had hardcoded values and placeholder images, so we wrote a fresh compliant bu
       `instruction.md`, the `MVI.html`/`mvi2.html` prototypes) — those references are now
       historical; the files live only in git history.**
 
+17. **Split into css/js files (2026-07-14, browser-verified)** — `index.html` was ~3,000
+    lines (HTML + inline `<style>` + inline `<script>`). Extracted into **`css/styles.css`**
+    (~520 lines) and **`js/app.js`** (~2,179 lines); `index.html` is now ~308 lines of
+    structure that `<link>`s the CSS and `<script src>`s the JS. **Still no build step** —
+    just three files served statically (open via `python -m http.server`). CDN libs
+    (Leaflet, Chart.js) stay in `<head>`; data files stay in root so the `fetch('./…')`
+    paths are unchanged. (So §1's "single self-contained `index.html`" is now historical —
+    the app is `index.html` + `css/styles.css` + `js/app.js` + the 3 data JSONs + logo.png.)
+    Verified after the split: CSS applied (magenta button), JS ran (KPIs computed, table
+    rendered), page-tab switching works.
+
 ## 6. Indicator naming — decision & approach
 Problem: dropdown labels were cryptic codes (e.g. `HCR_Upper_pct_HIES_22`, `Kancha_pct`,
 `BEP`) that a non-technical director can't read. Three tiers:
