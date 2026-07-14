@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BRAC · Composite Vulnerability Scoring Tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  :root{
+    --pink:#E4007C;
+    --pink-dark:#B5005F;
+    --pink-soft:#FCE4F1;
+    --purple:#5B2A7A;
+    --charcoal:#2B2B2B;
+    --muted:#6C6473;
+    --line:#E4DFEA;
+    --bg:#F6F4F9;
+    --card:#FFFFFF;
+    --radius:12px;
+    --ok:#1D8A5D;
+    --ok-bg:#E5F5EE;
+    --warn:#B5124E;
+    --warn-bg:#FCE9EF;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--bg); color:var(--charcoal);
+    font-family:'Inter',Arial,sans-serif; font-size:14px;
+  }
+  h1,h2,h3{font-family:'Inter',Arial,sans-serif; font-weight:700; margin:0;}
+
+  /* ---------- Header ---------- */
+  .topbar{
+    background:var(--pink);
+    background-image:linear-gradient(95deg, var(--purple) 0%, var(--pink) 55%, var(--pink) 100%);
+    color:#fff; padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    position:sticky; top:0; z-index:50;
+  }
+  .topbar .brand{display:flex; align-items:center; gap:12px;}
+  .brand .logo{
+    width:36px;height:36px;border-radius:9px;background:#fff;color:var(--pink);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;
+  }
+  .brand .titles .eyebrow{font-size:10.5px; opacity:.88; letter-spacing:.08em; text-transform:uppercase; font-weight:600;}
+  .brand .titles h1{font-size:17px; font-weight:700;}
+  .topbar .tag{
+    font-size:10.5px; background:rgba(255,255,255,.2); padding:5px 11px; border-radius:20px;
+    letter-spacing:.02em; white-space:nowrap;
+  }
+  .menu-btn{
+    display:none; width:34px; height:34px; border-radius:8px; border:none; background:rgba(255,255,255,.18);
+    color:#fff; font-size:18px; cursor:pointer; align-items:center; justify-content:center;
+  }
+
+  /* ---------- Layout ---------- */
+  .app{display:flex; align-items:flex-start;}
+  .sidebar{
+    width:308px; flex:0 0 308px; background:var(--card); border-right:1px solid var(--line);
+    min-height:calc(100vh - 60px); padding:18px; position:sticky; top:60px;
+    max-height:calc(100vh - 60px); overflow-y:auto; transition:margin-left .2s ease;
+  }
+  .sidebar.collapsed{margin-left:-308px;}
+  .sidebar h2{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--purple); margin-bottom:10px;}
+  .sidebar .section{margin-bottom:20px;}
+  .hint{font-size:11px; color:var(--muted); margin-bottom:10px; line-height:1.5;}
+
+  .indicator-item{
+    border:1.3px solid var(--line); border-radius:10px; padding:9px 10px; margin-bottom:8px;
+  }
+  .indicator-item .check-row{display:flex; align-items:flex-start; gap:8px; cursor:pointer;}
+  .indicator-item input[type=checkbox]{margin-top:2px; accent-color:var(--pink); width:15px; height:15px; cursor:pointer;}
+  .indicator-item .label{font-size:12.6px; font-weight:600; line-height:1.3;}
+  .indicator-item .meta{font-size:10.5px; color:var(--muted); margin-top:1px;}
+  .indicator-item .inverse-badge{
+    font-size:9px; font-weight:700; color:var(--purple); background:#EFE6F5; padding:1px 6px;
+    border-radius:10px; margin-left:6px; letter-spacing:.02em;
+  }
+
+  .weight-controls{display:none; margin-top:9px; padding-top:9px; border-top:1px dashed var(--line);}
+  .indicator-item.active .weight-controls{display:block;}
+  .weight-row{display:flex; align-items:center; gap:8px;}
+  .weight-row input[type=range]{
+    flex:1; -webkit-appearance:none; height:5px; border-radius:4px; background:var(--pink-soft); outline:none;
+  }
+  .weight-row input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:15px; height:15px; border-radius:50%;
+    background:var(--pink); cursor:pointer; border:2px solid #fff; box-shadow:0 0 0 1px var(--pink);
+  }
+  .weight-row .num{
+    width:56px; padding:4px 6px; border-radius:6px; border:1.3px solid var(--line); font-size:12px;
+    text-align:center; font-weight:600; font-family:'Inter';
+  }
+  .weight-row .pct{font-size:11px; color:var(--muted);}
+
+  .weight-sum{
+    display:flex; align-items:center; gap:8px; padding:10px 11px; border-radius:9px; font-size:12.3px; font-weight:600;
+    margin-top:4px;
+  }
+  .weight-sum.ok{background:var(--ok-bg); color:var(--ok);}
+  .weight-sum.warn{background:var(--warn-bg); color:var(--warn);}
+  .dot{width:7px;height:7px;border-radius:50%; flex:0 0 auto;}
+  .dot.ok{background:var(--ok);}
+  .dot.warn{background:var(--warn);}
+
+  .btn{
+    width:100%; padding:11px; border-radius:9px; border:none; font-weight:700;
+    font-size:13px; cursor:pointer; letter-spacing:.01em; font-family:'Inter';
+  }
+  .btn-primary{background:var(--pink); color:#fff; margin-top:10px;}
+  .btn-primary:hover:not(:disabled){background:var(--pink-dark);}
+  .btn-primary:disabled{background:#E9C7DA; color:#fff; cursor:not-allowed;}
+  .btn-ghost{background:transparent; color:var(--muted); border:1.3px solid var(--line); margin-top:8px; font-weight:600;}
+  .btn-ghost:hover{border-color:var(--purple); color:var(--purple);}
+  .btn-row{display:flex; gap:8px; margin-top:8px;}
+  .btn-row .btn-ghost{margin-top:0; flex:1; padding:9px 4px; font-size:11.5px;}
+
+  .note{font-size:10.8px; color:var(--muted); margin-top:12px; line-height:1.55;}
+
+  /* ---------- Main ---------- */
+  .main{flex:1; min-width:0; padding:20px 22px; overflow-x:hidden;}
+
+  .kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px;}
+  .kpi-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px;
+    border-top:3px solid var(--pink);
+  }
+  .kpi-card.min{border-top-color:#1B9E9E;}
+  .kpi-card.avg{border-top-color:var(--purple);}
+  .kpi-card.std{border-top-color:#E8A33D;}
+  .kpi-card .kpi-label{font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:700;}
+  .kpi-card .kpi-value{font-size:23px; font-weight:800; margin-top:5px; color:var(--charcoal);}
+  .kpi-card .kpi-sub{font-size:11.5px; color:var(--muted); margin-top:2px;}
+
+  .tabs{display:none; gap:6px; margin-bottom:14px;}
+  .tab-btn{
+    padding:8px 16px; border-radius:8px; border:1.3px solid var(--line); background:#fff; color:var(--muted);
+    font-weight:700; font-size:12.5px; cursor:pointer;
+  }
+  .tab-btn.active{background:var(--pink); color:#fff; border-color:var(--pink);}
+
+  .split{display:grid; grid-template-columns:1.1fr 1fr; gap:18px; align-items:start;}
+  .panel{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px; min-width:0;}
+  .panel-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; flex-wrap:wrap; gap:6px;}
+  .panel-head h3{font-size:14.5px;}
+  .panel-head .sub{font-size:11px; color:var(--muted);}
+
+  #map{height:460px; border-radius:9px; overflow:hidden; z-index:1;}
+  .legend-box{
+    display:flex; align-items:center; gap:8px; margin-top:10px; font-size:10.8px; color:var(--muted);
+  }
+  .legend-gradient{
+    flex:1; height:9px; border-radius:5px;
+    background:linear-gradient(90deg, #1B9E9E, #E8A33D, #EC008C, #6E1240);
+  }
+
+  .table-scroll{max-height:460px; overflow-x:auto; overflow-y:auto;}
+  table{width:100%; border-collapse:collapse; font-size:11.8px;}
+  th{
+    text-align:left; font-size:10.2px; text-transform:uppercase; letter-spacing:.03em;
+    color:var(--muted); padding:7px 8px; border-bottom:1.5px solid var(--line); font-weight:700;
+    position:sticky; top:0; background:#fff;
+  }
+  td{padding:7.5px 8px; border-bottom:1px solid var(--line); white-space:nowrap;}
+  tr.row{cursor:pointer;}
+  tr.row:hover td{background:#FBF7FD;}
+  tr.row.selected td{background:var(--pink-soft);}
+  .rank-num{font-weight:800; color:var(--purple);}
+  .cell-norm{font-size:10px; color:var(--muted);}
+
+  .view-toggle{
+    text-align:center; margin-top:10px; font-size:12px; color:var(--pink); font-weight:700; cursor:pointer;
+    padding:8px; border-top:1px solid var(--line);
+  }
+
+  .foot-note{text-align:center; font-size:11px; color:var(--muted); padding:8px 0 26px;}
+
+  .flash{
+    position:fixed; top:70px; right:18px; background:var(--charcoal); color:#fff; padding:9px 16px;
+    border-radius:9px; font-size:12px; opacity:0; transition:opacity .25s ease; pointer-events:none; z-index:100;
+  }
+  .flash.show{opacity:1;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .split{grid-template-columns:1fr;}
+    .tabs{display:flex;}
+    .split .panel.map-panel{display:none;}
+    .split.show-map .panel.map-panel{display:block;}
+    .split.show-map .panel.table-panel{display:none;}
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width: 640px){
+    .menu-btn{display:flex;}
+    .sidebar{position:fixed; left:0; top:58px; z-index:60; margin-left:-308px; box-shadow:6px 0 24px rgba(0,0,0,.12);}
+    .sidebar.open{margin-left:0;}
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    .topbar{flex-wrap:wrap; row-gap:6px;}
+    .topbar .tag{display:none;}
+    .brand .titles h1{font-size:15px;}
+    body{overflow-x:hidden;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <button class="menu-btn" id="menuBtn">&#9776;</button>
+    <div class="logo">B</div>
+    <div class="titles">
+      <div class="eyebrow">BRAC · Executive Dashboard</div>
+      <h1>Composite Vulnerability Scoring Tool</h1>
+    </div>
+  </div>
+  <div class="tag">BRD v1.0 reference build · UPG Rural dataset (64 districts)</div>
+</div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="section">
+      <h2>1 · Select Indicators <span style="color:#B5124E;">(1–10)</span></h2>
+      <div class="hint">Pick the vulnerability indicators to include. All values below are drawn from BRAC's Poverty Cluster / UPG Targeting workbook (64 districts).</div>
+      <div id="indicatorList"></div>
+    </div>
+
+    <div class="section">
+      <h2>2 · Weight Check</h2>
+      <div class="weight-sum" id="weightSum"></div>
+      <div class="btn-row">
+        <button class="btn-ghost" id="distributeBtn">Distribute evenly</button>
+        <button class="btn-ghost" id="resetBtn">Reset to UPG default</button>
+      </div>
+      <button class="btn btn-primary" id="applyBtn">Calculate Score / Apply Filters</button>
+    </div>
+
+    <div class="note">
+      Indicator repository, weights, and inversion logic follow the BRD (v1.0, 10 Jul 2026) "Dynamic Composite Vulnerability Scoring Web Application" spec — Min-Max normalization, weights summing to 100%, inverse handling for indicators where higher = less vulnerable (e.g. Electricity Access).
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab-btn active" data-tab="map">Map View</button>
+      <button class="tab-btn" data-tab="table">Table View</button>
+    </div>
+
+    <div class="split show-map" id="split">
+      <div class="panel map-panel">
+        <div class="panel-head">
+          <h3>Module B · Interactive Map</h3>
+          <div class="sub">Leaflet + OpenStreetMap · marker size &amp; colour = composite score</div>
+        </div>
+        <div id="map"></div>
+        <div class="legend-box">
+          <span id="legendMin">0.00</span>
+          <div class="legend-gradient"></div>
+          <span id="legendMax">1.00</span>
+        </div>
+      </div>
+
+      <div class="panel table-panel">
+        <div class="panel-head">
+          <h3>Module A · Regional Rankings</h3>
+          <div class="sub" id="tableSub">Top 15 of 64 districts</div>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr id="tableHeadRow"></tr></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+        <div class="view-toggle" id="viewToggle">Show all 64 districts ▾</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="foot-note">Indicator values are real figures from BRAC's Poverty Cluster / UPG Targeting workbook (2026–2030 cycle). District coordinates are approximate town centroids for prototype mapping — production should use BRAC's official district boundary GeoJSON for true choropleth polygons.</div>
+<div class="flash" id="flash">Score recalculated</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const DATASET = [{"name": "Bagerhat", "lat": 22.6602, "lng": 89.7895, "hcr": 13.7, "ep": 2, "mpi": 0.107, "cvi": 0.52, "cva": 0.43, "migration": 0.37, "pwd": 1.62, "elec_access": 94.5}, {"name": "Bandarban", "lat": 22.1953, "lng": 92.2184, "hcr": 25, "ep": 3, "mpi": 0.325, "cvi": 0.55, "cva": 0.423, "migration": 0.04, "pwd": 1.49, "elec_access": 53.6}, {"name": "Barguna", "lat": 22.0953, "lng": 90.1121, "hcr": 19.8, "ep": 3, "mpi": 0.12, "cvi": 0.51, "cva": 0.407, "migration": 0.11, "pwd": 2.24, "elec_access": 86.2}, {"name": "Barishal", "lat": 22.701, "lng": 90.3535, "hcr": 25.7, "ep": 3, "mpi": 0.119, "cvi": 0.53, "cva": 0.451, "migration": 0.06, "pwd": 1.31, "elec_access": 95.1}, {"name": "Bhola", "lat": 22.6859, "lng": 90.6482, "hcr": 27, "ep": 3, "mpi": 0.214, "cvi": 0.53, "cva": 0.465, "migration": 0.82, "pwd": 1.31, "elec_access": 83.3}, {"name": "Bogura", "lat": 24.8465, "lng": 89.3773, "hcr": 12, "ep": 2, "mpi": 0.093, "cvi": 0.49, "cva": 0.458, "migration": -0.14, "pwd": 1.47, "elec_access": 95.9}, {"name": "Brahmanbaria", "lat": 23.9571, "lng": 91.1119, "hcr": 20.2, "ep": 3, "mpi": 0.136, "cvi": 0.43, "cva": 0.448, "migration": -0.83, "pwd": 1.34, "elec_access": 98.6}, {"name": "Chandpur", "lat": 23.2333, "lng": 90.6713, "hcr": 24.6, "ep": 3, "mpi": 0.09, "cvi": 0.47, "cva": 0.468, "migration": 0.16, "pwd": 1.31, "elec_access": 95.7}, {"name": "Chapainawabganj", "lat": 24.5965, "lng": 88.2775, "hcr": 34.7, "ep": 3, "mpi": 0.125, "cvi": 0.48, "cva": 0.451, "migration": -0.27, "pwd": 1.54, "elec_access": 95.8}, {"name": "Chattogram", "lat": 22.3569, "lng": 91.7832, "hcr": 12, "ep": 2, "mpi": 0.067, "cvi": 0.46, "cva": 0.384, "migration": 0.36, "pwd": 1.01, "elec_access": 98.7}, {"name": "Chuadanga", "lat": 23.6402, "lng": 88.841, "hcr": 20.9, "ep": 2, "mpi": 0.055, "cvi": 0.46, "cva": 0.49, "migration": -1.12, "pwd": 1.82, "elec_access": 98.5}, {"name": "Cox's Bazar", "lat": 21.4272, "lng": 92.0058, "hcr": 27.8, "ep": 3, "mpi": 0.229, "cvi": 0.52, "cva": 0.476, "migration": 1.05, "pwd": 1.39, "elec_access": 81.1}, {"name": "Cumilla", "lat": 23.4607, "lng": 91.1809, "hcr": 13.4, "ep": 2, "mpi": 0.072, "cvi": 0.46, "cva": 0.45, "migration": -0.74, "pwd": 1.13, "elec_access": 99.8}, {"name": "Dhaka", "lat": 23.8103, "lng": 90.4125, "hcr": 8.6, "ep": 1, "mpi": 0.039, "cvi": 0.44, "cva": 0.358, "migration": -2.21, "pwd": 0.71, "elec_access": 100}, {"name": "Dinajpur", "lat": 25.6279, "lng": 88.6332, "hcr": 25.7, "ep": 3, "mpi": 0.062, "cvi": 0.51, "cva": 0.439, "migration": -0.5, "pwd": 1.51, "elec_access": 97.2}, {"name": "Faridpur", "lat": 23.607, "lng": 89.8429, "hcr": 27, "ep": 1, "mpi": 0.091, "cvi": 0.46, "cva": 0.464, "migration": -0.03, "pwd": 1.31, "elec_access": 94.8}, {"name": "Feni", "lat": 23.0159, "lng": 91.3976, "hcr": 10.5, "ep": 2, "mpi": 0.058, "cvi": 0.44, "cva": 0.45, "migration": -0.12, "pwd": 1.21, "elec_access": 99.9}, {"name": "Gaibandha", "lat": 25.3296, "lng": 89.5281, "hcr": 24.6, "ep": 3, "mpi": 0.129, "cvi": 0.53, "cva": 0.532, "migration": 0.01, "pwd": 1.89, "elec_access": 92.6}, {"name": "Gazipur", "lat": 23.9999, "lng": 90.4203, "hcr": 20.7, "ep": 2, "mpi": 0.042, "cvi": 0.44, "cva": 0.392, "migration": 2.05, "pwd": 0.71, "elec_access": 99.5}, {"name": "Gopalganj", "lat": 23.005, "lng": 89.8266, "hcr": 25.7, "ep": 1, "mpi": 0.098, "cvi": 0.47, "cva": 0.45, "migration": 0.07, "pwd": 1.87, "elec_access": 99.4}, {"name": "Habiganj", "lat": 24.3745, "lng": 91.4155, "hcr": 10.9, "ep": 1, "mpi": 0.175, "cvi": 0.47, "cva": 0.468, "migration": -0.74, "pwd": 1.31, "elec_access": 95.9}, {"name": "Jamalpur", "lat": 24.9375, "lng": 89.9375, "hcr": 18.8, "ep": 3, "mpi": 0.139, "cvi": 0.51, "cva": 0.539, "migration": 0.26, "pwd": 1.41, "elec_access": 90.9}, {"name": "Jashore", "lat": 23.1667, "lng": 89.2167, "hcr": 20, "ep": 2, "mpi": 0.139, "cvi": 0.47, "cva": 0.475, "migration": -0.41, "pwd": 1.44, "elec_access": 99.1}, {"name": "Jhalokati", "lat": 22.6406, "lng": 90.1987, "hcr": 33.5, "ep": 3, "mpi": 0.088, "cvi": 0.48, "cva": 0.419, "migration": 1.59, "pwd": 2.27, "elec_access": 95.6}, {"name": "Jhenaidah", "lat": 23.5448, "lng": 89.1539, "hcr": 21.2, "ep": 2, "mpi": 0.035, "cvi": 0, "cva": 0.483, "migration": -0.53, "pwd": 1.6, "elec_access": 99.2}, {"name": "Joypurhat", "lat": 25.0968, "lng": 89.0227, "hcr": 15.1, "ep": 2, "mpi": 0.13, "cvi": 0.45, "cva": 0.431, "migration": 0.45, "pwd": 2.11, "elec_access": 99.2}, {"name": "Khagrachhari", "lat": 23.1193, "lng": 91.9847, "hcr": 15.9, "ep": 2, "mpi": 0.173, "cvi": 0.52, "cva": 0.371, "migration": -0.39, "pwd": 1.59, "elec_access": 73.3}, {"name": "Khulna", "lat": 22.8456, "lng": 89.5403, "hcr": 10.2, "ep": 1, "mpi": 0.065, "cvi": 0.52, "cva": 0.44, "migration": -0.03, "pwd": 1.8, "elec_access": 97.2}, {"name": "Kishoreganj", "lat": 24.426, "lng": 90.7766, "hcr": 35.3, "ep": 2, "mpi": 0.168, "cvi": 0.49, "cva": 0.452, "migration": 0.19, "pwd": 1.37, "elec_access": 96.6}, {"name": "Kurigram", "lat": 25.8054, "lng": 89.6294, "hcr": 31.3, "ep": 3, "mpi": 0.168, "cvi": 0.51, "cva": 0.53, "migration": -0.4, "pwd": 1.66, "elec_access": 82.9}, {"name": "Kushtia", "lat": 23.9013, "lng": 89.1206, "hcr": 18, "ep": 2, "mpi": 0.051, "cvi": 0.46, "cva": 0.49, "migration": 0.1, "pwd": 1.65, "elec_access": 98.8}, {"name": "Lakshmipur", "lat": 22.9427, "lng": 90.8282, "hcr": 15.6, "ep": 2, "mpi": 0.163, "cvi": 0.48, "cva": 0.491, "migration": 0.07, "pwd": 1.28, "elec_access": 80.3}, {"name": "Lalmonirhat", "lat": 25.9923, "lng": 89.2847, "hcr": 20, "ep": 3, "mpi": 0.16, "cvi": 0.46, "cva": 0.504, "migration": -0.08, "pwd": 1.54, "elec_access": 91.5}, {"name": "Madaripur", "lat": 23.1641, "lng": 90.1897, "hcr": 54.4, "ep": 3, "mpi": 0.106, "cvi": 0.43, "cva": 0.458, "migration": 0.27, "pwd": 1.24, "elec_access": 99.0}, {"name": "Magura", "lat": 23.4855, "lng": 89.4198, "hcr": 22.8, "ep": 2, "mpi": 0.086, "cvi": 0.47, "cva": 0.465, "migration": -0.43, "pwd": 1.44, "elec_access": 97.6}, {"name": "Manikganj", "lat": 23.8644, "lng": 89.999, "hcr": 22.2, "ep": 1, "mpi": 0.058, "cvi": 0.47, "cva": 0.488, "migration": -0.44, "pwd": 1.67, "elec_access": 98.5}, {"name": "Maulvibazar", "lat": 24.4829, "lng": 91.7774, "hcr": 20.4, "ep": 3, "mpi": 0.141, "cvi": 0.44, "cva": 0.438, "migration": -0.58, "pwd": 1.39, "elec_access": 92.4}, {"name": "Meherpur", "lat": 23.7622, "lng": 88.6318, "hcr": 9.8, "ep": 2, "mpi": 0.045, "cvi": 0.47, "cva": 0.486, "migration": 0.41, "pwd": 2.19, "elec_access": 99.1}, {"name": "Munshiganj", "lat": 23.5422, "lng": 90.5305, "hcr": 11.3, "ep": 1, "mpi": 0.067, "cvi": 0.41, "cva": 0.443, "migration": -0.49, "pwd": 1.33, "elec_access": 98.7}, {"name": "Mymensingh", "lat": 24.7471, "lng": 90.4203, "hcr": 20.4, "ep": 3, "mpi": 0.159, "cvi": 0.51, "cva": 0.488, "migration": -0.47, "pwd": 1.35, "elec_access": 92.3}, {"name": "Naogaon", "lat": 24.7936, "lng": 88.9318, "hcr": 16.2, "ep": 3, "mpi": 0.069, "cvi": 0.5, "cva": 0.428, "migration": -0.16, "pwd": 1.8, "elec_access": 96.9}, {"name": "Narail", "lat": 23.1725, "lng": 89.5126, "hcr": 14.9, "ep": 1, "mpi": 0.091, "cvi": 0.48, "cva": 0.442, "migration": -0.07, "pwd": 1.76, "elec_access": 96.0}, {"name": "Narayanganj", "lat": 23.6238, "lng": 90.499, "hcr": 13.7, "ep": 1, "mpi": 0.065, "cvi": 0.42, "cva": 0.409, "migration": -1.52, "pwd": 0.71, "elec_access": 99.8}, {"name": "Narsingdi", "lat": 23.9322, "lng": 90.715, "hcr": 43.7, "ep": 3, "mpi": 0.092, "cvi": 0.44, "cva": 0.432, "migration": -0.78, "pwd": 1.14, "elec_access": 99.7}, {"name": "Natore", "lat": 24.4206, "lng": 88.972, "hcr": 24.4, "ep": 3, "mpi": 0.07, "cvi": 0.47, "cva": 0.471, "migration": -0.15, "pwd": 1.75, "elec_access": 97.5}, {"name": "Netrokona", "lat": 24.8709, "lng": 90.728, "hcr": 33.9, "ep": 3, "mpi": 0.179, "cvi": 0.52, "cva": 0.472, "migration": 0.08, "pwd": 1.52, "elec_access": 92.2}, {"name": "Nilphamari", "lat": 25.931, "lng": 88.856, "hcr": 22.2, "ep": 3, "mpi": 0.104, "cvi": 0.52, "cva": 0.476, "migration": -0.1, "pwd": 1.85, "elec_access": 95.0}, {"name": "Noakhali", "lat": 22.8696, "lng": 91.0995, "hcr": 6.1, "ep": 1, "mpi": 0.158, "cvi": 0.49, "cva": 0.448, "migration": -1.15, "pwd": 1.36, "elec_access": 85.0}, {"name": "Pabna", "lat": 24.0064, "lng": 89.2372, "hcr": 12.1, "ep": 2, "mpi": 0.108, "cvi": 0.48, "cva": 0.494, "migration": -0.54, "pwd": 1.33, "elec_access": 98.7}, {"name": "Panchagarh", "lat": 26.3411, "lng": 88.5599, "hcr": 33.2, "ep": 3, "mpi": 0.116, "cvi": 0.49, "cva": 0.394, "migration": -0.92, "pwd": 1.81, "elec_access": 90.4}, {"name": "Patuakhali", "lat": 22.3596, "lng": 90.3298, "hcr": 20.8, "ep": 3, "mpi": 0.14, "cvi": 0.57, "cva": 0.431, "migration": -0.47, "pwd": 1.38, "elec_access": 80.9}, {"name": "Pirojpur", "lat": 22.5841, "lng": 89.972, "hcr": 37.9, "ep": 3, "mpi": 0.124, "cvi": 0.5, "cva": 0.416, "migration": -0.27, "pwd": 1.51, "elec_access": 95.0}, {"name": "Rajbari", "lat": 23.7574, "lng": 89.6444, "hcr": 27.8, "ep": 1, "mpi": 0.125, "cvi": 0.47, "cva": 0.496, "migration": -0.89, "pwd": 1.39, "elec_access": 96.8}, {"name": "Rajshahi", "lat": 24.3745, "lng": 88.6042, "hcr": 15.5, "ep": 2, "mpi": 0.091, "cvi": 0.47, "cva": 0.462, "migration": -0.39, "pwd": 1.65, "elec_access": 98.6}, {"name": "Rangamati", "lat": 22.6533, "lng": 92.1988, "hcr": 14.3, "ep": 2, "mpi": 0.216, "cvi": 0.53, "cva": 0.38, "migration": 2.23, "pwd": 1.72, "elec_access": 66.8}, {"name": "Rangpur", "lat": 25.7439, "lng": 89.2752, "hcr": 21.8, "ep": 3, "mpi": 0.094, "cvi": 0.51, "cva": 0.503, "migration": 1.17, "pwd": 1.59, "elec_access": 97.0}, {"name": "Satkhira", "lat": 22.7085, "lng": 89.0713, "hcr": 17.3, "ep": 2, "mpi": 0.092, "cvi": 0.51, "cva": 0.478, "migration": 0.12, "pwd": 1.76, "elec_access": 95.6}, {"name": "Shariatpur", "lat": 23.2423, "lng": 90.4348, "hcr": 27.1, "ep": 2, "mpi": 0.125, "cvi": 0.46, "cva": 0.46, "migration": 0.35, "pwd": 1.16, "elec_access": 96.1}, {"name": "Sherpur", "lat": 25.0204, "lng": 90.0153, "hcr": 19.9, "ep": 3, "mpi": 0.152, "cvi": 0.5, "cva": 0.524, "migration": 0.3, "pwd": 1.42, "elec_access": 97.3}, {"name": "Sirajganj", "lat": 24.4534, "lng": 89.7, "hcr": 10.9, "ep": 2, "mpi": 0.13, "cvi": 0.49, "cva": 0.505, "migration": -0.06, "pwd": 1.41, "elec_access": 95.8}, {"name": "Sunamganj", "lat": 25.0658, "lng": 91.395, "hcr": 27.2, "ep": 3, "mpi": 0.225, "cvi": 0.51, "cva": 0.463, "migration": -0.32, "pwd": 1.25, "elec_access": 94.1}, {"name": "Sylhet", "lat": 24.8949, "lng": 91.8687, "hcr": 16, "ep": 2, "mpi": 0.157, "cvi": 0.44, "cva": 0.437, "migration": -0.53, "pwd": 1.24, "elec_access": 97.8}, {"name": "Tangail", "lat": 24.2513, "lng": 89.9167, "hcr": 13.3, "ep": 1, "mpi": 0.07, "cvi": 0.5, "cva": 0.488, "migration": -0.18, "pwd": 1.3, "elec_access": 99.5}, {"name": "Thakurgaon", "lat": 26.0336, "lng": 88.4616, "hcr": 23.3, "ep": 3, "mpi": 0.091, "cvi": 0.5, "cva": 0.413, "migration": -0.14, "pwd": 1.48, "elec_access": 96.7}];
+
+const INDICATORS = [
+  {key:'hcr', label:'Poverty Headcount Ratio (HCR)', unit:'%', inverse:false, weight:20, on:true},
+  {key:'ep', label:'Extreme Poverty Status', unit:'class 1–3', inverse:false, weight:20, on:true},
+  {key:'mpi', label:'Multidimensional Poverty Index', unit:'0–1', inverse:false, weight:20, on:true},
+  {key:'cvi', label:'Climate Vulnerability Index', unit:'0–1', inverse:false, weight:10, on:true},
+  {key:'cva', label:'Climate Vulnerability Assessment', unit:'0–1', inverse:false, weight:10, on:true},
+  {key:'migration', label:'Internal Migration', unit:'growth rate', inverse:false, weight:10, on:true},
+  {key:'pwd', label:'Prevalence of Disability (PWD)', unit:'%', inverse:false, weight:10, on:true},
+  {key:'elec_access', label:'Electricity Access Rate', unit:'%', inverse:true, weight:0, on:false},
+];
+const MAX_INDICATORS = 10;
+
+let selectedName = null;
+let viewAll = false;
+let lastRanked = [];
+let map, markerLayer;
+
+function activeIndicators(){ return INDICATORS.filter(i=>i.on); }
+
+function weightSumPct(){
+  return activeIndicators().reduce((a,i)=>a+Number(i.weight||0),0);
+}
+
+function renderIndicatorList(){
+  const wrap = document.getElementById('indicatorList');
+  wrap.innerHTML = '';
+  INDICATORS.forEach(ind=>{
+    const item = document.createElement('div');
+    item.className = 'indicator-item' + (ind.on ? ' active':'');
+    item.innerHTML = `
+      <label class="check-row">
+        <input type="checkbox" ${ind.on?'checked':''} data-key="${ind.key}">
+        <div>
+          <div class="label">${ind.label}${ind.inverse?'<span class="inverse-badge">INVERSE</span>':''}</div>
+          <div class="meta">Unit: ${ind.unit}</div>
+        </div>
+      </label>
+      <div class="weight-controls">
+        <div class="weight-row">
+          <input type="range" min="0" max="100" step="1" value="${ind.weight}" data-wkey="${ind.key}">
+          <input type="text" class="num" value="${ind.weight}" data-nkey="${ind.key}">
+          <span class="pct">%</span>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(item);
+  });
+
+  wrap.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', e=>{
+      const key = e.target.dataset.key;
+      const ind = INDICATORS.find(i=>i.key===key);
+      const activeCount = activeIndicators().length;
+      if(e.target.checked && activeCount >= MAX_INDICATORS){
+        e.target.checked = false;
+        flash(`You can select up to ${MAX_INDICATORS} indicators.`);
+        return;
+      }
+      ind.on = e.target.checked;
+      if(!ind.on) ind.weight = 0;
+      renderIndicatorList();
+      updateWeightSum();
+    });
+  });
+  wrap.querySelectorAll('input[type=range]').forEach(sl=>{
+    sl.addEventListener('input', e=>{
+      const ind = INDICATORS.find(i=>i.key===e.target.dataset.wkey);
+      ind.weight = Number(e.target.value);
+      const numInput = wrap.querySelector(`input[data-nkey="${ind.key}"]`);
+      if(numInput) numInput.value = ind.weight;
+      updateWeightSum();
+    });
+  });
+  wrap.querySelectorAll('input.num').forEach(ni=>{
+    ni.addEventListener('input', e=>{
+      let v = parseInt(e.target.value.replace(/[^0-9]/g,'')) || 0;
+      v = Math.max(0, Math.min(100, v));
+      const ind = INDICATORS.find(i=>i.key===e.target.dataset.nkey);
+      ind.weight = v;
+      const slider = wrap.querySelector(`input[data-wkey="${ind.key}"]`);
+      if(slider) slider.value = v;
+      updateWeightSum();
+    });
+  });
+}
+
+function updateWeightSum(){
+  const sum = weightSumPct();
+  const ok = sum === 100;
+  const box = document.getElementById('weightSum');
+  box.className = 'weight-sum ' + (ok ? 'ok':'warn');
+  box.innerHTML = `<span class="dot ${ok?'ok':'warn'}"></span> Total weight: ${sum}% ${ok? '— ready to calculate' : '— must equal 100%'}`;
+  document.getElementById('applyBtn').disabled = !ok;
+}
+
+function minMax(key){
+  const vals = DATASET.map(d=>d[key]);
+  return {min:Math.min(...vals), max:Math.max(...vals)};
+}
+
+function normalize(val, key, range, inverse){
+  const {min,max} = range;
+  if(max===min) return 0.5;
+  let n = (val-min)/(max-min);
+  if(inverse) n = 1-n;
+  return n;
+}
+
+function computeAll(){
+  const inds = activeIndicators();
+  const ranges = {};
+  inds.forEach(i=> ranges[i.key] = minMax(i.key));
+
+  const rows = DATASET.map(d=>{
+    let score = 0;
+    const normVals = {};
+    inds.forEach(i=>{
+      const n = normalize(d[i.key], i.key, ranges[i.key], i.inverse);
+      normVals[i.key] = n;
+      score += n * (i.weight/100);
+    });
+    return {...d, score, normVals};
+  });
+  rows.sort((a,b)=>b.score-a.score);
+  return rows;
+}
+
+function priorityOf(score){
+  if(score>=.75) return {label:'Very High', color:'#7A0F3F'};
+  if(score>=.50) return {label:'High', color:'#E4007C'};
+  if(score>=.25) return {label:'Medium', color:'#E8A33D'};
+  return {label:'Low', color:'#1B9E9E'};
+}
+
+function tileColor(score){
+  const stops = [
+    {t:0.0, c:[27,158,158]},
+    {t:0.35,c:[232,163,61]},
+    {t:0.65,c:[228,0,124]},
+    {t:1.0, c:[110,18,64]},
+  ];
+  for(let i=0;i<stops.length-1;i++){
+    if(score>=stops[i].t && score<=stops[i+1].t){
+      const f=(score-stops[i].t)/(stops[i+1].t-stops[i].t);
+      const c=stops[i].c.map((v,idx)=>Math.round(v+f*(stops[i+1].c[idx]-v)));
+      return `rgb(${c[0]},${c[1]},${c[2]})`;
+    }
+  }
+  return 'rgb(110,18,64)';
+}
+
+function renderKPI(rows){
+  const scores = rows.map(r=>r.score);
+  const max = rows[0];
+  const min = rows[rows.length-1];
+  const avg = scores.reduce((a,b)=>a+b,0)/scores.length;
+  const variance = scores.reduce((a,b)=>a+Math.pow(b-avg,2),0)/scores.length;
+  const std = Math.sqrt(variance);
+
+  const grid = document.getElementById('kpiGrid');
+  grid.innerHTML = `
+    <div class="kpi-card max">
+      <div class="kpi-label">Maximum</div>
+      <div class="kpi-value">${max.score.toFixed(3)}</div>
+      <div class="kpi-sub">${max.name}</div>
+    </div>
+    <div class="kpi-card min">
+      <div class="kpi-label">Minimum</div>
+      <div class="kpi-value">${min.score.toFixed(3)}</div>
+      <div class="kpi-sub">${min.name}</div>
+    </div>
+    <div class="kpi-card avg">
+      <div class="kpi-label">Average</div>
+      <div class="kpi-value">${avg.toFixed(3)}</div>
+      <div class="kpi-sub">across 64 districts</div>
+    </div>
+    <div class="kpi-card std">
+      <div class="kpi-label">Std Dev</div>
+      <div class="kpi-value">${std.toFixed(3)}</div>
+      <div class="kpi-sub">distribution spread</div>
+    </div>
+  `;
+  document.getElementById('legendMin').textContent = min.score.toFixed(2);
+  document.getElementById('legendMax').textContent = max.score.toFixed(2);
+}
+
+function renderTable(rows){
+  const inds = activeIndicators();
+  const headRow = document.getElementById('tableHeadRow');
+  headRow.innerHTML = '<th>Rank</th><th>District</th><th>Composite</th>' +
+    inds.map(i=>`<th>${i.label} <span style="font-weight:400;">(raw / norm)</span></th>`).join('') +
+    '<th>Priority</th>';
+
+  const shown = viewAll ? rows : rows.slice(0,15);
+  document.getElementById('tableSub').textContent = viewAll ? `All ${rows.length} districts` : `Top 15 of ${rows.length} districts`;
+  document.getElementById('viewToggle').textContent = viewAll ? 'Show top 15 only ▴' : `Show all ${rows.length} districts ▾`;
+
+  const body = document.getElementById('tableBody');
+  body.innerHTML = '';
+  shown.forEach((d,idx)=>{
+    const p = priorityOf(d.score);
+    const tr = document.createElement('tr');
+    tr.className = 'row' + (d.name===selectedName?' selected':'');
+    let cells = `<td class="rank-num">${idx+1}</td><td><b>${d.name}</b></td><td><b>${d.score.toFixed(3)}</b></td>`;
+    inds.forEach(i=>{
+      cells += `<td>${d[i.key]} <span class="cell-norm">(${d.normVals[i.key].toFixed(2)})</span></td>`;
+    });
+    cells += `<td><span style="background:${p.color};color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;">${p.label}</span></td>`;
+    tr.innerHTML = cells;
+    tr.addEventListener('click', ()=>{ selectedName = (selectedName===d.name)?null:d.name; renderAll(false); });
+    body.appendChild(tr);
+  });
+}
+
+function initMap(){
+  try{
+    if(typeof L === 'undefined') throw new Error('Leaflet failed to load (no network)');
+    map = L.map('map', {scrollWheelZoom:false}).setView([23.6, 90.3], 6.6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors', maxZoom: 12,
+    }).addTo(map);
+    markerLayer = L.layerGroup().addTo(map);
+  } catch(err){
+    console.warn('Map unavailable:', err.message);
+    const el = document.getElementById('map');
+    if(el) el.innerHTML = '<div style="height:100%;display:flex;align-items:center;justify-content:center;color:#6C6473;font-size:12.5px;text-align:center;padding:20px;background:#F6F4F9;border-radius:9px;">Map tiles need an internet connection to load (OpenStreetMap).<br>Table and KPI panels below are fully functional offline.</div>';
+  }
+}
+
+function renderMap(rows){
+  if(!markerLayer) return;
+  markerLayer.clearLayers();
+  const maxScore = Math.max(...rows.map(r=>r.score), 0.001);
+  rows.forEach(d=>{
+    const radius = 5 + (d.score/maxScore)*14;
+    const marker = L.circleMarker([d.lat,d.lng], {
+      radius: radius,
+      fillColor: tileColor(d.score),
+      color: d.name===selectedName ? '#221C2B' : '#ffffff',
+      weight: d.name===selectedName ? 2.5 : 1,
+      fillOpacity: 0.88,
+    }).addTo(markerLayer);
+    marker.bindTooltip(`<b>${d.name}</b><br>Composite score: ${d.score.toFixed(3)}`, {sticky:true});
+    marker.on('click', ()=>{ selectedName = (selectedName===d.name)?null:d.name; renderAll(false); });
+  });
+}
+
+function renderAll(recalcFlash){
+  const rows = computeAll();
+  lastRanked = rows;
+  renderKPI(rows);
+  renderTable(rows);
+  renderMap(rows);
+  if(recalcFlash) flash('Score recalculated');
+}
+
+function flash(msg){
+  const f = document.getElementById('flash');
+  f.textContent = msg;
+  f.classList.add('show');
+  setTimeout(()=>f.classList.remove('show'), 1600);
+}
+
+document.getElementById('applyBtn').addEventListener('click', ()=>{
+  if(weightSumPct()!==100) return;
+  renderAll(true);
+});
+document.getElementById('distributeBtn').addEventListener('click', ()=>{
+  const active = activeIndicators();
+  const n = active.length;
+  if(n===0) return;
+  const base = Math.floor(100/n);
+  let remainder = 100 - base*n;
+  active.forEach((ind,idx)=>{ ind.weight = base + (idx < remainder ? 1:0); });
+  renderIndicatorList(); updateWeightSum();
+});
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  const defaults = {hcr:20, ep:20, mpi:20, cvi:10, cva:10, migration:10, pwd:10, elec_access:0};
+  const onKeys = ['hcr','ep','mpi','cvi','cva','migration','pwd'];
+  INDICATORS.forEach(i=>{ i.weight = defaults[i.key]; i.on = onKeys.includes(i.key); });
+  renderIndicatorList(); updateWeightSum();
+  flash('Reset to UPG–Rural default weights');
+});
+document.getElementById('viewToggle').addEventListener('click', ()=>{
+  viewAll = !viewAll;
+  renderTable(lastRanked);
+});
+document.getElementById('menuBtn').addEventListener('click', ()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+});
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const split = document.getElementById('split');
+    split.classList.toggle('show-map', btn.dataset.tab==='map');
+    if(btn.dataset.tab==='map' && map) setTimeout(()=>map.invalidateSize(), 50);
+  });
+});
+
+renderIndicatorList();
+updateWeightSum();
+initMap();
+renderAll(false);
+</script>
+
+</body>
+</html>

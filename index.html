@@ -65,12 +65,14 @@
   .filter-section-label{font-size:13px; font-weight:700; color:var(--text); margin:0 0 12px;}
   .field .filter-section-label{margin:0;}
 
-  .dashboard-title{font-size:20px; font-weight:700; color:var(--text); margin:0; text-align:center; justify-self:center; white-space:nowrap;}
+  .dashboard-title{font-size:20px; font-weight:700; color:var(--text); margin:0; text-align:center; justify-self:stretch; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis;}
   .topbar-row{
-    display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:16px;
+    display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:16px;
     margin-bottom:12px; padding-bottom:12px; border-bottom:0.5px solid var(--border);
   }
-  .topbar-left{display:flex; align-items:center; gap:10px; justify-self:start;}
+  .topbar-left{display:flex; align-items:center; gap:20px; justify-self:start;}
+  .brand-logo-link{display:inline-flex; align-items:center; line-height:0; flex:0 0 auto;}
+  .brand-logo{height:26px; width:auto; display:block;}
   .filters-toggle, .home-btn{
     display:inline-flex; align-items:center; justify-content:center; gap:6px;
     height:34px; padding:0 14px; flex:0 0 auto;
@@ -83,7 +85,7 @@
   .home-btn:hover{background:var(--surface);}
 
   /* Top-level page nav (Map View / Correlation View) */
-  .page-tabs{display:flex; gap:24px; justify-self:end;}
+  .page-tabs{display:flex; gap:18px; justify-self:end;}
   .page-tab-btn{
     display:flex; align-items:center; gap:6px;
     padding:6px 2px; background:none; border:none; cursor:pointer;
@@ -92,6 +94,16 @@
   }
   .page-tab-btn:hover{color:var(--text);}
   .page-tab-btn.active{color:var(--magenta); border-bottom-color:var(--magenta);}
+
+  /* Right group of the single navbar: page tabs + BRAC logo (logo at the far right).
+     gap gives the logo its brand-mandated clear space (exclusion zone); the logo keeps
+     its natural aspect ratio (width:auto) and is never rotated/recoloured. */
+  .topbar-right{display:flex; align-items:center; gap:24px; justify-self:end;}
+  .topbar-right .page-tabs{justify-self:auto;}
+  .topbar-right .brand-logo-link{padding-left:4px;}
+
+  /* In-page Filters bar (above content, out of the navbar). */
+  .filter-bar{display:flex; align-items:center; margin-bottom:12px;}
 
   /* ---------- Main ---------- */
   .main{padding:14px 28px; min-width:0; flex:1;}
@@ -106,6 +118,16 @@
   .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
   .card-head h2{font-size:16px; font-weight:600; margin:0;}
   .card-head .sub{font-size:13px; color:var(--text-muted); margin-top:2px;}
+
+  /* Spatial distribution card head: title (shows the selected metric name) is
+     truly centered regardless of the action-button cluster's width. */
+  .map-card-head{position:relative;}
+  .map-card-head h2{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    text-align:center; max-width:55%; white-space:nowrap; overflow:hidden;
+    text-overflow:ellipsis; pointer-events:none;
+  }
+  .map-head-actions{margin-left:auto; display:flex; gap:2px;}
 
   /* Card title with leading icon + subtitle (correlation cards) */
   .card-title{display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;}
@@ -159,6 +181,22 @@
     background:var(--surface); border:0.5px solid var(--border);
     border-radius:6px; margin-bottom:10px; display:none;
   }
+
+  /* Permanent short (3-letter) district labels on the choropleth */
+  .district-label-icon{ pointer-events:none; }
+  .district-label-icon span{
+    display:block; text-align:center; font-size:9.5px; font-weight:700;
+    color:#3a2140; letter-spacing:0.02em; white-space:nowrap;
+    text-shadow:0 0 2px #fff, 0 0 3px #fff, 0 0 3px #fff;
+  }
+
+  /* Full screen map: card breaks out to a fixed overlay that fills the viewport */
+  .card.map-fullscreen{
+    position:fixed; inset:16px; z-index:2000;
+    box-shadow:0 25px 70px rgba(0,0,0,.4);
+  }
+  .card.map-fullscreen #map{ flex:1; height:auto; }
+  body.map-fullscreen-active{ overflow:hidden; }
   .legend{margin-top:10px;}
   .legend-bar{height:8px; border-radius:999px; background:linear-gradient(to right,var(--map-low),var(--magenta));}
   .legend-row{display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-bottom:6px;}
@@ -242,8 +280,10 @@
   tbody tr.selected{background:rgba(236,0,140,0.08);}
   tbody tr.selected td.dist{color:var(--magenta); font-weight:700;}
   .row-mid > .card{display:flex; flex-direction:column; min-width:0;}
-  .table-scroll{flex:1; overflow:auto; max-height:280px;}
-  .table-scroll.expanded{max-height:280px; flex:none;}
+  /* flex:1 (no max-height cap) lets the list fill the card down to the map
+     card's height instead of stopping short and leaving blank space below. */
+  .table-scroll{flex:1; overflow:auto;}
+  .table-scroll.expanded{flex:1; overflow:auto;}
   .icon-btn[disabled]{opacity:.4; cursor:not-allowed;}
   .link-btn{
     width:100%; margin-top:12px; padding:9px; background:none;
@@ -303,6 +343,11 @@
     .main{padding:22px 20px;}
     .kpi-strip{grid-template-columns:repeat(2,1fr);}
     .row-mid, .row-mid.cols-equal{grid-template-columns:1fr;}
+    /* Below this width the MVI page flows/scrolls normally instead of locking to the
+       viewport height (a fixed height can't stack the sidebar + results sensibly). */
+    #page-mvi{height:auto;}
+    .mvi-results-col{height:auto; overflow:visible;}
+    #mvi-map{height:460px; flex:none;}
     .topbar-row{display:flex; flex-wrap:wrap; row-gap:8px;}
     .dashboard-title{order:3; width:100%; text-align:center; white-space:normal;}
   }
@@ -350,6 +395,142 @@
     .legend-row{font-size:11px;}
     .btn-primary, .link-btn{padding:10px;}
   }
+
+  /* ---------- MVI (Composite Vulnerability Score tool) ---------- */
+  /* Each page has ONE left sidebar toggled by the same "Filters" button:
+     Map/Correlation show the Data-filters sidebar (#sidebar); MVI shows its own
+     Metric-repository sidebar (#mvi-sidebar). Only one is in the DOM flow at a time. */
+  body.mvi-page-active #sidebar{ display:none; }
+  body:not(.mvi-page-active) #mvi-sidebar{ display:none; }
+  @media (min-width:769px){ .mvi-sidebar{ flex-basis:360px; width:360px; } }
+
+  /* One-screen layout: the MVI results area owns the viewport height so its table
+     and map scroll INTERNALLY and the page itself never scrolls (matches the
+     Map/Correlation single-screen feel). The Metric-repository picker now lives in
+     the collapsible #mvi-sidebar, which scrolls on its own like the Data-filters
+     sidebar, so no per-region flex height juggling is needed here anymore. */
+  #page-mvi{ height:calc(100vh - 96px); }  /* navbar + main padding (Filters is back in the navbar) */
+  .mvi-results-col{ display:flex; flex-direction:column; height:100%; min-height:0; overflow:hidden; gap:10px; margin-bottom:0; }
+  /* Compact header so the KPI cards sit higher / closer to the top */
+  .mvi-results-head{ margin:0; }
+  .mvi-results-head h2{ font-size:14px; margin:0; line-height:1.2; }
+  .mvi-results-head .sub{ font-size:11px; color:var(--text-muted); }
+  .mvi-results-col{ gap:8px; }
+  /* Selected indicators already appear in the Weights list below, so the separate
+     chips row is redundant clutter — hidden (user request). Removal is via each
+     weight row's × or the metric-list checkbox. */
+  #mvi-chips{ display:none; }
+  /* More compact search box on the left */
+  #mvi-picker-search{ padding:7px 10px; font-size:13px; }
+  /* × control on each weight row (replaces the removed chips' × for deselecting) */
+  .mvi-weight-remove{ background:none; border:none; color:var(--text-muted); cursor:pointer;
+    font-size:16px; line-height:1; padding:0 2px; flex:0 0 auto; }
+  .mvi-weight-remove:hover{ color:var(--magenta); }
+  /* Caption removed (user request) — the search bar sits right under the title. */
+  #mvi-picker-sub{ display:none; }
+  /* Tighter weight rows + header so all 10 sliders + footer fit one screen. */
+  .mvi-weight-row{ padding:6px 0; gap:3px; }
+  #mvi-picker-search{ margin-bottom:6px !important; }
+  /* Extra compaction so the whole MVI page fits one screen: smaller KPI boxes, tighter
+     rows, drop the subtitle. (user: font choto, space komano, box choto) */
+  .mvi-results-head .sub{ display:none; }
+  .mvi-results-col .kpi{ padding:8px 12px; }
+  .mvi-results-col .kpi .label{ font-size:10px; }
+  .mvi-results-col .kpi .value{ font-size:20px; }
+  .mvi-metric-row{ padding:5px 10px; font-size:12px; }
+  .mvi-weight-row .mvi-label{ font-size:12px; }
+  .mvi-weight-sum{ margin-top:6px; padding:6px 10px; font-size:12px; }
+  .mvi-picker-actions{ margin-top:6px; }
+  #mvi-calc-btn{ margin-top:6px !important; }
+  .mvi-results-col .kpi-strip{ margin-bottom:0; flex:0 0 auto; }
+  .mvi-results-col .mvi-toolbar{ margin-bottom:0; flex:0 0 auto; }
+  #mvi-grid-card, #mvi-map-card{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; margin-bottom:0; }
+  #mvi-grid-card .table-scroll{ flex:1; }
+  #mvi-map{ flex:1; min-height:440px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface); }
+
+  .mvi-picker-scroll{
+    /* flex-shrink:0 so this scroll box never collapses to 0 height inside the
+       flex-column sidebar (a scroll-container flex item has min-height:auto = 0,
+       which the tall weight list would otherwise squeeze away — hiding search
+       results). Compact height: ~3-4 rows visible, then scroll to select. */
+    flex:0 0 auto;
+    max-height:150px; min-height:44px; overflow-y:auto; border:0.5px solid var(--border);
+    border-radius:var(--radius); margin-bottom:10px;
+  }
+  /* No height cap — up to 10 weight rows stack at natural height; the picker
+     card itself scrolls if the combined content is taller than the viewport. */
+  #mvi-weight-list{ margin-bottom:4px; }
+  .mvi-metric-group{
+    position:sticky; top:0; padding:7px 10px 5px; font-size:11px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); background:var(--surface);
+  }
+  .mvi-metric-row{display:flex; align-items:center; gap:8px; padding:7px 10px; font-size:13px; cursor:pointer;}
+  .mvi-metric-row:hover{background:var(--surface);}
+  .mvi-metric-row.selected{background:rgba(236,0,140,0.08);}
+  .mvi-metric-row .mvi-metric-label{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+  .mvi-polarity-tag{
+    flex:0 0 auto; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:700;
+    border:1px solid var(--border); color:var(--text-muted); cursor:pointer; white-space:nowrap;
+  }
+  .mvi-polarity-tag.inverse{color:#fff; background:var(--purple); border-color:var(--purple);}
+
+  .mvi-chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;}
+  .mvi-chip{
+    display:inline-flex; align-items:center; gap:6px; padding:4px 6px 4px 10px;
+    border-radius:999px; background:rgba(236,0,140,0.08); color:var(--magenta); font-size:12px; font-weight:600;
+  }
+  .mvi-chip button{background:none; border:none; color:var(--magenta); cursor:pointer; padding:2px; line-height:0; font-size:14px;}
+
+  .mvi-weight-row{
+    display:flex; flex-direction:column; gap:4px;
+    padding:8px 0; border-bottom:0.5px solid var(--border);
+  }
+  .mvi-weight-row:last-child{border-bottom:none;}
+  .mvi-weight-top{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .mvi-weight-row .mvi-label{flex:1; min-width:0; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .mvi-weight-row .mvi-slider{width:100%; accent-color:var(--magenta);}
+  .mvi-weight-row .mvi-num{
+    flex:0 0 52px; width:52px; padding:4px 6px; text-align:right;
+    border:0.5px solid var(--border); border-radius:6px; font-size:13px; font-variant-numeric:tabular-nums;
+  }
+
+  .mvi-weight-sum{
+    margin-top:10px; padding:8px 12px; border-radius:6px; font-size:13px; font-weight:700;
+    background:var(--surface); border:0.5px solid var(--border);
+  }
+  .mvi-weight-sum.ok{color:var(--teal); border-color:var(--teal);}
+  .mvi-weight-sum.warn{color:var(--magenta); border-color:var(--magenta);}
+
+  .mvi-picker-actions{display:flex; gap:8px; margin-top:10px;}
+  .mvi-picker-actions .btn-ghost{flex:1; justify-content:center;}
+
+  .mvi-toolbar{display:flex; gap:10px; align-items:center; margin-bottom:10px; flex-wrap:wrap;}
+  /* Keep the Data grid / Map view toggle on the left and push the compact
+     search + division controls to the right, so the bar no longer stretches
+     the search box across the whole width. */
+  .mvi-toolbar .scale-toggle{margin-right:auto;}
+  .mvi-toolbar .combobox-input{flex:0 0 200px; width:200px; max-width:45%; min-width:140px; padding:8px 10px; font-size:13px;}
+  .mvi-toolbar select{
+    flex:0 0 auto; padding:8px 10px; border:0.5px solid var(--border); border-radius:var(--radius);
+    font-size:13px; background:var(--bg); color:var(--text);
+  }
+  @media (max-width:640px){
+    .mvi-toolbar .scale-toggle{margin-right:0;}
+    .mvi-toolbar .combobox-input{flex:1 1 100%; width:auto; max-width:none;}
+    .mvi-toolbar select{flex:1 1 100%;}
+  }
+
+  .mvi-tier-pill{
+    display:inline-block; padding:2px 8px; border-radius:999px;
+    font-size:10px; font-weight:700; color:#fff; white-space:nowrap;
+  }
+  .mvi-tier-low{background:var(--teal);}
+  .mvi-tier-moderate{background:var(--blue);}
+  .mvi-tier-high{background:var(--amber);}
+  .mvi-tier-severe{background:var(--magenta);}
+  .mvi-tier-nodata{background:var(--text-muted);}
+  tr.mvi-excluded-row td{color:var(--text-muted); font-style:italic;}
 </style>
 </head>
 <body>
@@ -366,7 +547,7 @@
     <div class="field">
       <label for="f-metric">Metric name</label>
       <select id="f-metric"></select>
-      <div class="toggle-row"><input type="checkbox" id="f-showall" /><label for="f-showall" style="font-weight:400;">Show all 421 metrics</label></div>
+      <div class="toggle-row"><input type="checkbox" id="f-showall" /><label for="f-showall" id="f-showall-label" style="font-weight:400;">Show all metrics</label></div>
     </div>
 
     <div class="filter-divider"></div>
@@ -414,30 +595,63 @@
     <button class="btn-primary" id="apply-btn">Apply filters</button>
   </aside>
 
+  <!-- ============ SIDEBAR: MVI Metric repository (fixed, collapsible — shown only on the MVI page) ============ -->
+  <aside class="sidebar mvi-sidebar" id="mvi-sidebar">
+    <div class="sidebar-head" style="border-bottom:none; padding-bottom:0; margin-bottom:6px; justify-content:flex-end;">
+      <!-- Title/funnel/count removed per user request; count element kept (hidden) because buildMviPicker() writes to it. -->
+      <span class="sub" id="mvi-picker-count" style="display:none;">0/10</span>
+      <button class="sidebar-close" id="mvi-sidebar-close" aria-label="Close metric repository"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="sub" id="mvi-picker-sub" style="margin:-6px 0 10px;">Search all metrics and select 1–10 to build the MVI. Click DIRECT/INVERSE to flip a metric's polarity.</div>
+    <div class="combobox mvi-search-combo">
+      <input type="text" class="combobox-input" id="mvi-picker-search" placeholder="Search indicators…"
+             autocomplete="off" role="combobox" aria-expanded="false" aria-controls="mvi-picker-list" />
+      <div id="mvi-picker-list" class="combobox-list" role="listbox" hidden></div>
+    </div>
+    <div class="mvi-chips" id="mvi-chips"></div>
+
+    <div class="filter-section-label" style="margin-top:6px;">Weights</div>
+    <div id="mvi-weight-list"></div>
+    <div class="mvi-weight-sum" id="mvi-weight-sum">Total: 0%</div>
+    <div class="mvi-picker-actions">
+      <button class="btn-ghost" id="mvi-distribute-btn">Distribute evenly</button>
+      <button class="btn-ghost" id="mvi-reset-btn">Reset to default</button>
+    </div>
+    <button class="btn-primary" id="mvi-calc-btn" style="margin-top:10px;" disabled>Calculate MVI / apply filters</button>
+  </aside>
+
   <!-- ============ MAIN ============ -->
   <main class="main">
     <div class="topbar-row">
       <div class="topbar-left">
-        <a class="home-btn" id="home-btn" href="https://insights.brac.net/dashboard/view_dashboard/" target="_blank" rel="noopener noreferrer" aria-label="Home" title="Home">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5a1 1 0 0 0 1 1H17.5a1 1 0 0 0 1-1V10"/><path d="M9.5 20.5V14h5v6.5"/></svg>
-          Home
+        <a class="brand-logo-link" href="https://insights.brac.net/dashboard/view_dashboard/" target="_blank" rel="noopener noreferrer" aria-label="BRAC — Home" title="BRAC">
+          <img src="logo.png" alt="BRAC" class="brand-logo" />
         </a>
+        <nav class="page-tabs" role="tablist">
+          <button class="page-tab-btn active" id="page-tab-map" role="tab" aria-selected="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="9 18 3 21 3 6 9 3 15 6 21 3 21 18 15 21 9 18"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+            Map View
+          </button>
+          <button class="page-tab-btn" id="page-tab-correlation" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            Correlation View
+          </button>
+          <button class="page-tab-btn" id="page-tab-mvi" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            MVI
+          </button>
+        </nav>
+      </div>
+      <h1 class="dashboard-title">BRAC Geo-Targeting Insights</h1>
+      <div class="topbar-right">
         <button class="filters-toggle" id="filters-toggle" aria-label="Toggle filters" title="Toggle filters">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
           Filters
         </button>
+        <a class="home-btn" id="home-btn" href="https://insights.brac.net/dashboard/view_dashboard/" target="_blank" rel="noopener noreferrer" aria-label="All dashboards" title="All dashboards">
+          All Dashboards
+        </a>
       </div>
-      <h1 class="dashboard-title">BRAC Geo-Targeting Insights</h1>
-      <nav class="page-tabs" role="tablist">
-        <button class="page-tab-btn active" id="page-tab-map" role="tab" aria-selected="true">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="9 18 3 21 3 6 9 3 15 6 21 3 21 18 15 21 9 18"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
-          Map View
-        </button>
-        <button class="page-tab-btn" id="page-tab-correlation" role="tab" aria-selected="false">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Correlation View
-        </button>
-      </nav>
     </div>
 
     <!-- ============ PAGE: MAP ============ -->
@@ -453,14 +667,13 @@
       <!-- Map + Regional data breakdowns -->
       <section class="row-mid">
         <!-- Map -->
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <h2>Spatial distribution</h2>
-            </div>
-            <div>
-              <button class="icon-btn" id="map-zoom-in" title="Zoom in (disabled — view is locked for now)" aria-label="Zoom in" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+        <div class="card" id="map-card">
+          <div class="card-head map-card-head">
+            <h2 id="map-title">Spatial distribution</h2>
+            <div class="map-head-actions">
+              <button class="icon-btn" id="map-zoom-in" title="Zoom in" aria-label="Zoom in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
               <button class="icon-btn" id="map-reset" title="Reset view" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+              <button class="icon-btn" id="map-fullscreen-btn" title="Full screen" aria-label="Toggle full screen map" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
             </div>
           </div>
           <div class="map-msg" id="map-msg"></div>
@@ -550,6 +763,63 @@
         </div>
       </section>
     </div>
+
+    <!-- ============ PAGE: MVI (Composite Vulnerability Score) ============ -->
+    <div id="page-mvi" style="display:none;">
+        <!-- Results (full width — the Metric-repository picker now lives in the #mvi-sidebar) -->
+        <div class="mvi-results-col">
+
+          <section class="kpi-strip" id="mvi-kpi-strip">
+            <div class="card kpi"><span class="label">Maximum</span><span class="value" id="mvi-kpi-max">—</span><span class="kpi-dist" id="mvi-kpi-max-district"></span></div>
+            <div class="card kpi"><span class="label">Minimum</span><span class="value" id="mvi-kpi-min">—</span><span class="kpi-dist" id="mvi-kpi-min-district"></span></div>
+            <div class="card kpi"><span class="label">Average</span><span class="value" id="mvi-kpi-avg">—</span></div>
+            <div class="card kpi"><span class="label">Std dev</span><span class="value" id="mvi-kpi-std">—</span></div>
+          </section>
+
+          <div class="mvi-toolbar">
+            <div class="scale-toggle" id="mvi-view-toggle" role="tablist" aria-label="Data grid or map view">
+              <button class="scale-tab active" data-view="grid" role="tab" aria-selected="true">Data grid</button>
+              <button class="scale-tab" data-view="map" role="tab" aria-selected="false">Map view</button>
+            </div>
+            <input type="text" class="combobox-input" id="mvi-district-search" placeholder="Search district…" />
+            <select id="mvi-division-filter"><option value="">All divisions</option></select>
+          </div>
+
+          <!-- Data grid -->
+          <div class="card" id="mvi-grid-card">
+            <div class="card-head">
+              <div><h2>District vulnerability ranking</h2></div>
+              <button class="btn-ghost" id="mvi-sort-btn">Sort by score
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 10 12 5 17 10"/><polyline points="7 14 12 19 17 14"/></svg>
+              </button>
+            </div>
+            <div class="table-scroll" id="mvi-table-scroll">
+              <table>
+                <thead><tr id="mvi-table-head"><th>Rank</th><th>District</th><th>Division</th><th class="num">MVI Score</th><th class="num">Households</th></tr></thead>
+                <tbody id="mvi-table-body"></tbody>
+              </table>
+            </div>
+            <button class="link-btn" id="mvi-viewall-btn">View all 64 regions</button>
+          </div>
+
+          <!-- Map -->
+          <div class="card" id="mvi-map-card" style="display:none;">
+            <div class="card-head map-card-head">
+              <h2>Composite Vulnerability Score — spatial distribution</h2>
+            </div>
+            <div class="map-msg" id="mvi-map-msg"></div>
+            <div id="mvi-map" role="img" aria-label="Choropleth map of composite vulnerability score"></div>
+            <div class="legend">
+              <div class="legend-row">
+                <span id="mvi-legend-min">—</span>
+                <span class="cap">Vulnerability score (higher = more vulnerable)</span>
+                <span id="mvi-legend-max">—</span>
+              </div>
+              <div class="legend-bar"></div>
+            </div>
+          </div>
+        </div>
+    </div>
   </main>
 </div>
 
@@ -560,7 +830,7 @@
    1. STATE
    ===================================================================== */
 const state = {
-  page: 'map',                       // 'map' | 'correlation'
+  page: 'map',                       // 'map' | 'correlation' | 'mvi'
   metric: 'HCR_Upper_pct_HIES_22',   // default reproduces reference (Poverty Headcount Rate)
   bracProgramme: '',
   valueRange: null,                  // [lo, hi] on selected metric, or null = full
@@ -575,7 +845,29 @@ const state = {
   quadSortKey: 'y',                  // 'name' | 'x' | 'y' — 4-quadrant table sort column
   quadSortDir: 'desc',
   quadFilter: null,                  // 'HH' | 'HL' | 'LH' | 'LL' | null — active quadrant chip filter
-  scatterScale: 'actual'             // 'actual' | 'normalized' — scatter axis value scale
+  scatterScale: 'actual',            // 'actual' | 'normalized' — scatter axis value scale
+
+  // ---- MVI (Composite Vulnerability Score tool) — independent of the filters
+  // above; MVI always scores getUnits() (all 64 districts), never visibleUnits().
+  // Default indicators/weights duplicated here as literals (not a reference to
+  // MVI_DEFAULT_SELECTION/MVI_DEFAULT_WEIGHTS, which are declared further down
+  // the script and would be in the temporal dead zone at this point) — kept in
+  // sync with those consts, which mviResetToDefault() reads from.
+  mviSelected: ['HCR_Upper_pct_HIES_22','MPI','CVI','Weighted_avg_composite_score_vulnerability',
+    'No_Electricity_Connection_pct','Percent_Returned_Migrant','disability_rate_pct','Kancha_pct',
+    'Unsafe_Disposal_with_Flushing_Pouring_Water_pct','Literacy_Rate_7yearplus_Overall'],
+  mviWeights: { HCR_Upper_pct_HIES_22:10, MPI:10, CVI:10, Weighted_avg_composite_score_vulnerability:10,
+    No_Electricity_Connection_pct:10, Percent_Returned_Migrant:10, disability_rate_pct:10, Kancha_pct:10,
+    Unsafe_Disposal_with_Flushing_Pouring_Water_pct:10, Literacy_Rate_7yearplus_Overall:10 },
+  mviInverseOverrides: {},        // key -> boolean, user-flipped polarity (overrides MVI_INVERSE_DEFAULTS)
+  mviSearch: '',                  // metric repository search text
+  mviResults: null,               // cached computeMviScores() output, until next Calculate
+  mviSortDir: 'desc',
+  mviTableExpanded: false,
+  mviSelectedDistrict: null,      // deliberately separate from state.selectedDistrict
+  mviResultView: 'grid',          // 'grid' | 'map' — Data grid / Map view toggle
+  mviDistrictSearch: '',          // results-header district search (display filter only)
+  mviDivisionFilter: ''           // results-header division filter (display filter only)
 };
 
 let DATA = null;          // raw json
@@ -587,6 +879,15 @@ let scatterChart = null;
 let unitByNorm = {};       // normalized name -> unit (for geojson join)
 let layerByCode = {};      // district code -> leaflet layer
 let programmeMarkers = null; // leaflet layer group: pins for the selected BRAC programme
+let labelLayer = null;     // leaflet layer group: permanent short district labels
+
+// MVI page's own Leaflet instance — Leaflet requires one map per container, so
+// this cannot share map/geoLayer/labelLayer/layerByCode with Map view above.
+let mviMap = null;
+let mviGeoLayer = null;
+let mviLabelLayer = null;
+let mviLayerByCode = {};
+let cachedGeojson = null; // bd_districts.geojson, fetched once, shared by initMap() and initMviMap()
 
 /* District-name aliases: our name <- geojson variants */
 const NAME_ALIASES = {
@@ -786,6 +1087,90 @@ function valuesOf(units, key){
   }
   return out;
 }
+
+/* =====================================================================
+   MVI: metric repository (Composite Vulnerability Score tool)
+   Modeled after the MVI.html prototype's "Metric repository" — searchable
+   across ALL 421 metrics (+ 1 derived), not a small curated pool, so a
+   director can build the composite from whatever indicators they need.
+   `MVI_INVERSE_DEFAULTS` seeds sensible default polarity for a handful of
+   well-known "higher = safer" metrics; anything else defaults to direct but
+   is user-flippable via the DIRECT/INVERSE tag (state.mviInverseOverrides).
+   `disability_rate_pct` is derived at runtime (see init()) and deliberately
+   never added to DICT/NAME_OVERRIDES, so it stays invisible to the
+   Map/Correlation metric dropdowns (metricKeysForDropdown() iterates
+   Object.keys(DICT)) while still being selectable here.
+   ===================================================================== */
+const MVI_INVERSE_DEFAULTS = {
+  Literacy_Rate_7yearplus_Overall: true,
+  Literacy_Rate_7yearplus_Female: true,
+  Literacy_Rate_7yearplus_Male: true,
+  Safe_Disposal_with_Flushing_Pouring_Water_pct: true,
+  Have_financial_account_Overall: true,
+  Have_financial_account_Female: true,
+  Pucca_pct: true,
+  National_Grid_pct: true,
+  Electricty_pct: true
+};
+
+function mviAllMetricKeys(){
+  return ['disability_rate_pct'].concat(Object.keys(DICT));
+}
+
+function mviMetricMeta(key){
+  const derived = key === 'disability_rate_pct';
+  const label = derived ? 'Disability rate (%)' : metricLabel(key);
+  const category = derived ? 'disability' : ((DICT[key] && DICT[key].category) || 'other');
+  const defaultInverse = !!MVI_INVERSE_DEFAULTS[key];
+  const inverse = (key in state.mviInverseOverrides) ? state.mviInverseOverrides[key] : defaultInverse;
+  return { key, label, category, inverse };
+}
+
+// Default MVI loads with 10 indicators (the max-useful set) so the Weights panel
+// shows 10 sliders on first load, not a fixed 4. All 10 have 64/64 coverage, so no
+// district is dropped from the ranking. Even 10% weights → sum exactly 100% (Calculate
+// enabled on load). Directors can still remove/add (1–10) and re-weight or "Distribute
+// evenly". Polarity: literacy is INVERSE (higher = less vulnerable); the rest are DIRECT.
+const MVI_DEFAULT_SELECTION = [
+  'HCR_Upper_pct_HIES_22',                            // poverty (headcount, upper line)
+  'MPI',                                              // multidimensional poverty
+  'CVI',                                              // climate vulnerability
+  'Weighted_avg_composite_score_vulnerability',      // composite vulnerability
+  'No_Electricity_Connection_pct',                   // energy access deficit
+  'Percent_Returned_Migrant',                        // migration
+  'disability_rate_pct',                             // disability (derived)
+  'Kancha_pct',                                      // temporary/kacha housing
+  'Unsafe_Disposal_with_Flushing_Pouring_Water_pct', // WASH / unsafe waste disposal
+  'Literacy_Rate_7yearplus_Overall'                  // education (INVERSE)
+];
+const MVI_DEFAULT_WEIGHTS = {
+  HCR_Upper_pct_HIES_22:10, MPI:10, CVI:10, Weighted_avg_composite_score_vulnerability:10,
+  No_Electricity_Connection_pct:10, Percent_Returned_Migrant:10, disability_rate_pct:10,
+  Kancha_pct:10, Unsafe_Disposal_with_Flushing_Pouring_Water_pct:10, Literacy_Rate_7yearplus_Overall:10
+};
+const MVI_MIN_INDICATORS = 1, MVI_MAX_INDICATORS = 10;
+
+/* District -> division lookup (Bangladesh's 8 divisions / 64 districts is
+   fixed public administrative geography, not derived from master_data.json —
+   the data has no division field, only `parent` which is null for all 64). */
+const BD_DISTRICT_DIVISIONS = {
+  Barguna:'Barisal', Barisal:'Barisal', Bhola:'Barisal', Jhalokati:'Barisal', Patuakhali:'Barisal', Pirojpur:'Barisal',
+  Bandarban:'Chattogram', Brahmanbaria:'Chattogram', Chandpur:'Chattogram', Chattogram:'Chattogram',
+  "Cox's Bazar":'Chattogram', Cumilla:'Chattogram', Feni:'Chattogram', Khagrachhari:'Chattogram',
+  Lakshmipur:'Chattogram', Noakhali:'Chattogram', Rangamati:'Chattogram',
+  Dhaka:'Dhaka', Faridpur:'Dhaka', Gazipur:'Dhaka', Gopalganj:'Dhaka', Kishoregonj:'Dhaka', Madaripur:'Dhaka',
+  Manikganj:'Dhaka', Munshiganj:'Dhaka', Narayanganj:'Dhaka', Narsingdi:'Dhaka', Rajbari:'Dhaka',
+  Shariatpur:'Dhaka', Tangail:'Dhaka',
+  Bagerhat:'Khulna', Chuadanga:'Khulna', Jashore:'Khulna', Jhenaidah:'Khulna', Khulna:'Khulna', Kushtia:'Khulna',
+  Magura:'Khulna', Meherpur:'Khulna', Narail:'Khulna', Satkhira:'Khulna',
+  Jamalpur:'Mymensingh', Mymensingh:'Mymensingh', Netrakona:'Mymensingh', Sherpur:'Mymensingh',
+  Bogura:'Rajshahi', Chapainawabganj:'Rajshahi', Joypurhat:'Rajshahi', Naogaon:'Rajshahi', Natore:'Rajshahi',
+  Pabna:'Rajshahi', Rajshahi:'Rajshahi', Sirajganj:'Rajshahi',
+  Dinajpur:'Rangpur', Gaibandha:'Rangpur', Kurigram:'Rangpur', Lalmonirhat:'Rangpur', Nilphamari:'Rangpur',
+  Panchagarh:'Rangpur', Rangpur:'Rangpur', Thakurgaon:'Rangpur',
+  Habiganj:'Sylhet', Moulvibazar:'Sylhet', Sunamganj:'Sylhet', Sylhet:'Sylhet'
+};
+function districtDivision(name){ return BD_DISTRICT_DIVISIONS[name] || ''; }
 
 /* =====================================================================
    FILTER PIPELINE -> currently visible units
@@ -1109,10 +1494,10 @@ function matchUnit(props){
 
 async function initMap(){
   map = L.map('map', {
-    // TEMP (requested 2026-06-21): zoom locked while testing the fixed default view.
-    // Revert by restoring zoomControl:true and removing the false flags below.
-    zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false,
-    touchZoom:false, boxZoom:false, keyboard:false,
+    // Zoom/pan re-enabled 2026-07-02 (was TEMP-locked 2026-06-21). Custom
+    // zoomControl stays off since the card has its own #map-zoom-in button.
+    zoomControl:false, scrollWheelZoom:true, doubleClickZoom:true,
+    touchZoom:true, boxZoom:true, keyboard:true,
     // Fractional zoom so fitBounds can fill the card tightly instead of rounding
     // down to the nearest whole zoom level (which left large margins of India/Myanmar visible).
     zoomSnap:0.1, zoomDelta:0.1,
@@ -1140,6 +1525,7 @@ async function initMap(){
     }
   }
 
+  cachedGeojson = geojson; // shared with the MVI page's Leaflet instance, so it fetches only once
   renderChoropleth(geojson);
 }
 
@@ -1149,12 +1535,21 @@ function showMapMessage(msg){
   el.style.display = 'block';
 }
 
+// 3-letter district abbreviation for the permanent map labels, e.g.
+// "Dhaka" -> "Dha", "Cox's Bazar" -> "Cox" (always Titlecase regardless of source casing).
+function shortDistrictLabel(name){
+  const s = (name || '').replace(/[^A-Za-z]/g, '').slice(0,3);
+  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+}
+
 function renderChoropleth(geojson){
   buildNormLookup();
   if(geoLayer){ map.removeLayer(geoLayer); }
+  if(labelLayer){ map.removeLayer(labelLayer); labelLayer = null; }
   layerByCode = {};
 
   const unmatched = [];
+  const labelMarkers = [];
   geoLayer = L.geoJSON(geojson, {
     style: feature => styleFor(matchUnit(feature.properties)),
     onEachFeature: (feature, layer) => {
@@ -1164,8 +1559,21 @@ function renderChoropleth(geojson){
       layer.on('mouseover', () => { if(u.code!==state.selectedDistrict) layer.setStyle({weight:2, color:'#fff'}); layer.bindTooltip(tooltipHTML(u),{sticky:true}).openTooltip(); });
       layer.on('mouseout',  () => { if(u.code!==state.selectedDistrict) geoLayer.resetStyle(layer); });
       layer.on('click', () => selectDistrict(u.code));
+      try{
+        const center = layer.getBounds().getCenter();
+        labelMarkers.push(L.marker(center, {
+          icon: L.divIcon({
+            className:'district-label-icon',
+            html:`<span>${shortDistrictLabel(u.name)}</span>`,
+            iconSize:[26,14], iconAnchor:[13,7]
+          }),
+          interactive:false, keyboard:false
+        }));
+      }catch(e){}
     }
   }).addTo(map);
+
+  labelLayer = L.layerGroup(labelMarkers).addTo(map);
 
   try{ map.invalidateSize(); map.fitBounds(geoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
   if(unmatched.length) console.warn('Unmatched GeoJSON district features:', unmatched);
@@ -1783,6 +2191,22 @@ function updateLegend(){
   const [min,max] = metricBounds(state.metric);
   $('legend-min').textContent = fmt(min,state.metric);
   $('legend-max').textContent = fmt(max,state.metric);
+  $('map-title').textContent = metricLabel(state.metric);
+}
+
+function toggleMapFullscreen(){
+  const card = $('map-card');
+  const btn = $('map-fullscreen-btn');
+  const isFs = card.classList.toggle('map-fullscreen');
+  document.body.classList.toggle('map-fullscreen-active', isFs);
+  btn.title = isFs ? 'Exit full screen' : 'Full screen';
+  btn.setAttribute('aria-pressed', String(isFs));
+  // Card size changes with the layout transition; nudge Leaflet once it settles.
+  setTimeout(()=>{
+    if(!map) return;
+    map.invalidateSize();
+    if(geoLayer){ try{ map.fitBounds(geoLayer.getBounds(), {padding:[4,4]}); }catch(e){} }
+  }, 50);
 }
 
 function bindFilters(){
@@ -1816,35 +2240,70 @@ function bindFilters(){
     tableExpanded = !tableExpanded; renderTable();
   });
 
-  $('map-zoom-in').addEventListener('click', ()=>{ /* TEMP: zoom disabled, see initMap() — map.zoomIn(); */ });
+  $('map-zoom-in').addEventListener('click', ()=>{ if(map) map.zoomIn(); });
   $('map-reset').addEventListener('click', ()=>{
     if(map && geoLayer){ try{ map.invalidateSize(); map.fitBounds(geoLayer.getBounds(),{padding:[4,4]}); }catch(e){ map.setView([23.7,90.35],6.4); } }
   });
+  $('map-fullscreen-btn').addEventListener('click', toggleMapFullscreen);
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && $('map-card').classList.contains('map-fullscreen')) toggleMapFullscreen();
+  });
 
-  // Sidebar: fixed + collapsible (pushes main content, no overlay)
+  // Sidebar: fixed + collapsible (pushes main content, no overlay). Each page has
+  // one sidebar toggled by the same "Filters" button — the Data-filters sidebar on
+  // Map/Correlation, the Metric-repository sidebar (#mvi-sidebar) on MVI.
+  const activeSidebar = ()=> state.page === 'mvi' ? $('mvi-sidebar') : $('sidebar');
   const toggleSidebar = ()=>{
-    $('sidebar').classList.toggle('collapsed');
+    activeSidebar().classList.toggle('collapsed');
     // Sidebar width change resizes the map column too — Leaflet caches container
-    // size, so it needs a nudge once the 0.25s CSS transition finishes.
-    if(map && geoLayer) setTimeout(()=>{ map.invalidateSize(); map.fitBounds(geoLayer.getBounds(), {padding:[4,4]}); }, 270);
+    // size, so the relevant map needs a nudge once the 0.25s CSS transition finishes.
+    setTimeout(()=>{
+      if(state.page === 'mvi'){
+        if(state.mviResultView === 'map' && mviMap){
+          mviMap.invalidateSize();
+          try{ if(mviGeoLayer) mviMap.fitBounds(mviGeoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
+        }
+      } else if(map && geoLayer){
+        map.invalidateSize();
+        map.fitBounds(geoLayer.getBounds(), {padding:[4,4]});
+      }
+    }, 270);
   };
   $('filters-toggle').addEventListener('click', toggleSidebar);
   $('sidebar-close').addEventListener('click', toggleSidebar);
+  $('mvi-sidebar-close').addEventListener('click', toggleSidebar);
 
-  // Top-level page nav: Map view / Correlation view
+  // Top-level page nav: Map view / Correlation view / MVI
   const switchPage = page => {
-    const isMap = page === 'map';
     state.page = page;
+    const isMap = page === 'map', isCorrelation = page === 'correlation', isMvi = page === 'mvi';
     $('page-tab-map').classList.toggle('active', isMap);
-    $('page-tab-correlation').classList.toggle('active', !isMap);
+    $('page-tab-correlation').classList.toggle('active', isCorrelation);
+    $('page-tab-mvi').classList.toggle('active', isMvi);
     $('page-tab-map').setAttribute('aria-selected', isMap);
-    $('page-tab-correlation').setAttribute('aria-selected', !isMap);
+    $('page-tab-correlation').setAttribute('aria-selected', isCorrelation);
+    $('page-tab-mvi').setAttribute('aria-selected', isMvi);
     $('page-map').style.display = isMap ? '' : 'none';
-    $('page-correlation').style.display = isMap ? 'none' : '';
-    if(!isMap && scatterChart) scatterChart.resize();
+    $('page-correlation').style.display = isCorrelation ? '' : 'none';
+    $('page-mvi').style.display = isMvi ? '' : 'none';
+    // Swap which left sidebar is in the DOM flow: the Data-filters sidebar on
+    // Map/Correlation, the Metric-repository sidebar (#mvi-sidebar) on MVI. The
+    // shared "Filters" toggle button now controls whichever one the page shows.
+    document.body.classList.toggle('mvi-page-active', isMvi);
+    if(isCorrelation && scatterChart) scatterChart.resize();
+    // The MVI map only exists inside its own "Map view" sub-tab (mviSwitchView
+    // lazily creates it on first use). If the sub-tab was already 'map' from a
+    // prior visit, #page-mvi itself just went from display:none to visible, so
+    // Leaflet's cached container size is stale and needs the same nudge used
+    // elsewhere in this file after any hidden->visible transition.
+    if(isMvi && state.mviResultView === 'map' && mviMap){
+      mviMap.invalidateSize();
+      try{ if(mviGeoLayer) mviMap.fitBounds(mviGeoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
+    }
   };
   $('page-tab-map').addEventListener('click', ()=>switchPage('map'));
   $('page-tab-correlation').addEventListener('click', ()=>switchPage('correlation'));
+  $('page-tab-mvi').addEventListener('click', ()=>switchPage('mvi'));
 
   $('quad-download-btn').addEventListener('click', downloadQuadrantCsv);
 
@@ -1899,6 +2358,557 @@ function downloadQuadrantCsv(){
 }
 
 /* =====================================================================
+   MVI: COMPOSITE VULNERABILITY SCORE TOOL (own page, own Leaflet instance)
+   Always computed over getUnits() (all 64 districts) — never visibleUnits()/
+   passesFilters(), which are Map-view-specific filters unrelated to this tool.
+   ===================================================================== */
+
+/* ---- Metric repository picker: search, chips, DIRECT/INVERSE tags, weights ---- */
+function buildMviPicker(){
+  renderMviPickerList();
+  renderMviChips();
+  renderMviWeightList();
+  renderMviWeightSum();
+  $('mvi-picker-count').textContent = `${state.mviSelected.length}/${MVI_MAX_INDICATORS}`;
+  // Metric totals are computed at runtime (master_data.json's 421 + NEET's 27 merged
+  // into DICT + 1 derived), so show the live count instead of a hardcoded "421".
+  const repoCount = mviAllMetricKeys().length;        // MVI repository (incl. derived disability_rate_pct)
+  const dictCount = Object.keys(DICT).length;          // "Show all" toggle (dictionary metrics only)
+  const subEl = $('mvi-picker-sub');
+  if(subEl) subEl.textContent = `Pick 1–${MVI_MAX_INDICATORS} of ${repoCount} indicators.`;
+  const searchEl = $('mvi-picker-search');
+  if(searchEl) searchEl.placeholder = `Search indicators…`;
+  const showAllEl = $('f-showall-label');
+  if(showAllEl) showAllEl.textContent = `Show all ${dictCount} metrics`;
+}
+
+function renderMviPickerList(){
+  const list = $('mvi-picker-list');
+  list.innerHTML = '';
+  const q = (state.mviSearch || '').trim().toLowerCase();
+  const selectedSet = new Set(state.mviSelected);
+
+  const addHead = (text) => {
+    const head = document.createElement('div');
+    head.className = 'mvi-metric-group';
+    head.textContent = text;
+    list.appendChild(head);
+  };
+  const addRow = (m) => {
+    const checked = selectedSet.has(m.key);
+    const row = document.createElement('div');
+    row.className = 'mvi-metric-row' + (checked ? ' selected' : '');
+    row.innerHTML =
+      `<input type="checkbox" ${checked?'checked':''}/>` +
+      `<span class="mvi-metric-label" title="${m.label}">${m.label}</span>` +
+      `<span class="mvi-polarity-tag ${m.inverse?'inverse':''}">${m.inverse?'INVERSE':'DIRECT'}</span>`;
+    row.querySelector('input').addEventListener('change', e => mviToggleIndicator(m.key, e.target.checked));
+    row.querySelector('.mvi-polarity-tag').addEventListener('click', e => { e.stopPropagation(); mviTogglePolarity(m.key); });
+    row.addEventListener('click', e => {
+      if(e.target.tagName === 'INPUT' || e.target.classList.contains('mvi-polarity-tag')) return;
+      const cb = row.querySelector('input');
+      cb.checked = !cb.checked;
+      mviToggleIndicator(m.key, cb.checked);
+    });
+    list.appendChild(row);
+  };
+
+  const all = mviAllMetricKeys().map(mviMetricMeta)
+    .filter(m => !q || m.label.toLowerCase().includes(q) || m.key.toLowerCase().includes(q));
+
+  // Selected indicators float to the top (in selection order) so the current build is
+  // always visible — this replaces the old chips row. Skipped while searching so search
+  // spans everything.
+  if(!q && state.mviSelected.length){
+    addHead(`Selected (${state.mviSelected.length})`);
+    state.mviSelected.forEach(k => addRow(mviMetricMeta(k)));
+  }
+
+  // Remaining (unselected) metrics grouped by category. When searching, show all matches.
+  const rest = all.filter(m => q || !selectedSet.has(m.key));
+  const catOrder = Object.keys((DATA.meta && DATA.meta.categories) || {});
+  const byCat = {};
+  rest.forEach(m => { (byCat[m.category] = byCat[m.category] || []).push(m); });
+  const orderedCats = catOrder.filter(c => byCat[c])
+    .concat(Object.keys(byCat).filter(c => !catOrder.includes(c)));
+  orderedCats.forEach(cat => {
+    const catLabel = (DATA.meta && DATA.meta.categories && DATA.meta.categories[cat]) || cat;
+    addHead(catLabel);
+    byCat[cat].sort((a,b)=>a.label.localeCompare(b.label)).forEach(addRow);
+  });
+}
+
+function renderMviChips(){
+  const wrap = $('mvi-chips');
+  wrap.innerHTML = '';
+  state.mviSelected.forEach(key => {
+    const meta = mviMetricMeta(key);
+    const chip = document.createElement('span');
+    chip.className = 'mvi-chip';
+    chip.innerHTML = `${meta.label} <button type="button" aria-label="Remove ${meta.label}">&times;</button>`;
+    chip.querySelector('button').addEventListener('click', () => mviToggleIndicator(key, false));
+    wrap.appendChild(chip);
+  });
+}
+
+function renderMviWeightList(){
+  const list = $('mvi-weight-list');
+  list.innerHTML = '';
+  state.mviSelected.forEach(key => {
+    const meta = mviMetricMeta(key);
+    const weight = state.mviWeights[key] || 0;
+    const row = document.createElement('div');
+    row.className = 'mvi-weight-row';
+    row.dataset.key = key;
+    row.innerHTML =
+      `<div class="mvi-weight-top"><span class="mvi-label" title="${meta.label}">${meta.label}</span>` +
+      `<input type="number" class="mvi-num" min="0" max="100" value="${weight}"/>` +
+      `<button class="mvi-weight-remove" title="Remove this indicator">×</button></div>` +
+      `<input type="range" class="mvi-slider" min="0" max="100" value="${weight}"/>`;
+    row.querySelector('.mvi-slider').addEventListener('input', e => mviSetWeight(key, e.target.value));
+    row.querySelector('.mvi-num').addEventListener('input', e => mviSetWeight(key, e.target.value));
+    row.querySelector('.mvi-weight-remove').addEventListener('click', () => mviToggleIndicator(key, false));
+    list.appendChild(row);
+  });
+}
+
+function mviTogglePolarity(key){
+  const meta = mviMetricMeta(key);
+  state.mviInverseOverrides[key] = !meta.inverse;
+  buildMviPicker();
+}
+
+function mviToggleIndicator(key, checked){
+  const idx = state.mviSelected.indexOf(key);
+  if(checked){
+    if(idx === -1){
+      if(state.mviSelected.length >= MVI_MAX_INDICATORS){
+        buildMviPicker(); // rebuild reverts this checkbox (key was never added to mviSelected)
+        return;
+      }
+      state.mviSelected.push(key);
+      if(!(key in state.mviWeights)) state.mviWeights[key] = 0;
+    }
+  }else if(idx !== -1){
+    state.mviSelected.splice(idx, 1);
+    delete state.mviWeights[key];
+  }
+  buildMviPicker();
+}
+
+function mviSetWeight(key, val){
+  const num = Math.max(0, Math.min(100, Math.round(Number(val) || 0)));
+  state.mviWeights[key] = num;
+  const row = $('mvi-weight-list').querySelector(`.mvi-weight-row[data-key="${key}"]`);
+  if(row){
+    row.querySelector('.mvi-slider').value = num;
+    row.querySelector('.mvi-num').value = num;
+  }
+  renderMviWeightSum();
+}
+
+function renderMviWeightSum(){
+  const count = state.mviSelected.length;
+  const sum = state.mviSelected.reduce((a,k) => a + (state.mviWeights[k] || 0), 0);
+  const ok = sum === 100 && count >= MVI_MIN_INDICATORS && count <= MVI_MAX_INDICATORS;
+  const el = $('mvi-weight-sum');
+  el.classList.toggle('ok', ok);
+  el.classList.toggle('warn', !ok);
+  let msg = `Total: ${sum}%`;
+  if(count < MVI_MIN_INDICATORS) msg += ` — select at least ${MVI_MIN_INDICATORS} indicator (${count} selected)`;
+  else if(count > MVI_MAX_INDICATORS) msg += ` — select at most ${MVI_MAX_INDICATORS} indicators (${count} selected)`;
+  else if(sum !== 100) msg += sum < 100 ? ` — add ${100-sum}% more to reach 100%` : ` — remove ${sum-100}% to reach 100%`;
+  else msg += ' ✓';
+  el.textContent = msg;
+  $('mvi-calc-btn').disabled = !ok;
+}
+
+function mviDistributeEvenly(){
+  const keys = state.mviSelected;
+  const n = keys.length;
+  if(!n) return;
+  const base = Math.floor(100 / n);
+  const rem = 100 - base * n;
+  keys.forEach((k, i) => { state.mviWeights[k] = base + (i < rem ? 1 : 0); });
+  buildMviPicker();
+}
+
+function mviResetToDefault(){
+  state.mviSelected = MVI_DEFAULT_SELECTION.slice();
+  state.mviWeights = Object.assign({}, MVI_DEFAULT_WEIGHTS);
+  state.mviInverseOverrides = {};
+  buildMviPicker();
+}
+
+/* ---- Computation: min-max normalize -> inverse flip -> weight -> sum ---- */
+function mviPercentile(sortedAsc, p){
+  if(!sortedAsc.length) return null;
+  const idx = (sortedAsc.length - 1) * p;
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  if(lo === hi) return sortedAsc[lo];
+  return sortedAsc[lo] + (sortedAsc[hi] - sortedAsc[lo]) * (idx - lo);
+}
+
+function mviTiers(scores){
+  if(!scores.length) return null;
+  const sorted = scores.slice().sort((a,b)=>a-b);
+  return { q1: mviPercentile(sorted,0.25), q2: median(scores), q3: mviPercentile(sorted,0.75) };
+}
+
+function mviTierFor(score, tiers){
+  if(!tiers) return 'nodata';
+  if(score >= tiers.q3) return 'severe';
+  if(score >= tiers.q2) return 'high';
+  if(score >= tiers.q1) return 'moderate';
+  return 'low';
+}
+
+function computeMviScores(){
+  const units = getUnits();
+  const keys = state.mviSelected.slice();
+  const bounds = {};
+  keys.forEach(k => {
+    const vals = valuesOf(units, k);
+    bounds[k] = vals.length ? [Math.min(...vals), Math.max(...vals)] : [0, 0];
+  });
+
+  const byCode = {};
+  const includedScores = [];
+  units.forEach(u => {
+    const pop = u.metrics['Population_HIES_22'];
+    const avgHH = u.metrics['Average_Household_Size'];
+    const households = (pop != null && avgHH) ? Math.round(pop / avgHH) : null;
+
+    const missing = keys.some(k => {
+      const v = u.metrics[k];
+      return v === null || v === undefined || Number.isNaN(v);
+    });
+    if(missing){
+      // Excluded rather than defaulted to 0 — a missing raw value must not
+      // silently look "best possible" (the bug found in the MVI.html prototype).
+      byCode[u.code] = { code:u.code, name:u.name, included:false, score:null, breakdown:[], households };
+      return;
+    }
+    let score = 0;
+    const breakdown = [];
+    keys.forEach(k => {
+      const meta = mviMetricMeta(k);
+      const raw = u.metrics[k];
+      const [min,max] = bounds[k];
+      let norm = (max === min) ? 0.5 : (raw - min) / (max - min);
+      if(meta.inverse) norm = 1 - norm;
+      const weight = (state.mviWeights[k] || 0) / 100;
+      const weighted = norm * weight;
+      score += weighted;
+      breakdown.push({ key:k, label:meta.label, raw, norm, weight: state.mviWeights[k] || 0, weighted });
+    });
+    byCode[u.code] = { code:u.code, name:u.name, included:true, score, breakdown, households };
+    includedScores.push(score);
+  });
+
+  const order = Object.values(byCode).filter(r=>r.included).sort((a,b)=>b.score-a.score).map(r=>r.code);
+  const excludedCodes = Object.values(byCode).filter(r=>!r.included).map(r=>r.code);
+  const tiers = mviTiers(includedScores);
+  order.forEach(code => { byCode[code].tier = mviTierFor(byCode[code].score, tiers); });
+  const scoreMin = includedScores.length ? Math.min(...includedScores) : 0;
+  const scoreMax = includedScores.length ? Math.max(...includedScores) : 0;
+
+  return { byCode, order, excludedCodes, includedCount: order.length, tiers, scoreMin, scoreMax };
+}
+
+/* ---- Display filters (district search + division), for the results header ---- */
+function mviPassesDisplayFilter(rec){
+  const q = (state.mviDistrictSearch || '').trim().toLowerCase();
+  if(q && !rec.name.toLowerCase().includes(q)) return false;
+  if(state.mviDivisionFilter && districtDivision(rec.name) !== state.mviDivisionFilter) return false;
+  return true;
+}
+
+/* ---- KPI strip + ranked table ---- */
+function renderMviKPIs(results){
+  const scores = results.order.filter(code => mviPassesDisplayFilter(results.byCode[code])).map(code => results.byCode[code].score);
+  if(!scores.length){
+    ['mvi-kpi-max','mvi-kpi-min','mvi-kpi-avg','mvi-kpi-std'].forEach(id => { $(id).textContent = '—'; });
+    $('mvi-kpi-max-district').textContent = '';
+    $('mvi-kpi-min-district').textContent = '';
+    return;
+  }
+  const max = Math.max(...scores), min = Math.min(...scores);
+  const avg = scores.reduce((a,b)=>a+b,0) / scores.length;
+  const maxCode = results.order.find(code => results.byCode[code].score === max);
+  const minCode = results.order.find(code => results.byCode[code].score === min);
+  $('mvi-kpi-max').textContent = max.toFixed(3);
+  $('mvi-kpi-min').textContent = min.toFixed(3);
+  $('mvi-kpi-avg').textContent = avg.toFixed(3);
+  $('mvi-kpi-std').textContent = stdDev(scores).toFixed(3);
+  $('mvi-kpi-max-district').textContent = results.byCode[maxCode].name;
+  $('mvi-kpi-max-district').onclick = () => mviSelectDistrict(maxCode);
+  $('mvi-kpi-min-district').textContent = results.byCode[minCode].name;
+  $('mvi-kpi-min-district').onclick = () => mviSelectDistrict(minCode);
+}
+
+function renderMviTable(results){
+  const descOrder = results.order; // true rank, independent of the display filters below
+  const rankByCode = {};
+  descOrder.forEach((code,i) => { rankByCode[code] = i + 1; });
+
+  // Dynamic header: Rank / District / Division / MVI Score / Households + one column per selected indicator
+  const thead = $('mvi-table-head');
+  thead.innerHTML = '<th>Rank</th><th>District</th><th>Division</th><th class="num">MVI Score</th><th class="num">Households</th>' +
+    state.mviSelected.map(k => `<th class="num">${mviMetricMeta(k).label}</th>`).join('');
+
+  let rows = descOrder.filter(code => mviPassesDisplayFilter(results.byCode[code])).map(code => results.byCode[code]);
+  if(state.mviSortDir === 'asc') rows = rows.slice().reverse();
+  const excludedRows = results.excludedCodes.filter(code => mviPassesDisplayFilter(results.byCode[code])).map(code => results.byCode[code]);
+
+  const shown = state.mviTableExpanded ? rows : rows.slice(0,10);
+  const tb = $('mvi-table-body');
+  tb.innerHTML = '';
+  const colCount = 5 + state.mviSelected.length;
+  shown.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.dataset.code = r.code;
+    if(r.code === state.mviSelectedDistrict) tr.classList.add('selected');
+    const tierLabel = r.tier.charAt(0).toUpperCase() + r.tier.slice(1);
+    const hh = r.households != null ? r.households.toLocaleString('en-US') : '—';
+    let cells = `<td class="num">${rankByCode[r.code]}</td><td class="dist">${r.name}</td>` +
+      `<td>${districtDivision(r.name) || '—'}</td>` +
+      `<td class="num">${r.score.toFixed(3)} <span class="mvi-tier-pill mvi-tier-${r.tier}">${tierLabel}</span></td>` +
+      `<td class="num">${hh}</td>`;
+    r.breakdown.forEach(b => {
+      cells += `<td class="num">${b.raw!=null ? Number(b.raw).toLocaleString('en-US',{maximumFractionDigits:2}) : '—'}</td>`;
+    });
+    tr.innerHTML = cells;
+    tr.addEventListener('click', ()=>mviSelectDistrict(r.code));
+    tb.appendChild(tr);
+  });
+  if(state.mviTableExpanded){
+    excludedRows.forEach(r => {
+      const tr = document.createElement('tr');
+      tr.className = 'mvi-excluded-row';
+      const hh = r.households != null ? r.households.toLocaleString('en-US') : '—';
+      tr.innerHTML = `<td class="num">—</td><td class="dist">${r.name}</td><td>${districtDivision(r.name) || '—'}</td>` +
+        `<td colspan="${colCount-3}">Insufficient data for the selected indicators (households: ${hh})</td>`;
+      tb.appendChild(tr);
+    });
+  }
+  $('mvi-table-scroll').classList.toggle('expanded', state.mviTableExpanded);
+  const total = rows.length + excludedRows.length;
+  $('mvi-viewall-btn').textContent = state.mviTableExpanded ? 'Show top 10' : `View all ${total} regions`;
+}
+
+/* ---- Map (own Leaflet instance) ----
+   mviStyleFor/mviTooltipHTML read state.mviResults directly (no results param)
+   so that Leaflet's style callback and resetStyle() always reflect the latest
+   Calculate — mirrors the existing Map-view convention (styleFor(u) reads
+   state.metric directly). A stale closured `results` argument here would mean
+   hover/mouseout repaint districts using whatever results existed at the one
+   moment renderMviChoropleth() was first called (before any Calculate), which
+   resetStyle() would keep reverting to forever. */
+function mviStyleFor(u){
+  const results = state.mviResults;
+  const rec = (u && results) ? results.byCode[u.code] : null;
+  const visible = rec && rec.included && mviPassesDisplayFilter(rec);
+  const val = visible ? rec.score : null;
+  return {
+    fillColor: colorScale(val, results ? results.scoreMin : 0, results ? results.scoreMax : 1),
+    fillOpacity: 0.85,
+    color: '#FFFFFF',
+    weight: 0.6
+  };
+}
+
+function mviTooltipHTML(u){
+  const results = state.mviResults;
+  const rec = results ? results.byCode[u.code] : null;
+  if(!rec){
+    return `<strong>${u.name}</strong><br>Click Calculate to compute the MVI score`;
+  }
+  if(!rec.included){
+    return `<strong>${u.name}</strong><br>Insufficient data for the selected indicators`;
+  }
+  const rows = rec.breakdown.map(b =>
+    `${b.label}: ${b.raw!=null ? Number(b.raw).toLocaleString('en-US',{maximumFractionDigits:2}) : '—'} (weight ${b.weight}%)`
+  ).join('<br>');
+  return `<strong>${u.name}</strong><br>Composite score: ${rec.score.toFixed(3)} (${rec.tier})<br>${rows}`;
+}
+
+function showMviMapMessage(msg){
+  const el = $('mvi-map-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+async function initMviMap(){
+  mviMap = L.map('mvi-map', {
+    zoomControl:false, scrollWheelZoom:true, doubleClickZoom:true,
+    touchZoom:true, boxZoom:true, keyboard:true,
+    zoomSnap:0.1, zoomDelta:0.1,
+    attributionControl:true
+  }).setView([23.7, 90.35], 6.4);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution:'&copy; OpenStreetMap, &copy; CARTO', subdomains:'abcd', maxZoom:19
+  }).addTo(mviMap);
+
+  if(!cachedGeojson){
+    try{
+      cachedGeojson = await fetch('./bd_districts.geojson').then(r=>{ if(!r.ok) throw new Error('no bundle'); return r.json(); });
+    }catch(e){
+      console.warn('Bundled bd_districts.geojson missing, trying geoBoundaries API (MVI map)', e);
+      try{
+        const meta = await fetch('https://www.geoboundaries.org/api/current/gbOpen/BGD/ADM2/').then(r=>r.json());
+        cachedGeojson = await fetch(meta.gjDownloadURL).then(r=>r.json());
+      }catch(e2){
+        showMviMapMessage('District boundaries could not be loaded. Table and KPI panels remain fully functional.');
+        return;
+      }
+    }
+  }
+  renderMviChoropleth(cachedGeojson);
+}
+
+function renderMviChoropleth(geojson){
+  buildNormLookup(); // metric-agnostic (keys off the unit list, not state.metric) — safe to reuse
+  if(mviGeoLayer){ mviMap.removeLayer(mviGeoLayer); }
+  if(mviLabelLayer){ mviMap.removeLayer(mviLabelLayer); mviLabelLayer = null; }
+  mviLayerByCode = {};
+
+  const labelMarkers = [];
+  mviGeoLayer = L.geoJSON(geojson, {
+    style: feature => mviStyleFor(matchUnit(feature.properties)),
+    onEachFeature: (feature, layer) => {
+      const u = matchUnit(feature.properties);
+      if(!u) return;
+      mviLayerByCode[u.code] = layer;
+      layer.on('mouseover', () => { if(u.code!==state.mviSelectedDistrict) layer.setStyle({weight:2, color:'#fff'}); layer.bindTooltip(mviTooltipHTML(u),{sticky:true}).openTooltip(); });
+      layer.on('mouseout',  () => { if(u.code!==state.mviSelectedDistrict) mviGeoLayer.resetStyle(layer); });
+      layer.on('click', () => mviSelectDistrict(u.code));
+      try{
+        const center = layer.getBounds().getCenter();
+        labelMarkers.push(L.marker(center, {
+          icon: L.divIcon({ className:'district-label-icon', html:`<span>${shortDistrictLabel(u.name)}</span>`, iconSize:[26,14], iconAnchor:[13,7] }),
+          interactive:false, keyboard:false
+        }));
+      }catch(e){}
+    }
+  }).addTo(mviMap);
+
+  mviLabelLayer = L.layerGroup(labelMarkers).addTo(mviMap);
+  try{ mviMap.invalidateSize(); mviMap.fitBounds(mviGeoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
+  applyMviMapSelection();
+  updateMviLegend();
+}
+
+function mviRecolorMap(){
+  if(!mviGeoLayer) return;
+  mviGeoLayer.eachLayer(layer => {
+    const u = matchUnit(layer.feature.properties);
+    layer.setStyle(mviStyleFor(u));
+  });
+  applyMviMapSelection();
+}
+
+function applyMviMapSelection(){
+  if(!mviGeoLayer) return;
+  mviGeoLayer.eachLayer(layer => {
+    const u = matchUnit(layer.feature.properties);
+    if(u && u.code === state.mviSelectedDistrict){
+      layer.setStyle({weight:3, color:'#EC008C'});
+      layer.bringToFront();
+    }
+  });
+}
+
+function updateMviLegend(){
+  const results = state.mviResults;
+  if(!results || !results.order.length){
+    $('mvi-legend-min').textContent = '—';
+    $('mvi-legend-max').textContent = '—';
+    return;
+  }
+  $('mvi-legend-min').textContent = results.scoreMin.toFixed(3);
+  $('mvi-legend-max').textContent = results.scoreMax.toFixed(3);
+}
+
+/* ---- Data grid / Map view toggle ---- */
+function mviSwitchView(view){
+  state.mviResultView = view;
+  $('mvi-grid-card').style.display = view === 'grid' ? '' : 'none';
+  $('mvi-map-card').style.display = view === 'map' ? '' : 'none';
+  $('mvi-view-toggle').querySelectorAll('.scale-tab').forEach(btn => {
+    const on = btn.dataset.view === view;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-selected', on);
+  });
+  if(view === 'map'){
+    if(!mviMap) initMviMap();
+    else{
+      mviMap.invalidateSize();
+      try{ if(mviGeoLayer) mviMap.fitBounds(mviGeoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
+    }
+  }
+}
+
+/* ---- Selection + Calculate + event wiring ---- */
+function mviSelectDistrict(code){
+  state.mviSelectedDistrict = code;
+  if(state.mviResults) renderMviTable(state.mviResults);
+  mviRecolorMap();
+}
+
+function runMviCalculation(){
+  state.mviResults = computeMviScores();
+  renderMviKPIs(state.mviResults);
+  renderMviTable(state.mviResults);
+  if(mviGeoLayer){ mviRecolorMap(); updateMviLegend(); }
+}
+
+function bindMviEvents(){
+  // Metric search behaves like the Map/Correlation "Metric name" combobox: a floating
+  // grouped dropdown that opens on focus/typing and floats over the weights. Difference:
+  // MVI is MULTI-select, so clicking a row toggles it and the dropdown STAYS open
+  // (closes only on outside click / Escape).
+  const mviSearchInput = $('mvi-picker-search');
+  const mviList = $('mvi-picker-list');
+  const openMviList  = () => { mviList.hidden = false; mviSearchInput.setAttribute('aria-expanded', 'true'); };
+  const closeMviList = () => { mviList.hidden = true;  mviSearchInput.setAttribute('aria-expanded', 'false'); };
+  mviSearchInput.addEventListener('focus', openMviList);
+  mviSearchInput.addEventListener('input', e => { state.mviSearch = e.target.value; renderMviPickerList(); openMviList(); });
+  mviSearchInput.addEventListener('keydown', e => { if(e.key === 'Escape'){ closeMviList(); mviSearchInput.blur(); } });
+  document.addEventListener('click', e => {
+    const combo = mviSearchInput.closest('.combobox');
+    if(combo && !combo.contains(e.target)) closeMviList();
+  });
+  $('mvi-calc-btn').addEventListener('click', runMviCalculation);
+  $('mvi-distribute-btn').addEventListener('click', mviDistributeEvenly);
+  $('mvi-reset-btn').addEventListener('click', mviResetToDefault);
+  $('mvi-sort-btn').addEventListener('click', () => {
+    state.mviSortDir = state.mviSortDir === 'desc' ? 'asc' : 'desc';
+    if(state.mviResults) renderMviTable(state.mviResults);
+  });
+  $('mvi-viewall-btn').addEventListener('click', () => {
+    state.mviTableExpanded = !state.mviTableExpanded;
+    if(state.mviResults) renderMviTable(state.mviResults);
+  });
+  $('mvi-view-toggle').querySelectorAll('.scale-tab').forEach(btn => {
+    btn.addEventListener('click', () => mviSwitchView(btn.dataset.view));
+  });
+  $('mvi-district-search').addEventListener('input', e => {
+    state.mviDistrictSearch = e.target.value;
+    if(state.mviResults){ renderMviKPIs(state.mviResults); renderMviTable(state.mviResults); mviRecolorMap(); }
+  });
+  $('mvi-division-filter').addEventListener('change', e => {
+    state.mviDivisionFilter = e.target.value;
+    if(state.mviResults){ renderMviKPIs(state.mviResults); renderMviTable(state.mviResults); mviRecolorMap(); }
+  });
+  [...new Set(Object.values(BD_DISTRICT_DIVISIONS))].sort().forEach(div => {
+    const opt = document.createElement('option');
+    opt.value = div; opt.textContent = div;
+    $('mvi-division-filter').appendChild(opt);
+  });
+}
+
+/* =====================================================================
    10. INIT
    ===================================================================== */
 async function init(){
@@ -1930,6 +2940,42 @@ async function init(){
   { const meherpur = ALL_UNITS.find(u => u.code === 'BD4057');
     if(meherpur && meherpur.name_google === 'Manikganj') meherpur.name_google = meherpur.name; }
 
+  // Runtime-derived metric (MVI tool only, not in master_data.json): disability
+  // rate, so raw district population size doesn't bias the raw
+  // Total_Persons_With_Disability count. Deliberately NOT added to DICT — see
+  // the MVI_INDICATOR_POOL comment above.
+  ALL_UNITS.forEach(u => {
+    const pwd = u.metrics['Total_Persons_With_Disability'];
+    const pop = u.metrics['Population_HIES_22'];
+    u.metrics['disability_rate_pct'] = (pwd != null && pop) ? (pwd / pop * 100) : null;
+  });
+
+  // New data source (2026-07-12): NEET youth indicators (Not in Education,
+  // Employment, or Training) from the Population & Housing Census 2022, merged
+  // at runtime from neet_data.json so master_data.json stays untouched (per the
+  // do-not-edit rule). Adds 27 % metrics to DICT + each district's metrics, so
+  // they appear automatically in the MVI metric repository and, when "Show all"
+  // is on, in the Map/Correlation dropdowns too.
+  try{
+    const neet = await fetch('./neet_data.json').then(r=>{ if(!r.ok) throw new Error('no neet_data'); return r.json(); });
+    if(neet && neet.metrics && neet.by_district){
+      if(DATA.meta && DATA.meta.categories && !DATA.meta.categories[neet.category_key])
+        DATA.meta.categories[neet.category_key] = neet.category_label;
+      Object.entries(neet.metrics).forEach(([k,label])=>{
+        DICT[k] = { label, category: neet.category_key || 'neet_youth', source:'BBS PHC 2022', coverage:64, curated:false };
+        NAME_OVERRIDES[k] = label; // exact label from the source file (skip prettifyLabel mangling)
+      });
+      // District-name reconciliation: this file spells "Barishal"; master_data uses "Barisal".
+      const NEET_NAME_FIX = { 'Barishal':'Barisal' };
+      const byOurName = {};
+      Object.entries(neet.by_district).forEach(([nm,rec]) => { byOurName[NEET_NAME_FIX[nm] || nm] = rec; });
+      ALL_UNITS.forEach(u => {
+        const rec = byOurName[u.name];
+        if(rec) Object.entries(rec).forEach(([k,v]) => { u.metrics[k] = v; });
+      });
+    }
+  }catch(e){ console.warn('NEET data (neet_data.json) not loaded — MVI/dropdowns will simply omit NEET metrics.', e); }
+
   buildMetricDropdown();
   buildProgrammeDropdown();
 
@@ -1948,6 +2994,10 @@ async function init(){
   updateLegend();
   renderTable();
   updateScatter();
+
+  bindMviEvents(); // builds the division-filter <option> list, must run before buildMviPicker's first render
+  buildMviPicker();
+  runMviCalculation(); // compute with the default indicators so the MVI page shows data on load (mirrors MVI.html init)
 
   await initMap();          // async; map renders when GeoJSON resolves
 }
