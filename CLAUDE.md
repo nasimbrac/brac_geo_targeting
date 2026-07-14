@@ -335,6 +335,31 @@ it had hardcoded values and placeholder images, so we wrote a fresh compliant bu
       collapse→full-width results, MVI floating search dropdown (multi-select, ✓ on added),
       and MVI one-screen no-scroll all confirmed via screenshots.
 
+16. **Navbar final layout + repo cleanup (2026-07-14, browser-verified & committed)** —
+    supersedes the navbar arrangement in #15:
+    - **Single navbar, final**: BRAC **logo (left)** + page tabs Map/Correlation/MVI (left) ·
+      title (center) · **Filters + All Dashboards (right)**. (User reversed #15: logo moved
+      back to the LEFT, All Dashboards to the RIGHT, Filters back UP into the navbar — the
+      in-page `.filter-bar` from #15 was removed; `#page-mvi` height reverted to
+      `calc(100vh - 96px)`.)
+    - **Grid overlap fix**: `.topbar-row` uses `grid-template-columns:auto minmax(0,1fr) auto`
+      (clusters size to content, title takes the middle) and `.dashboard-title` is
+      `justify-self:stretch` + `overflow:hidden; text-overflow:ellipsis`. Earlier
+      `justify-self:center` sized the title to its content and let the overflow spill onto
+      the MVI tab / Filters; stretch makes it fill its cell and truncate instead. Verified
+      no overlap/clipping with the wide (360px) MVI sidebar open.
+    - **"Programmatic MVI" heading removed** from the MVI results column (user request).
+    - **Repo cleaned to code-only** (2 commits: `5331b7f` snapshot-all, then remove).
+      **Remaining files: `index.html`, `master_data.json`, `bd_districts.geojson`,
+      `neet_data.json`, `logo.png`, `CLAUDE.md`, `.gitignore`.** Deleted (recoverable via
+      `git checkout 5331b7f -- <path>`): the `MVI.html`/`mvi2.html` prototypes, `design/`,
+      `docs/`, `new_data/` (NEET source xlsx), `instruction.md`, both codebook CSVs,
+      `data_template.csv`, `DATA_COLLECTION_FORMAT.md`, `make_data_templates.py`,
+      `metric_naming_map.json`. **NOTE: earlier sections of this log still reference some of
+      these now-deleted files (e.g. §2's file table, the Codebook.csv, `design/`,
+      `instruction.md`, the `MVI.html`/`mvi2.html` prototypes) — those references are now
+      historical; the files live only in git history.**
+
 ## 6. Indicator naming — decision & approach
 Problem: dropdown labels were cryptic codes (e.g. `HCR_Upper_pct_HIES_22`, `Kancha_pct`,
 `BEP`) that a non-technical director can't read. Three tiers:
