@@ -52,12 +52,14 @@
   .filter-section-label{font-size:13px; font-weight:700; color:var(--text); margin:0 0 12px;}
   .field .filter-section-label{margin:0;}
 
-  .dashboard-title{font-size:20px; font-weight:700; color:var(--text); margin:0; text-align:center; justify-self:stretch; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis;}
+  .dashboard-title{font-size:20px; font-weight:700; color:var(--text); margin:0; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; justify-self:center; text-align:center;}
+  /* Single navbar row: left cluster (logo · All Dashboards · Filters) | centred title | right cluster (page tabs).
+     Grid keeps the title truly centred regardless of each cluster's width. */
   .topbar-row{
-    display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:16px;
+    display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:16px;
     margin-bottom:12px; padding-bottom:12px; border-bottom:0.5px solid var(--border);
   }
-  .topbar-left{display:flex; align-items:center; gap:20px; justify-self:start;}
+  .topbar-left{display:flex; align-items:center; gap:16px; min-width:0;}
   .brand-logo-link{display:inline-flex; align-items:center; line-height:0; flex:0 0 auto;}
   .brand-logo{height:26px; width:auto; display:block;}
   .filters-toggle, .home-btn{
@@ -71,8 +73,8 @@
   .home-btn{border:0.5px solid var(--border); background:var(--bg); color:var(--magenta);}
   .home-btn:hover{background:var(--surface);}
 
-  /* Top-level page nav (Map View / Correlation View) */
-  .page-tabs{display:flex; gap:18px; justify-self:end;}
+  /* Top-level page nav (Map View / Correlation View / MVI) — now on the right of the navbar */
+  .page-tabs{display:flex; gap:18px;}
   .page-tab-btn{
     display:flex; align-items:center; gap:6px;
     padding:6px 2px; background:none; border:none; cursor:pointer;
@@ -82,18 +84,13 @@
   .page-tab-btn:hover{color:var(--text);}
   .page-tab-btn.active{color:var(--magenta); border-bottom-color:var(--magenta);}
 
-  /* Right group of the single navbar: page tabs + BRAC logo (logo at the far right).
-     gap gives the logo its brand-mandated clear space (exclusion zone); the logo keeps
-     its natural aspect ratio (width:auto) and is never rotated/recoloured. */
-  .topbar-right{display:flex; align-items:center; gap:24px; justify-self:end;}
-  .topbar-right .page-tabs{justify-self:auto;}
-  .topbar-right .brand-logo-link{padding-left:4px;}
-
-  /* In-page Filters bar (above content, out of the navbar). */
-  .filter-bar{display:flex; align-items:center; margin-bottom:12px;}
+  /* Right group of the single navbar: the 3 page tabs. (Logo + All Dashboards +
+     Filters now live in the LEFT cluster; the BRAC logo keeps its natural aspect
+     ratio and clear space per brand rules, and is never rotated/recoloured.) */
+  .topbar-right{display:flex; align-items:center; gap:24px;}
 
   /* ---------- Main ---------- */
-  .main{padding:14px 28px; min-width:0; flex:1;}
+  .main{padding:10px 28px 12px; min-width:0; flex:1;}
   .topbar{display:none;}
 
   .card{
@@ -115,6 +112,10 @@
     text-overflow:ellipsis; pointer-events:none;
   }
   .map-head-actions{margin-left:auto; display:flex; gap:2px;}
+
+  /* #map-title now lives back in the Spatial-distribution card head (styled by
+     .map-card-head h2 above) — it shows the selected metric name and is centred there.
+     It sits inside #page-map, so it only appears on Map view. */
 
   /* Card title with leading icon + subtitle (correlation cards) */
   .card-title{display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;}
@@ -156,13 +157,33 @@
   .kpi-dist:empty{display:none;}
   .kpi-dist:hover{text-decoration:underline;}
 
+  /* Map view fits the viewport (no page scroll): #page-map owns the height so the
+     Regional-breakdowns table scrolls INTERNALLY instead of pushing the whole page
+     into a scroll. Mirrors the MVI page's one-screen approach. */
+  #page-map{ display:flex; flex-direction:column; height:calc(100vh - 84px); }
+  /* minmax(0,1fr) row + min-height:0 down the chain lets the cards/table shrink to the
+     locked height so the table scrolls internally instead of spilling past the page
+     (overriding the default min-height:auto that otherwise forces content height). */
+  #page-map .row-mid{ flex:1; min-height:0; grid-template-rows:minmax(0,1fr); margin-bottom:0; }
+  #page-map .row-mid > .card{ min-height:0; }
+  #page-map .table-scroll{ min-height:0; }
+
+  /* Correlation view: same viewport-lock so the scatter + quadrant list fit one screen
+     (the scatter's chart container and the quadrant list scroll within their cards). */
+  #page-correlation{ display:flex; flex-direction:column; height:calc(100vh - 84px); }
+  #page-correlation .row-mid{ flex:1; min-height:0; grid-template-rows:minmax(0,1fr); margin-bottom:0; }
+  #page-correlation .row-mid > .card{ min-height:0; }
+
   /* Grid rows */
-  .row-mid{display:grid; grid-template-columns:1.1fr 1fr; gap:10px; margin-bottom:10px;}
+  .row-mid{display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin-bottom:10px;}
   .row-mid.cols-equal{grid-template-columns:1.6fr 1fr;}
   .row-bot{margin-bottom:10px;}
 
   /* Map */
-  #map{height:420px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface);}
+  /* flex:1 lets the map fill the card down to the sibling table card's height, so the
+     legend sits flush at the bottom. Low min-height so it shrinks to fit shorter
+     viewports (100% zoom on a laptop) instead of overflowing the locked page. */
+  #map{flex:1; min-height:300px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface);}
   .map-msg{
     padding:10px 14px; font-size:13px; color:var(--text-muted);
     background:var(--surface); border:0.5px solid var(--border);
@@ -172,9 +193,11 @@
   /* Permanent short (3-letter) district labels on the choropleth */
   .district-label-icon{ pointer-events:none; }
   .district-label-icon span{
-    display:block; text-align:center; font-size:9.5px; font-weight:700;
-    color:#3a2140; letter-spacing:0.02em; white-space:nowrap;
-    text-shadow:0 0 2px #fff, 0 0 3px #fff, 0 0 3px #fff;
+    display:block; text-align:center; font-size:9.5px; font-weight:600;
+    color:#ffffff; letter-spacing:0.02em; white-space:nowrap;
+    /* white labels on all districts; dark halo keeps them legible on the
+       light-pink (low-value) districts too */
+    text-shadow:0 0 2px rgba(0,0,0,.55), 0 0 3px rgba(0,0,0,.4);
   }
 
   /* Full screen map: card breaks out to a fixed overlay that fills the viewport */
@@ -183,7 +206,18 @@
     box-shadow:0 25px 70px rgba(0,0,0,.4);
   }
   .card.map-fullscreen #map{ flex:1; height:auto; }
+  .card.map-fullscreen #mvi-map{ flex:1; height:auto; min-height:0; }
   body.map-fullscreen-active{ overflow:hidden; }
+  /* The MVI map's controls (Ranking/Map toggle, district search, division filter, and the
+     zoom/reset/EXIT-fullscreen icons) live in .mvi-toolbar — which sits OUTSIDE the map
+     card (since #23). In full screen the card becomes a fixed z-index:2000 overlay, so
+     without this the toolbar (incl. the minimize button) would be buried under it. Float
+     the toolbar on top of the overlay so every control — especially exit — stays usable. */
+  body.map-fullscreen-active .mvi-toolbar{
+    position:fixed; top:26px; left:34px; right:34px; z-index:2100; margin:0;
+    background:var(--bg); border:0.5px solid var(--border); border-radius:12px;
+    padding:8px 12px; box-shadow:0 6px 22px rgba(0,0,0,.18);
+  }
   .legend{margin-top:10px;}
   .legend-bar{height:8px; border-radius:999px; background:linear-gradient(to right,var(--map-low),var(--magenta));}
   .legend-row{display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-bottom:6px;}
@@ -330,9 +364,11 @@
     .main{padding:22px 20px;}
     .kpi-strip{grid-template-columns:repeat(2,1fr);}
     .row-mid, .row-mid.cols-equal{grid-template-columns:1fr;}
-    /* Below this width the MVI page flows/scrolls normally instead of locking to the
-       viewport height (a fixed height can't stack the sidebar + results sensibly). */
+    /* Below this width the Map + MVI pages flow/scroll normally instead of locking to
+       the viewport height (a fixed height can't stack the sidebar + results sensibly). */
     #page-mvi{height:auto;}
+    #page-map, #page-correlation{height:auto;}
+    #page-map .row-mid, #page-correlation .row-mid{flex:none; min-height:0;}
     .mvi-results-col{height:auto; overflow:visible;}
     #mvi-map{height:460px; flex:none;}
     .topbar-row{display:flex; flex-wrap:wrap; row-gap:8px;}
@@ -396,7 +432,7 @@
      Map/Correlation single-screen feel). The Metric-repository picker now lives in
      the collapsible #mvi-sidebar, which scrolls on its own like the Data-filters
      sidebar, so no per-region flex height juggling is needed here anymore. */
-  #page-mvi{ height:calc(100vh - 96px); }  /* navbar + main padding (Filters is back in the navbar) */
+  #page-mvi{ height:calc(100vh - 84px); }  /* navbar + main padding — matches #page-map/#page-correlation */
   .mvi-results-col{ display:flex; flex-direction:column; height:100%; min-height:0; overflow:hidden; gap:10px; margin-bottom:0; }
   /* Compact header so the KPI cards sit higher / closer to the top */
   .mvi-results-head{ margin:0; }
@@ -433,7 +469,14 @@
   .mvi-results-col .mvi-toolbar{ margin-bottom:0; flex:0 0 auto; }
   #mvi-grid-card, #mvi-map-card{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; margin-bottom:0; }
   #mvi-grid-card .table-scroll{ flex:1; }
-  #mvi-map{ flex:1; min-height:440px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface); }
+  /* Low min-height so the flex map SHRINKS to fit shorter viewports (100% zoom on a
+     laptop) instead of forcing the results column to overflow/clip; flex:1 still lets
+     it grow to fill taller screens. (user: 100% zoom-e MVI page scroll lage) */
+  /* MVI map shows ONLY Bangladesh (no India/ocean basemap — the tile layer is not added
+     in initMviMap). Full width; fitBounds sizes BD to the box. NOTE: BD is portrait, so a
+     lone full-width map has neutral side space — the real fix for that is a side-by-side
+     layout (map + ranking), see log #25. */
+  #mvi-map{ flex:1; min-height:220px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface); }
 
   .mvi-picker-scroll{
     /* flex-shrink:0 so this scroll box never collapses to 0 height inside the
@@ -461,6 +504,17 @@
     border:1px solid var(--border); color:var(--text-muted); cursor:pointer; white-space:nowrap;
   }
   .mvi-polarity-tag.inverse{color:#fff; background:var(--purple); border-color:var(--purple);}
+
+  /* Recommender badge: shows the signed correlation (r) of a recommended indicator
+     with the primary target. Positive r = magenta (moves with primary); negative r =
+     teal (moves opposite, flipped to INVERSE); the primary itself gets a muted tag. */
+  .mvi-rec-badge{
+    flex:0 0 auto; padding:1px 6px; border-radius:999px; font-size:9.5px; font-weight:700;
+    letter-spacing:0.02em; white-space:nowrap; color:var(--magenta);
+    background:rgba(236,0,140,0.10); border:1px solid rgba(236,0,140,0.25);
+  }
+  .mvi-rec-badge.neg{ color:#007161; background:rgba(0,113,97,0.10); border-color:rgba(0,113,97,0.28); }
+  .mvi-rec-badge.primary{ color:var(--text-muted); background:var(--surface); border-color:var(--border); text-transform:uppercase; }
 
   .mvi-chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;}
   .mvi-chip{

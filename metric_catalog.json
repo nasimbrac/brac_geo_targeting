@@ -1,0 +1,4072 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-07-14",
+  "_comment": "Single source of truth for metric metadata + MVI auto-recommend eligibility. Edit by hand to curate. Required per-metric fields: metric_key, label, category, unit, type, enabled, allowAutoRecommend. Optional fields you may add per metric: description, subcategory, priority, keywords (array), displayOrder, viz (hints), ai (explanation meta). type is one of: need|response|statistical|raw_count|demographic_slice. Only metrics with enabled==true AND allowAutoRecommend==true are offered as automatic MVI recommendations (and only type=='need' should be auto-recommendable); the manual Indicators search still spans ALL metrics. First pass auto-classified by heuristics — review and adjust.",
+  "settings": {
+    "dedupR": 0.97,
+    "minPairs": 20,
+    "recommendCount": 9,
+    "maxPerCategory": 3
+  },
+  "categories": [
+    "BRAC Programmes (Response)",
+    "Digital Access",
+    "Disability",
+    "Employment & Work",
+    "Energy & Fuel",
+    "Financial Inclusion",
+    "Household Structure",
+    "Housing Quality",
+    "Literacy & Education",
+    "Marriage & Child Marriage",
+    "Population & Demography",
+    "Poverty & Vulnerability",
+    "Religion & Ethnicity",
+    "Remittance & Migration",
+    "WASH (Water & Sanitation)",
+    "Youth (NEET)"
+  ],
+  "metrics": [
+    {
+      "metric_key": "Inernet_Total_15_yearplus",
+      "label": "Inernet_Total_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Inernet_Total_5yearplus",
+      "label": "Inernet_Total_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Mobile_Phone_Total_15_yearplus",
+      "label": "Mobile Phone_Total_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Mobile_Phone_Total_5yearplus",
+      "label": "Mobile Phone_Total_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Autism_or_Autism_Spectrum_Disorders",
+      "label": "Autism or Autism Spectrum Disorders",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Cerebral_Palsy",
+      "label": "Cerebral Palsy",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Deaf-_Blindness",
+      "label": "Deaf- Blindness",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "disability_rate_pct",
+      "label": "Disability rate (%)",
+      "category": "Disability",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Down_Syndrome",
+      "label": "Down Syndrome",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Hearing_Disability",
+      "label": "Hearing Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Intellectual_Disability",
+      "label": "Intellectual Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Mental_Illness_Leading_to_Disability",
+      "label": "Mental Illness Leading to Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Multiple_Disabilities",
+      "label": "Multiple Disabilities",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Other_Disability",
+      "label": "Other Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Physical_Disability",
+      "label": "Physical Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Speech_Disability",
+      "label": "Speech Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Persons_With_Disability",
+      "label": "Total_Persons_With_Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Visual_Disability",
+      "label": "Visual Disability",
+      "category": "Disability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Do_not_Work_Working_Status_5_Yearplus",
+      "label": "Overall_Do not Work_Working_Status_5 Year+",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Employed_Working_Status_5_Yearplus",
+      "label": "Overall_Employed_Working_Status_5 Year+",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Household_Work_Working_Status_5_Yearplus",
+      "label": "Overall_Household Work_Working_Status_5 Year+",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Looking_for_work_Working_Status_5_Yearplus",
+      "label": "Overall_Looking for work_Working_Status_5 Year+",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Working_Status_5_Yearplus",
+      "label": "Overall_Working_Status_5 Year+",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Agriculture",
+      "label": "Total_Agriculture",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Apprenticeship",
+      "label": "Total_Apprenticeship",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Household_Use_Consumption",
+      "label": "Total_Household Use/Consumption",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Industry",
+      "label": "Total_Industry",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Profit",
+      "label": "Total_Profit",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Salary_Wage",
+      "label": "Total_Salary/Wage",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_Service",
+      "label": "Total_Service",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Unemployment_Rate_Overall_calculated",
+      "label": "Unemployment Rate_Overall_calculated*",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Biogas_pct",
+      "label": "Biogas_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Electricty_pct",
+      "label": "Electricty_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Kerosene_Paraffin_pct",
+      "label": "Kerosene/ Paraffin_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "LP_Gas_pct",
+      "label": "LP Gas_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "National_Grid_pct",
+      "label": "National Grid_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "No_Electricity_Connection_pct",
+      "label": "No Electricity Connection_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Others_pct_source_cooking_fuel",
+      "label": "Others_%_source_cooking_fuel",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Others_pct_source_electricity",
+      "label": "Others_%_source_electricity",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Petrol_Diesel_pct",
+      "label": "Petrol/ Diesel_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Solar_Power_pct",
+      "label": "Solar Power_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Straw_Leaf_Bran_Husk_pct",
+      "label": "Straw/ Leaf/ Bran/ Husk_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Supply_Gas_pct",
+      "label": "Supply Gas_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Wood-coal_Charcoal_Dried_Dung_pct",
+      "label": "Wood-coal/ Charcoal/ Dried Dung_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Wood_Chalk_Chopped_Wood_pct",
+      "label": "Wood/ Chalk/ Chopped Wood_%",
+      "category": "Energy & Fuel",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Have_financial_account_Overall",
+      "label": "Have financial account_Overall",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Overall",
+      "label": "Mobile Bank Account_Overall",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Average_Household_Size",
+      "label": "Average Household Size",
+      "category": "Household Structure",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_HH_num",
+      "label": "Total_HH #",
+      "category": "Household Structure",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_HH_Remittance_num",
+      "label": "Total_HH_Remittance #",
+      "category": "Household Structure",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Cement_Concrete_Brick_Terracotta_Wall_pct",
+      "label": "Cement/Concrete/Brick/Terracotta_Wall_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Cement_Concrete_Brick_Terracotta_floor_pct",
+      "label": "Cement/Concrete/Brick/Terracotta_floor_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Cement_Concrete_Tile_roof_pct",
+      "label": "Cement/Concrete/Tile_roof_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Ceramic_Tiles_Wall_pct",
+      "label": "Ceramic Tiles_Wall_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Hand-made_Tiles_Tile_roof_pct",
+      "label": "Hand-made Tiles/Tile_roof_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Jhupri_pct",
+      "label": "Jhupri_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Kancha_pct",
+      "label": "Kancha_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet_roof_pct",
+      "label": "Metal Sheet/ CI Sheet/Corrugated Iron Sheet_roof_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Metal_sheet_CI_sheet_Corrugated_Iron_sheet_Wall_pct",
+      "label": "Metal sheet/CI sheet/Corrugated Iron sheet_Wall_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "No_wall_pct",
+      "label": "No wall %",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "No_roof_pct",
+      "label": "No_roof_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Other_Materials_Wall_pct",
+      "label": "Other Materials__Wall_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Other_Materials_floor_pct",
+      "label": "Other Materials_floor_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Other_Materials_roof_pct",
+      "label": "Other Materials_roof_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Own_dwelling_unit_pct",
+      "label": "Own dwelling unit_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Pucca_pct",
+      "label": "Pucca_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Rent_free_and_having_no_own_dwelling_unit_elsewhere_pct",
+      "label": "Rent free and having no own dwelling unit elsewhere_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Rent_free_but_having_own_dwelling_unit_elsewhere_pct",
+      "label": "Rent free but having own dwelling unit elsewhere_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Rented_and_having_no_own_dwelling_unit_pct",
+      "label": "Rented and having no own dwelling unit_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Rented_but_having_own_dwelling_unit_elsewhere_pct",
+      "label": "Rented but having own dwelling unit elsewhere_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Semi-pucca_pct",
+      "label": "Semi-pucca_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Soil_Mud_Wall_pct",
+      "label": "Soil/ Mud_Wall_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Soil_Sand_Mud_floor_pct",
+      "label": "Soil/Sand/Mud_floor_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene_Wall_pct",
+      "label": "Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene_Wall_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Tiles_Mosaic_floor_pct",
+      "label": "Tiles/Mosaic_floor_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan_roof_pct",
+      "label": "Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/_roof_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk_Wall_pct",
+      "label": "Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk_Wall_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk_floor_pct",
+      "label": "Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk_floor_%",
+      "category": "Housing Quality",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Literacy_Rate_5yearplus_Overall",
+      "label": "Literacy Rate_5year+_Overall",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Literacy_Rate_7yearplus_Overall",
+      "label": "Literacy Rate_7year+_Overall",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Average_Rate_of_Child_marriage_pct",
+      "label": "Average Rate of Child marriage (%)",
+      "category": "Marriage & Child Marriage",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "pct_Population_General_HH",
+      "label": "% Population_General HH",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "pct_Population_Institutional_HH",
+      "label": "% Population_Institutional HH",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "pct_Population_other_HH",
+      "label": "% Population_other HH",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "A",
+      "label": "A",
+      "category": "Population & Demography",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "A_Lower_95pct_CI",
+      "label": "A Lower 95% CI",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "A_Upper_95pct_CI",
+      "label": "A Upper 95% CI",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "MF",
+      "label": "MF",
+      "category": "Population & Demography",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Others_pct_source_of_drinkingwater",
+      "label": "Others_%_source_of_drinkingwater",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Child-Woman_Ratio",
+      "label": "Overall_Child-Woman Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Dependeny_Ratio",
+      "label": "Overall_Dependeny_Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Overall_Sex_Ratio",
+      "label": "Overall_Sex_Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Total_pct",
+      "label": "Total_%",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "WASH",
+      "label": "WASH",
+      "category": "Population & Demography",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "CVI",
+      "label": "CVI",
+      "category": "Poverty & Vulnerability",
+      "unit": "index",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "H_Harmonised_National_MPI",
+      "label": "H (Harmonised National  MPI)",
+      "category": "Poverty & Vulnerability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "HCR_Upper_pct_HIES_22",
+      "label": "HCR Upper (%) HIES_22",
+      "category": "Poverty & Vulnerability",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "H_Lower_95pct_CI",
+      "label": "H_Lower 95% CI",
+      "category": "Poverty & Vulnerability",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "H_Upper_95pct_CI",
+      "label": "H_Upper 95% CI",
+      "category": "Poverty & Vulnerability",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "MPI",
+      "label": "MPI",
+      "category": "Poverty & Vulnerability",
+      "unit": "index",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "MPI_Lower_95pct_CI",
+      "label": "MPI Lower 95% CI",
+      "category": "Poverty & Vulnerability",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "MPI_Upper_95pct_CI",
+      "label": "MPI Upper 95% CI",
+      "category": "Poverty & Vulnerability",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Quintile_HIES_22",
+      "label": "Quintile HIES_22",
+      "category": "Poverty & Vulnerability",
+      "unit": "",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Weighted_avg_composite_score_vulnerability",
+      "label": "Weighted_avg_composite_score (vulnerability)",
+      "category": "Poverty & Vulnerability",
+      "unit": "index",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "pct_Hizra_Bangladeshi_National",
+      "label": "% Hizra_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "pct_Overall_Bangladeshi_National",
+      "label": "% Overall_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Migration",
+      "label": "Migration",
+      "category": "Remittance & Migration",
+      "unit": "ratio",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Percent_Returned_Migrant",
+      "label": "Percent_Returned_Migrant",
+      "category": "Remittance & Migration",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Bottled_Jar_Water_pct",
+      "label": "Bottled/Jar Water_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "No_Separate_Arrangement_pct",
+      "label": "No Separate Arrangement_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Only_Soap_pct",
+      "label": "Only Soap_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Only_Water_pct",
+      "label": "Only Water_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Open_Defecation_No_Latrine_Available_pct",
+      "label": "Open Defecation/ No Latrine Available_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Pit_Latrine_Without_Slab_Open_Pit_pct",
+      "label": "Pit Latrine   Without   Slab/ Open Pit_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Pit_Latrine_with_Slab_Ventilated_Improved_Latrine_Composting_Latrine_pct",
+      "label": "Pit Latrine with  Slab/ Ventilated  Improved Latrine/  Composting Latrine_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Pond_River_Canal_Lake_pct",
+      "label": "Pond/River/Canal/Lake_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Rain_Water_pct",
+      "label": "Rain Water_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Raw_Open_Hanging_Latrine_Permanent_Temporary_pct",
+      "label": "Raw/Open/ Hanging Latrine (Permanent/ Temporary)_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Safe_Disposal_with_Flushing_Pouring_Water_pct",
+      "label": "Safe Disposal with Flushing/ Pouring Water_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Soap_and_Water_pct",
+      "label": "Soap & Water_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Spring_pct",
+      "label": "Spring_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Tap_pipe_Supply_pct",
+      "label": "Tap/pipe (Supply)_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Toilet_Not-Toilet_Shared_pct",
+      "label": "Toilet_Not-Toilet_Shared_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Toilet_Shared_pct",
+      "label": "Toilet_Shared_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Tube-well_Deep_Shallow_pct",
+      "label": "Tube-well (Deep/Shallow)_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Unsafe_Disposal_with_Flushing_Pouring_Water_pct",
+      "label": "Unsafe Disposal   with Flushing/   Pouring Water_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "Well_pct",
+      "label": "Well_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "NEET_15_19_year_overall",
+      "label": "NEET 15 19 year overall (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "NEET_20_24_year_overall",
+      "label": "NEET 20 24 year overall (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "NEET_Overall_15_24",
+      "label": "NEET Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "need",
+      "enabled": true,
+      "allowAutoRecommend": true
+    },
+    {
+      "metric_key": "numParticipants_in_Apprenticeship_Star_programme",
+      "label": "#Participants in Apprenticeship/Star programme",
+      "category": "BRAC Programmes (Response)",
+      "unit": "count",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "BEP",
+      "label": "BEP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "BHP",
+      "label": "BHP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "BYP",
+      "label": "BYP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "CCP",
+      "label": "CCP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Child_marriages_prevented",
+      "label": "Child marriages prevented",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "DRMP",
+      "label": "DRMP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "IDP",
+      "label": "IDP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "MEP",
+      "label": "MEP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "No_of_Borrower_Dabi",
+      "label": "No of Borrower (Dabi)",
+      "category": "BRAC Programmes (Response)",
+      "unit": "count",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "No_of_Borrower_Progoti",
+      "label": "No of Borrower (Progoti)",
+      "category": "BRAC Programmes (Response)",
+      "unit": "count",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "SCP",
+      "label": "SCP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "SDP",
+      "label": "SDP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "SELP",
+      "label": "SELP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "TBCP",
+      "label": "TBCP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Total_Brac_Reach",
+      "label": "Total_Brac_Reach",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "UDP",
+      "label": "UDP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "UPGP",
+      "label": "UPGP",
+      "category": "BRAC Programmes (Response)",
+      "unit": "",
+      "type": "response",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Female_15_yearplus",
+      "label": "Inernet_Female_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Female_5yearplus",
+      "label": "Inernet_Female_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Male_15_yearplus",
+      "label": "Inernet_Male_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Male_5yearplus",
+      "label": "Inernet_Male_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Rural_Male_15_yearplus",
+      "label": "Inernet_Rural_Male_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Rural_Male_5yearplus",
+      "label": "Inernet_Rural_Male_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Rural_Total_15_yearplus",
+      "label": "Inernet_Rural_Total_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Rural_Total_5yearplus",
+      "label": "Inernet_Rural_Total_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Rural_female_15_yearplus",
+      "label": "Inernet_Rural_female_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_Rural_female_5yearplus",
+      "label": "Inernet_Rural_female_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_urban_Male_15_yearplus",
+      "label": "Inernet_urban_Male_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_urban_Male_5yearplus",
+      "label": "Inernet_urban_Male_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_urban_Total_15_yearplus",
+      "label": "Inernet_urban_Total_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_urban_Total_5yearplus",
+      "label": "Inernet_urban_Total_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_urban_female_15_yearplus",
+      "label": "Inernet_urban_female_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Inernet_urban_female_5yearplus",
+      "label": "Inernet_urban_female_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Female_15_yearplus",
+      "label": "Mobile Phone_Female_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Female_5yearplus",
+      "label": "Mobile Phone_Female_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Male_15_yearplus",
+      "label": "Mobile Phone_Male_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Male_5yearplus",
+      "label": "Mobile Phone_Male_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Rural_Male_15_yearplus",
+      "label": "Mobile Phone_Rural_Male_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Rural_Male_5yearplus",
+      "label": "Mobile Phone_Rural_Male_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Rural_Total_15_yearplus",
+      "label": "Mobile Phone_Rural_Total_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Rural_Total_5yearplus",
+      "label": "Mobile Phone_Rural_Total_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Rural_female_15_yearplus",
+      "label": "Mobile Phone_Rural_female_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_Rural_female_5yearplus",
+      "label": "Mobile Phone_Rural_female_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_urban_Male_15_yearplus",
+      "label": "Mobile Phone_urban_Male_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_urban_Male_5yearplus",
+      "label": "Mobile Phone_urban_Male_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_urban_Total_15_yearplus",
+      "label": "Mobile Phone_urban_Total_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_urban_Total_5yearplus",
+      "label": "Mobile Phone_urban_Total_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_urban_female_15_yearplus",
+      "label": "Mobile Phone_urban_female_15 year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Phone_urban_female_5yearplus",
+      "label": "Mobile Phone_urban_female_5year+",
+      "category": "Digital Access",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Agriculture",
+      "label": "Female_Agriculture",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Apprenticeship",
+      "label": "Female_Apprenticeship",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Employed_Population",
+      "label": "Female_Employed_Population",
+      "category": "Employment & Work",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Employed_Population_WorkType",
+      "label": "Female_Employed_Population_WorkType",
+      "category": "Employment & Work",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Household_Use_Consumption",
+      "label": "Female_Household Use/Consumption",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Industry",
+      "label": "Female_Industry",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Profit",
+      "label": "Female_Profit",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Service",
+      "label": "Female_Service",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Female_Salary_Wage",
+      "label": "Female__Salary/Wage",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Agriculture",
+      "label": "Male_Agriculture",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Apprenticeship",
+      "label": "Male_Apprenticeship",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Employed_Population",
+      "label": "Male_Employed_Population",
+      "category": "Employment & Work",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Employed_Population_WorkType",
+      "label": "Male_Employed_Population_WorkType",
+      "category": "Employment & Work",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Household_Use_Consumption",
+      "label": "Male_Household Use/Consumption",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Industry",
+      "label": "Male_Industry",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Profit",
+      "label": "Male_Profit",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Salary_Wage",
+      "label": "Male_Salary/Wage",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Male_Service",
+      "label": "Male_Service",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Do_not_Work_Working_Status_5_Yearplus_Female",
+      "label": "Overall_Do not Work_Working_Status_5 Year+_Female",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Do_not_Work_Working_Status_5_Yearplus_Male",
+      "label": "Overall_Do not Work_Working_Status_5 Year+_Male",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Employed_Working_Status_5_Yearplus_Female",
+      "label": "Overall_Employed_Working_Status_5 Year+_Female",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Employed_Working_Status_5_Yearplus_Male",
+      "label": "Overall_Employed_Working_Status_5 Year+_Male",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Household_Work_Working_Status_5_Yearplus_Female",
+      "label": "Overall_Household Work_Working_Status_5 Year+_Female",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Household_Work_Working_Status_5_Yearplus_Male",
+      "label": "Overall_Household Work_Working_Status_5 Year+_Male",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Looking_for_work_Working_Status_5_Yearplus_Female",
+      "label": "Overall_Looking for work_Working_Status_5 Year+_Female",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Looking_for_work_Working_Status_5_Yearplus_Male",
+      "label": "Overall_Looking for work_Working_Status_5 Year+_Male",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Working_Status_5_Yearplus_Female",
+      "label": "Overall_Working_Status_5 Year+_Female",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Working_Status_5_Yearplus_Male",
+      "label": "Overall_Working_Status_5 Year+_Male",
+      "category": "Employment & Work",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Total_Employed_Population",
+      "label": "Total_Employed_Population",
+      "category": "Employment & Work",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Total_Employed_Population_WorkType",
+      "label": "Total_Employed_Population_WorkType",
+      "category": "Employment & Work",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Female",
+      "label": "Have financial account_Female",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Male",
+      "label": "Have financial account_Male",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Rural",
+      "label": "Have financial account_Rural",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Rural_Female",
+      "label": "Have financial account_Rural_Female",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Rural_Male",
+      "label": "Have financial account_Rural_Male",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Urban",
+      "label": "Have financial account_Urban",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Urban_Female",
+      "label": "Have financial account_Urban_Female",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Have_financial_account_Urban_Male",
+      "label": "Have financial account_Urban_Male",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Female",
+      "label": "Mobile Bank Account_Female",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Male",
+      "label": "Mobile Bank Account_Male",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Rural",
+      "label": "Mobile Bank Account_Rural",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Rural_Female",
+      "label": "Mobile Bank Account_Rural_Female",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Rural_Male",
+      "label": "Mobile Bank Account_Rural_Male",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Urban",
+      "label": "Mobile Bank Account_Urban",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Urban_Female",
+      "label": "Mobile Bank Account_Urban_Female",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Mobile_Bank_Account_Urban_Male",
+      "label": "Mobile Bank Account_Urban_Male",
+      "category": "Financial Inclusion",
+      "unit": "count",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Rural_HH",
+      "label": "# Rural HH",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Rural_HH_byTypeDwelling",
+      "label": "# Rural HH_byTypeDwelling",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Floating_HH",
+      "label": "# of Floating HH",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Floating_HH_rural",
+      "label": "# of Floating HH _rural",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Floating_HH_urban",
+      "label": "# of Floating HH _urban",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_General_HH",
+      "label": "# of General HH",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_General_HH_Rural",
+      "label": "# of General HH_Rural",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_General_HH_Urban",
+      "label": "# of General HH_Urban",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH",
+      "label": "# of HH",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_excluding_slum_and_floating",
+      "label": "# of HH excluding slum and floating",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_excluding_slum_and_floating_rural",
+      "label": "# of HH excluding slum and floating_rural",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_excluding_slum_and_floating_urban",
+      "label": "# of HH excluding slum and floating_urban",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_1-Person",
+      "label": "# of HH with 1-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_10-Person",
+      "label": "# of HH with 10-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_10-Person_plus",
+      "label": "# of HH with 10-Person +",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_2-Person",
+      "label": "# of HH with 2-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_3-Person",
+      "label": "# of HH with 3-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_4-Person",
+      "label": "# of HH with 4-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_5-Person",
+      "label": "# of HH with 5-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_6-Person",
+      "label": "# of HH with 6-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_7-Person",
+      "label": "# of HH with 7-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_8-Person",
+      "label": "# of HH with 8-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_with_9-Person",
+      "label": "# of HH with 9-Person",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_HH_byTypeDwelling",
+      "label": "# of HH_byTypeDwelling",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Institutional_Household",
+      "label": "# of Institutional Household",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Institutional_Household_Rural",
+      "label": "# of Institutional Household_Rural",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Institutional_Household_Urban",
+      "label": "# of Institutional Household_Urban",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Other_Household",
+      "label": "# of Other Household",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Other_Household_Rural",
+      "label": "# of Other Household_Rural",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Other_Household_Urban",
+      "label": "# of Other Household_Urban",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Slum_HH",
+      "label": "# of Slum HH",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Slum_HH_rural",
+      "label": "# of Slum HH _rural",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Slum_HH_urban",
+      "label": "# of Slum HH _urban",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Urban_HH",
+      "label": "# of Urban HH",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_of_Urban_HH_byTypeDwelling",
+      "label": "# of Urban HH_byTypeDwelling",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_population_10andAbove_yrs",
+      "label": "# population_10andAbove_yrs",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Jhupri",
+      "label": "#_Jhupri",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Kancha",
+      "label": "#_Kancha",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Pucca",
+      "label": "#_Pucca",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Semi-pucca",
+      "label": "#_Semi-pucca",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Total",
+      "label": "#_Total",
+      "category": "Household Structure",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_No_Roof",
+      "label": "# No Roof",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_No_Wall",
+      "label": "# No Wall",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_floor_Cement_Concrete_Brick_Terracotta",
+      "label": "# floor_Cement/Concrete/Brick/Terracotta",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_floor_Other_Materials",
+      "label": "# floor_Other Materials",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_floor_Soil_Sand_Mud",
+      "label": "# floor_Soil/Sand/Mud",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_floor_Tiles_Mosaic",
+      "label": "# floor_Tiles/Mosaic",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_floor_Total",
+      "label": "# floor_Total",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_floor_Wood_Bamboo_Mat_Palm_Tree_Betel_Nut_Trunk",
+      "label": "# floor_Wood/Bamboo/Mat/Palm Tree/Betel Nut Trunk",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_roof_Cement_Concrete_Tile",
+      "label": "# roof_Cement/Concrete/Tile",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_roof_Hand-made_Tiles_Tile",
+      "label": "# roof_Hand-made Tiles/Tile",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_roof_Metal_Sheet_CI_Sheet_Corrugated_Iron_Sheet",
+      "label": "# roof_Metal Sheet/ CI Sheet/Corrugated Iron Sheet",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_roof_Other_Materials",
+      "label": "# roof_Other Materials",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_roof_Total",
+      "label": "# roof_Total",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_roof_Wood_Bamboo_Bichali_Golpata_Palm_Leaf_Polythene_Mat_Straw_Chhan",
+      "label": "# roof_Wood/Bamboo/Bichali/Golpata Palm Leaf/Polythene  Mat/Straw/Chhan/",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Cement_Concrete_Brick_Terracotta",
+      "label": "#Wall_Cement/Concrete/Brick/Terracotta",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Ceramic_Tiles",
+      "label": "#Wall_Ceramic Tiles",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Metal_sheet_CI_sheet_Corrugated_Iron_sheet",
+      "label": "#Wall_Metal sheet/CI sheet/Corrugated Iron sheet",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Other_Materials",
+      "label": "#Wall_Other Materials",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Soil_Mud",
+      "label": "#Wall_Soil/ Mud",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Straw_Chhan_Golpata_Palm_Leaf_Bichali_Polythene",
+      "label": "#Wall_Straw/ Chhan/Golpata/Palm Leaf/Bichali/Polythene",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Total",
+      "label": "#Wall_Total",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "numWall_Wood_Bamboo_Mat_Palm_Tree_Betal_Nut_Trunk",
+      "label": "#Wall_Wood/Bamboo/Mat/Palm Tree/Betal Nut Trunk",
+      "category": "Housing Quality",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "10-14_Years_Female_Student",
+      "label": "10-14 Years_Female_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "10-14_Years_Male_Student",
+      "label": "10-14 Years_Male_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "15-19_Years_Female_Student",
+      "label": "15-19 Years_Female_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "15-19_Years_Male_Student",
+      "label": "15-19 Years_Male_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "20-24_Years_Female_Student",
+      "label": "20-24 Years_Female_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "20-24_Years_Male_Student",
+      "label": "20-24 Years_Male_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "25-29_Years_Female_Student",
+      "label": "25-29 Years_Female_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "25-29_Years_Male_Student",
+      "label": "25-29 Years_Male_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "5-9_Year_Female_Student",
+      "label": "5-9 Year_Female_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "5-9_Year_Male_Student",
+      "label": "5-9 Year_Male_Student",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Literacy_Rate_5yearplus_Female",
+      "label": "Literacy Rate_5year+_Female",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Literacy_Rate_5yearplus_Male",
+      "label": "Literacy Rate_5year+_Male",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Literacy_Rate_7yearplus_Female",
+      "label": "Literacy Rate_7year+_Female",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Literacy_Rate_7yearplus_Male",
+      "label": "Literacy Rate_7year+_Male",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Literacy_Rate_5yearplus_Female",
+      "label": "Rural_Literacy Rate_5year+_Female",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Literacy_Rate_5yearplus_Male",
+      "label": "Rural_Literacy Rate_5year+_Male",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Literacy_Rate_5yearplus_Overall",
+      "label": "Rural_Literacy Rate_5year+_Overall",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Literacy_Rate_7yearplus_Female",
+      "label": "Rural_Literacy Rate_7year+_Female",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Literacy_Rate_7yearplus_Male",
+      "label": "Rural_Literacy Rate_7year+_Male",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Literacy_Rate_7yearplus_Overall",
+      "label": "Rural_Literacy Rate_7year+_Overall",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Total_Female_Student_5-29_years",
+      "label": "Total_Female_Student_5-29 years",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Total_Male_Student_5-29_years",
+      "label": "Total_Male_Student_5-29 years",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Literacy_Rate_5yearplus_Female",
+      "label": "Urban_Literacy Rate_5year+_Female",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Literacy_Rate_5yearplus_Male",
+      "label": "Urban_Literacy Rate_5year+_Male",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Literacy_Rate_5yearplus_Overall",
+      "label": "Urban_Literacy Rate_5year+_Overall",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Literacy_Rate_7yearplus_Female",
+      "label": "Urban_Literacy Rate_7year+_Female",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Literacy_Rate_7yearplus_Male",
+      "label": "Urban_Literacy Rate_7year+_Male",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Literacy_Rate_7yearplus_Overall",
+      "label": "Urban_Literacy Rate_7year+_Overall",
+      "category": "Literacy & Education",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Currently_married_population",
+      "label": "# Currently married population",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Currently_married_population_female",
+      "label": "# Currently married population_female",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Currently_married_population_male",
+      "label": "# Currently married population_male",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Divorced_population",
+      "label": "# Divorced population",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Divorced_population_female",
+      "label": "# Divorced population_female",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Divorced_population_male",
+      "label": "# Divorced population_male",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Never_married_population",
+      "label": "# Never married population",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Never_married_population_female",
+      "label": "# Never married population_female",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Never_married_population_male",
+      "label": "# Never married population_male",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Separated_population",
+      "label": "# Separated population",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Separated_population_female",
+      "label": "# Separated population_female",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Separated_population_male",
+      "label": "# Separated population_male",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Widow_Widower_population",
+      "label": "# Widow/Widower population",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Widow_Widower_population_female",
+      "label": "# Widow/Widower population_female",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Widow_Widower_population_male",
+      "label": "# Widow/Widower population_male",
+      "category": "Marriage & Child Marriage",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Female_Others",
+      "label": "# Female_Others",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male",
+      "label": "# Male",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male_Others",
+      "label": "# Male_Others",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_General_HH",
+      "label": "# Population_ General HH",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_General_HH_Rural",
+      "label": "# Population_ General HH_Rural",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_General_HH_Urban",
+      "label": "# Population_ General HH_Urban",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_Institutional_HH",
+      "label": "# Population_ Institutional HH",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_Institutional_HH_Rural",
+      "label": "# Population_Institutional HH_Rural",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_Institutional_HH_Urban",
+      "label": "# Population_Institutional HH_Urban",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_Rural",
+      "label": "# Population_Rural",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_TypeOf_HH",
+      "label": "# Population_TypeOf_HH",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_Urban",
+      "label": "# Population_Urban",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_other_HH",
+      "label": "# Population_other HH",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_other_HH_Rural",
+      "label": "# Population_other HH_Rural",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Population_other_HH_Urban",
+      "label": "# Population_other HH_Urban",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Total_Others",
+      "label": "# Total_Others",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_female",
+      "label": "# female",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Population_General_HH_Rural",
+      "label": "% Population_General HH_Rural",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Population_General_HH_Urban",
+      "label": "% Population_General HH_Urban",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Population_Institutional_HH_Rural",
+      "label": "% Population_Institutional HH_Rural",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Population_Institutional_HH_Urban",
+      "label": "% Population_Institutional HH_Urban",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Population_other_HH_Rural",
+      "label": "% Population_other HH_Rural",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Population_other_HH_Urban",
+      "label": "% Population_other HH_Urban",
+      "category": "Population & Demography",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Overall_Avg._Population_Growth",
+      "label": "Overall_Avg._Population Growth",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Excluding_Slum_Floating_Female",
+      "label": "Population_Excluding_Slum_Floating_Female",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Excluding_Slum_Floating_Hijra",
+      "label": "Population_Excluding_Slum_Floating_Hijra",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Excluding_Slum_Floating_Male",
+      "label": "Population_Excluding_Slum_Floating_Male",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Excluding_Slum_Floating_Total",
+      "label": "Population_Excluding_Slum_Floating_Total",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Female",
+      "label": "Population_Female",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Female_pop",
+      "label": "Population_Female_pop",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Floating_Female",
+      "label": "Population_Floating_Female",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Floating_Hijra",
+      "label": "Population_Floating_Hijra",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Floating_Male",
+      "label": "Population_Floating_Male",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Floating_Total",
+      "label": "Population_Floating_Total",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Hijra",
+      "label": "Population_Hijra",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Hijra_pop",
+      "label": "Population_Hijra_pop",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Male",
+      "label": "Population_Male",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Male_pop",
+      "label": "Population_Male_pop",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Slum_Female",
+      "label": "Population_Slum_Female",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Slum_Hijra",
+      "label": "Population_Slum_Hijra",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Slum_Male",
+      "label": "Population_Slum_Male",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Slum_Total",
+      "label": "Population_Slum_Total",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Total",
+      "label": "Population_Total",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Total_pop",
+      "label": "Population_Total_pop",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Urban_Female",
+      "label": "Population_Urban_Female",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Urban_Hijra",
+      "label": "Population_Urban_Hijra",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Urban_Male",
+      "label": "Population_Urban_Male",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_Urban_Total",
+      "label": "Population_Urban_Total",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_rural_Female",
+      "label": "Population_rural_Female",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_rural_Hijra",
+      "label": "Population_rural_Hijra",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_rural_Male",
+      "label": "Population_rural_Male",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_rural_Total",
+      "label": "Population_rural_Total",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Avg._Population_Growth",
+      "label": "Rural_Avg._Population Growth",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Child-Woman_Ratio",
+      "label": "Rural_Child-Woman Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Dependeny_Ratio",
+      "label": "Rural_Dependeny_Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Sex_Ratio",
+      "label": "Rural_Sex_Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Avg._Population_Growth",
+      "label": "Urban_Avg._Population Growth",
+      "category": "Population & Demography",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Child-Woman_Ratio",
+      "label": "Urban_Child-Woman Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Dependeny_Ratio",
+      "label": "Urban_Dependeny_Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_Sex_Ratio",
+      "label": "Urban_Sex_Ratio",
+      "category": "Population & Demography",
+      "unit": "ratio",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Number_of_Poor_000",
+      "label": "Number of Poor ('000)",
+      "category": "Poverty & Vulnerability",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Population_HIES_22",
+      "label": "Population_HIES_22",
+      "category": "Poverty & Vulnerability",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Std_Error_pct_HIES_22",
+      "label": "Std_Error (%) HIES_22",
+      "category": "Poverty & Vulnerability",
+      "unit": "%",
+      "type": "statistical",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Female_Bangladeshi_National",
+      "label": "# Female_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Female_Buddhist",
+      "label": "# Female_Buddhist",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Female_Christian",
+      "label": "# Female_Christian",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Female_Ethnic_Population",
+      "label": "# Female_Ethnic Population",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Female_Hindu",
+      "label": "# Female_Hindu",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Female_Muslim",
+      "label": "# Female_Muslim",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Hizra_Bangladeshi_National",
+      "label": "# Hizra_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male_Ethnic_Population",
+      "label": "# Male _Ethnic Population",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male_Bangladeshi_National",
+      "label": "# Male_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male_Buddhist",
+      "label": "# Male_Buddhist",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male_Christian",
+      "label": "# Male_Christian",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male_Hindu",
+      "label": "# Male_Hindu",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Male_Muslim",
+      "label": "# Male_Muslim",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Overall_Bangladeshi_National",
+      "label": "# Overall_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Overall_Ethnic_Population",
+      "label": "# Overall_Ethnic Population",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Total_Buddhist",
+      "label": "# Total_Buddhist",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Total_Christian",
+      "label": "# Total_Christian",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Total_Hindu",
+      "label": "# Total_Hindu",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "num_Total_Muslim",
+      "label": "# Total_Muslim",
+      "category": "Religion & Ethnicity",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Female_Bangladeshi_National",
+      "label": "% Female_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Female_Ethnic_Population",
+      "label": "% Female_Ethnic Population",
+      "category": "Religion & Ethnicity",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Male_Bangladeshi_National",
+      "label": "% Male_Bangladeshi_National",
+      "category": "Religion & Ethnicity",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "pct_Male_Ethnic_Population",
+      "label": "% Male_Ethnic Population",
+      "category": "Religion & Ethnicity",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Number_Returned_Migrant",
+      "label": "Number_Returned_Migrant",
+      "category": "Remittance & Migration",
+      "unit": "count",
+      "type": "raw_count",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_HH_Remittance_num",
+      "label": "Rural_HH_Remittance #",
+      "category": "Remittance & Migration",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Urban_HH_Remittance_num",
+      "label": "Urban_HH_Remittance #",
+      "category": "Remittance & Migration",
+      "unit": "",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Toilet_Not-Toilet_Shared_pct",
+      "label": "Rural_Toilet_Not-Toilet_Shared_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "Rural_Toilet_Shared_pct",
+      "label": "Rural_Toilet_Shared_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "urban_Toilet_Not-Toilet_Shared_pct",
+      "label": "urban_Toilet_Not-Toilet_Shared_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "urban_Toilet_Shared_pct",
+      "label": "urban_Toilet_Shared_%",
+      "category": "WASH (Water & Sanitation)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_15_19_year",
+      "label": "NEET female 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_20_24_year",
+      "label": "NEET female 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_Overall_15_24",
+      "label": "NEET female Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_rural_15_19_year",
+      "label": "NEET female rural 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_rural_20_24_year",
+      "label": "NEET female rural 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_rural_Overall_15_24",
+      "label": "NEET female rural Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_urban_15_19_year",
+      "label": "NEET female urban 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_urban_20_24_year",
+      "label": "NEET female urban 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_female_urban_Overall_15_24",
+      "label": "NEET female urban Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_15_19_year",
+      "label": "NEET male 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_20_24_year",
+      "label": "NEET male 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_Overall_15_24",
+      "label": "NEET male Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_rural_15_19_year",
+      "label": "NEET male rural 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_rural_20_24_year",
+      "label": "NEET male rural 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_rural_Overall_15_24",
+      "label": "NEET male rural Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_urban_15_19_year",
+      "label": "NEET male urban 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_urban_20_24_year",
+      "label": "NEET male urban 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_male_urban_Overall_15_24",
+      "label": "NEET male urban Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_rural_15_19_year",
+      "label": "NEET rural 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_rural_20_24_year",
+      "label": "NEET rural 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_rural_Overall_15_24",
+      "label": "NEET rural Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_urban_15_19_year",
+      "label": "NEET urban 15 19 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_urban_20_24_year",
+      "label": "NEET urban 20 24 year (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    },
+    {
+      "metric_key": "NEET_urban_Overall_15_24",
+      "label": "NEET urban Overall (15-24) (%)",
+      "category": "Youth (NEET)",
+      "unit": "%",
+      "type": "demographic_slice",
+      "enabled": true,
+      "allowAutoRecommend": false
+    }
+  ]
+}

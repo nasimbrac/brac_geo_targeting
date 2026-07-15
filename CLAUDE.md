@@ -384,6 +384,159 @@ it had hardcoded values and placeholder images, so we wrote a fresh compliant bu
       Households) — the per-indicator raw-value columns (added in #12) were removed because
       they forced horizontal scroll; ranking now fits one screen (verified scrollWidth==clientWidth).
       Per-indicator detail still shows on the Map view tooltip; could return as a row-expand later.
+19. **Map/MVI polish + MVI "Smart Recommend" (config-driven) (2026-07-14, browser-verified)** —
+    - **Map view**: removed the "Regional data breakdowns" heading text; moved the selected-metric
+      name out of the map-card head to a smaller page headline (`.page-metric-headline`, `#map-title`
+      relocated above the KPI strip); widened the map card (`.row-mid` grid `1.1fr 1fr`→`1.6fr 1fr`);
+      district map labels turned **white** (`.district-label-icon span`, dark halo) on both maps.
+    - **MVI map controls**: added zoom-in / reset / full-screen buttons (`#mvi-map-zoom-in`,
+      `#mvi-map-reset`, `#mvi-map-fullscreen-btn` → `toggleMviMapFullscreen`), and **zoom-to-division**
+      (`mviZoomToDivision()`): selecting a division fits the map to just that division's districts
+      (reset/"All divisions" returns to full-BD). Wired in `bindMviEvents`.
+    - **Correlation scatter**: points now sized by total BRAC reach (radius ∝ √reach, 3–12px),
+      reach shown in tooltip + subtitle.
+    - **MVI Smart Recommend**: new "Primary target" single-select combobox (`#mvi-primary-search`,
+      `state.mviPrimary`, default poverty). `mviCorrelate()` (Pearson via existing `linReg().r`,
+      over `getUnits()` all 64) ranks every eligible metric by **|r|**; `mviRecommendFrom()` picks
+      primary + top-N diverse correlates → sets selection, **weights ∝ |r|** (sum 100, primary
+      anchored), and **auto-aligns polarity** (`inverse = (r>0&&primaryInverse)||(r<0&&!primaryInverse)`).
+      Dynamic: changing the primary rebuilds + recalculates. Weight rows sort primary→rec(|r| desc)→
+      manual, each rec showing its **signed r** (magenta +, teal −; `.mvi-rec-badge[.neg|.primary]`);
+      primary tagged "primary". Manual "Indicators" search still spans all 449; manual edits don't
+      re-fire the recommender. `mviResetToDefault` now re-runs the recommender from poverty.
+    - **Config-driven eligibility — `metric_catalog.json` (new file, single source of truth)**: per-metric
+      `{metric_key,label,category,unit,type,enabled,allowAutoRecommend}` (+ optional `description/
+      subcategory/priority/keywords/displayOrder/viz/ai`), a `settings` block (`dedupR 0.97, minPairs 20,
+      recommendCount 9, maxPerCategory 3`), an allowed `categories` list, and `version`/`last_updated`.
+      The recommender reads eligibility (`mviAutoEligible`, only `enabled&&allowAutoRecommend`; type
+      should be `need`), tuning (`mviRecSetting`), and a **per-domain diversity cap** (`maxPerCategory`)
+      from this file — no rules hardcoded in JS. Missing file → fallback = consider all metrics.
+      First pass auto-classified by a scratchpad script (not committed): 130 `need`-eligible of 449
+      (18 response/BRAC, 154 raw_count, 146 demographic_slice, 1 statistical excluded) — meant to be
+      **hand-curated** going forward. `validateMetricCatalog()` runs at startup and console-warns on
+      duplicate keys, missing label/category, invalid type, category off the allowed list, or
+      `allowAutoRecommend&&type!=='need'`. **Future/phased (not done): migrate search, labels,
+      dashboards, and AI-explanation metadata to also read from this catalog instead of NAME_OVERRIDES/DICT.**
+20. **Filter-bar left-align + legend spacing + MVI map color match (2026-07-14, browser-verified)** —
+    - **`.filter-bar` reordered**: the `#filters-toggle` button now comes **first (left)**,
+      then the `#map-title` metric headline, both left-aligned (was headline-left /
+      Filters-`margin-left:auto`-right). CSS: dropped the `margin-left:auto` and changed the
+      headline to `flex:0 1 auto` so it no longer stretches the button to the far edge. On
+      Correlation/MVI the headline stays hidden (existing `body:not(.map-page-active)
+      #map-title{display:none}`), so those pages just show the left Filters button.
+    - **Map-view legend dead-space removed**: `#map` changed from fixed `height:420px` to
+      `flex:1; min-height:420px`. In the flex-column map card the map now grows to the
+      (taller) sibling table card's height, pushing the legend flush to the card bottom
+      instead of leaving blank space below it. Verified: gap below legend = 13px (card
+      padding), map grew 420→475px. Fullscreen/mobile `height` overrides still win.
+    - **MVI map colour now matches Map view's character**: both maps always shared the exact
+      same ramp (`colorScale`, `#FEEBF6`→`#EC008C`, opacity 0.85) — the MVI map only *looked*
+      "too pink" because the min-max-normalised composite score clusters mid-high (unlike
+      poverty's right-skewed, mostly-light distribution). Fix: `colorScale` gained an optional
+      `gamma` param (default 1 = linear, Map view untouched); `mviStyleFor` passes **`1.5`**,
+      which bends `t→t^1.5` to lighten mid-tones so the MVI ramp reads like Map view's. Legend
+      still shows true `scoreMin`/`scoreMax`; tiers still quantile-based — purely a perceptual
+      (standard cartographic) transform, not a data change. Verified side-by-side in-browser.
+21. **Correlation default X→CVI + MVI one-screen fit at 100% zoom (2026-07-14, browser-verified)** —
+    - **Correlation default axes**: `state.scatterX` changed `UPGP`→**`CVI`** (Climate
+      Vulnerability Index); `state.scatterY` unchanged (`HCR_Upper_pct_HIES_22`, poverty
+      headcount). So the scatter now opens as CVI (X) vs poverty (Y) per the user. `CVI` is
+      already runtime-patched `curated:true`, so it appears in the axis comboboxes by default.
+    - **MVI page no longer needs scrolling at 100% browser zoom**: `#mvi-map` min-height was
+      `440px`. Because the map is `flex:1` inside the viewport-locked `.mvi-results-col`
+      (`overflow:hidden`), that 440px floor stopped the map shrinking, so on a shorter
+      viewport (100% zoom on a laptop) the map bottom spilled past the viewport and clipped
+      (at 90% zoom the extra CSS px hid the problem — matching the user's report). Lowered to
+      **`min-height:220px`** so the flex map shrinks to fit short screens and still grows on
+      tall ones. Verified at 1366×657 (≈100%-zoom laptop): both Map- and Ranking-sub-views
+      have `document.scrollHeight == clientHeight` (zero page overflow), full legend visible.
+22. **Single-navbar redesign + all pages fit one screen (2026-07-14, browser-verified)** —
+    user pointed at a reference mock and asked to arrange the navbar like it and reclaim
+    vertical space so pages stop needing a bottom scroll. Supersedes the navbar in #16.
+    - **One navbar row, new arrangement**: **left cluster** = BRAC logo · All Dashboards ·
+      Filters; **centre** = title; **right cluster** = page tabs Map/Correlation/MVI. (Moved
+      `#home-btn` and `#filters-toggle` into `.topbar-left`; page tabs are the only thing in
+      `.topbar-right` now.) Title text is **"Geo-Targeting Insights"** (user: no "BRAC"
+      prefix). `.topbar-row` switched flex→**`display:grid; grid-template-columns:auto 1fr auto`**
+      with `.dashboard-title{justify-self:center; text-align:center}` so the title stays
+      centred regardless of cluster widths.
+    - **Deleted the separate in-page `.filter-bar` row** (added in #15/#20) — its Filters
+      button moved up into the navbar. This is the main space reclaim (~46px back to every
+      page). The `.filter-bar` and now-unused `.page-metric-headline` CSS were removed.
+    - **Selected-metric name moved back into the Spatial-distribution card head** (`<h2
+      id="map-title">`, styled by the existing absolute-centred `.map-card-head h2`), matching
+      the mock where the metric name is the map card's centred title with the zoom/reset/
+      fullscreen icons. (`#map-title` IDs/`updateLegend()` text-setting unchanged; it lives
+      inside `#page-map` so it only shows on Map view — the old `body:not(.map-page-active)
+      #map-title{display:none}` rule became redundant and was dropped.)
+    - **Map + Correlation pages now viewport-locked like MVI** so they fit one screen and
+      scroll *internally* instead of the whole page: `#page-map`/`#page-correlation` are
+      `display:flex; flex-direction:column; height:calc(100vh - 84px)`, their `.row-mid` is
+      `flex:1; min-height:0; grid-template-rows:minmax(0,1fr)`, and the cards/`.table-scroll`
+      get `min-height:0` (defeats the default `min-height:auto` that was letting the 10-row
+      Regional table spill past the page). `#map` min-height lowered 420→300 so it shrinks to
+      fit short viewports. `@media (max-width:1024px)` sets both pages back to `height:auto`
+      (normal mobile flow), alongside the existing MVI mobile override. Top padding trimmed
+      (`.main` padding-top 14→10) per "upor theke space komano".
+    - Verified in-browser at 1366×657 (≈100%-zoom laptop): Map, Correlation, and MVI all have
+      **zero page overflow**; the Regional table + 4-quadrant list scroll within their cards;
+      the scatter chart still renders (canvas 514×352); and the Filters button correctly
+      toggles the Data-filters sidebar on Map/Correlation and the Metric-repository sidebar on
+      MVI. Also (from the same session) Correlation default X axis set to **CVI** (see #21).
+
+23. **MVI map enlarged: toolbar merged into the map-card header line (2026-07-14, browser-verified)** —
+    user wanted the MVI Map view's two stacked rows (the `.mvi-toolbar` filter row +
+    the map card's "Composite Vulnerability Score — spatial distribution" title row)
+    collapsed into ONE line, the title text dropped, and the reclaimed height given to
+    the map so it renders bigger.
+    - **Deleted the `#mvi-map-card` header** (`.card-head.map-card-head` — the title `<h2>`
+      and its action-icon cluster) entirely, so the map card is now just the map + legend →
+      the map fills the extra row (grew ~224px→~320px at a 100%-zoom laptop viewport).
+    - **Moved the zoom/reset/fullscreen icons** (`#mvi-map-zoom-in/-reset/-fullscreen-btn`,
+      wrapped in `.map-head-actions#mvi-map-actions`) into the shared `.mvi-toolbar`, far
+      right. The toolbar line now reads `[Ranking|Map toggle] · [Search district] ·
+      [All divisions] · … · [zoom][reset][fullscreen]`. IDs unchanged, so `bindMviEvents`
+      wiring is intact (fullscreen + reset verified working in-browser).
+    - **Toggle stays reachable on both sub-views** because the toolbar lives OUTSIDE the
+      grid/map cards (not inside the map head) — so Ranking view can still switch back.
+      `mviSwitchView()` gained one line hiding `#mvi-map-actions` on the grid (Ranking)
+      view (`display:none` when `view!=='map'`), since zoom/fullscreen are map-only.
+    - Verified: MVI page still fits one screen (overflow 0), map noticeably larger, title
+      gone, icons show on Map view / hidden on Ranking view.
+
+24. **MVI map: capped width to kill the side empty-space (2026-07-14, browser-verified)** —
+    after #23 widened the MVI map to full card width, Bangladesh (a portrait-shaped country)
+    sat small in the centre with large India/ocean basemap gaps left & right — `fitBounds`
+    sizes the country to the box HEIGHT, so a very wide box wastes the horizontal space.
+    Can't fill the width without cropping the northern/southern districts, so instead capped
+    `#mvi-map` to `max-width:640px; margin-inline:auto` (kept `flex:1` height + `min-height`).
+    fitBounds now re-fits the narrower, taller box so BD fills its frame and reads big (like
+    Map view); the reclaimed sides are card background, not wasted basemap. All 64 districts
+    stay visible; page still fits one screen. Map/Correlation pages left untouched (user said
+    those two are fine).
+
+25. **MVI map: removed India basemap + fixed the fullscreen-can't-exit bug (2026-07-14, browser-verified)** —
+    - **Only Bangladesh, no basemap**: user wanted the MVI map to show ONLY Bangladesh (no
+      India/ocean context). Removed the `L.tileLayer(...).addTo(mviMap)` call in
+      `initMviMap()` — district polygons now render on the plain `#mvi-map` background.
+      Also reverted the #24 `max-width:640` cap (it was the white card-margin the user
+      circled) — map is full width again.
+    - **Geometry note (documented, not "fixed")**: BD is portrait and its on-screen size is
+      capped by the one-screen HEIGHT, so it lands ~300px wide regardless of box width; a
+      lone full-width map therefore has neutral side space. Proved via measurement that no
+      standalone resize (wide / narrow / portrait aspect-ratio) removes it without either
+      shrinking BD or cropping north/south districts. The real fix is a **side-by-side
+      layout (map + ranking)** like Map View — proposed to the user, still pending their
+      call (they redirected to the no-India + fullscreen asks instead). **Open item.**
+    - **Fullscreen exit bug FIXED (regression from #23)**: #23 moved the zoom/reset/
+      fullscreen icons into `.mvi-toolbar`, which sits OUTSIDE `#mvi-map-card`. In full
+      screen the card becomes a `position:fixed; z-index:2000` overlay, so the toolbar
+      (incl. the exit/minimize button) was buried underneath → user couldn't minimize.
+      Fix: `body.map-fullscreen-active .mvi-toolbar{ position:fixed; top:26px; left/right:34px;
+      z-index:2100; ... }` floats the whole toolbar on top of the overlay. Verified: in
+      fullscreen the Ranking/Map toggle, Search district, All divisions, and zoom/reset/
+      EXIT icons are all visible & clickable; exit minimizes correctly (Escape still works
+      too). Satisfies the user's "show the filters in fullscreen + let me minimize" ask.
 
 ## 6. Indicator naming — decision & approach
 Problem: dropdown labels were cryptic codes (e.g. `HCR_Upper_pct_HIES_22`, `Kancha_pct`,

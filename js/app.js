@@ -12,8 +12,8 @@ const state = {
   povertyRange: null,                // [lo, hi] on HCR_Upper_pct_HIES_22, or null = full
   selectedDistrict: null,            // district code
   sortDir: 'desc',
-  scatterX: 'UPGP',                  // BRAC response (need vs response framing)
-  scatterY: 'HCR_Upper_pct_HIES_22', // BBS need
+  scatterX: 'CVI',                   // climate vulnerability (default X)
+  scatterY: 'HCR_Upper_pct_HIES_22', // poverty headcount (default Y)
   showAllMetrics: false,
   activeLevel: 'district',
   quadSortKey: 'y',                  // 'name' | 'x' | 'y' — 4-quadrant table sort column
@@ -34,7 +34,11 @@ const state = {
     No_Electricity_Connection_pct:10, Percent_Returned_Migrant:10, disability_rate_pct:10, Kancha_pct:10,
     Unsafe_Disposal_with_Flushing_Pouring_Water_pct:10, Literacy_Rate_7yearplus_Overall:10 },
   mviInverseOverrides: {},        // key -> boolean, user-flipped polarity (overrides MVI_INVERSE_DEFAULTS)
+  mviPrimary: 'HCR_Upper_pct_HIES_22', // "primary target" anchor for the correlation recommender
+  mviRecommended: [],             // keys that came from the recommender (drives the rec sort + r-value badge)
+  mviRecCorr: {},                 // recommended key -> signed correlation r with the primary
   mviSearch: '',                  // metric repository search text
+  mviPrimarySearch: '',           // primary-target combobox search text
   mviResults: null,               // cached computeMviScores() output, until next Calculate
   mviSortDir: 'desc',
   mviTableExpanded: false,
@@ -62,6 +66,8 @@ let mviGeoLayer = null;
 let mviLabelLayer = null;
 let mviLayerByCode = {};
 let cachedGeojson = null; // bd_districts.geojson, fetched once, shared by initMap() and initMviMap()
+let METRIC_CATALOG = null;   // metric_catalog.json: key -> {enabled, allowAutoRecommend, category, type}. null = file absent → recommend from all (fallback).
+let CATALOG_SETTINGS = null; // metric_catalog.json "settings": {dedupR, minPairs, recommendCount, maxPerCategory}
 
 /* District-name aliases: our name <- geojson variants */
 const NAME_ALIASES = {
@@ -236,11 +242,15 @@ function hexToRgba(hex, alpha){
 }
 
 // light magenta tint -> full BRAC magenta across metric range
-function colorScale(val, min, max){
+function colorScale(val, min, max, gamma){
   if(val === null || val === undefined || Number.isNaN(val)) return '#E8E8E4';
   const lo = {r:0xFE,g:0xEB,b:0xF6}, hi = {r:0xEC,g:0x00,b:0x8C};
   let t = (max === min) ? 0.5 : (val - min)/(max - min);
   t = Math.max(0, Math.min(1, t));
+  // gamma > 1 lightens mid-tones: pushes clustered distributions (e.g. the MVI
+  // composite score) toward the light end so the ramp reads like Map view's
+  // right-skewed poverty ramp instead of a wall of saturated pink.
+  if(gamma && gamma !== 1) t = Math.pow(t, gamma);
   const c = k => Math.round(lo[k] + (hi[k]-lo[k])*t);
   return `rgb(${c('r')},${c('g')},${c('b')})`;
 }
@@ -323,6 +333,15 @@ const MVI_DEFAULT_WEIGHTS = {
   Kancha_pct:10, Unsafe_Disposal_with_Flushing_Pouring_Water_pct:10, Literacy_Rate_7yearplus_Overall:10
 };
 const MVI_MIN_INDICATORS = 1, MVI_MAX_INDICATORS = 10;
+
+// Smart-recommend knobs (see mviCorrelate/mviRecommendFrom):
+// - DEDUP_R: skip a candidate whose |r| with the primary or with an already-picked
+//   recommendation is this high — they're effectively the same indicator (e.g. two
+//   poverty measures), so we want diversity, not 9 clones.
+// - MIN_PAIRS: minimum districts with BOTH values present before an r is trusted.
+const MVI_DEDUP_R = 0.97;
+const MVI_MIN_PAIRS = 20;
+const MVI_RECOMMEND_COUNT = MVI_MAX_INDICATORS - 1; // primary + this many = full set of 10
 
 /* District -> division lookup (Bangladesh's 8 divisions / 64 districts is
    fixed public administrative geography, not derived from master_data.json —
@@ -948,7 +967,7 @@ function updateScatter(){
     const x = u.metrics[xk], y = u.metrics[yk];
     if(x===null||x===undefined||Number.isNaN(x)) continue;
     if(y===null||y===undefined||Number.isNaN(y)) continue;
-    pts.push({x,y,name:u.name,code:u.code,zone:u.climate_zone});
+    pts.push({x,y,name:u.name,code:u.code,zone:u.climate_zone,reach:u.metrics['Total_Brac_Reach']});
   }
 
   // quadrant split at the median of each axis
@@ -977,7 +996,21 @@ function updateScatter(){
   const projX = v => norm ? normX(v) : v;
   const projY = v => norm ? normY(v) : v;
   // Plotted points carry projected coords for position + actual (ax/ay) for tooltips.
-  const plotPts = pts.map(p => ({x:projX(p.x), y:projY(p.y), ax:p.x, ay:p.y, name:p.name, code:p.code}));
+  const plotPts = pts.map(p => ({x:projX(p.x), y:projY(p.y), ax:p.x, ay:p.y, name:p.name, code:p.code, reach:p.reach}));
+
+  // Bubble sizing: point radius scales with each district's total BRAC reach so a
+  // bigger dot = more people reached. Area-proportional (radius ∝ √value) so large
+  // districts don't visually dominate; districts with no reach value fall back to
+  // the minimum radius.
+  const reaches = pts.map(p=>p.reach).filter(v=>v!=null && !Number.isNaN(v));
+  const reachMin = reaches.length ? Math.min(...reaches) : 0;
+  const reachMax = reaches.length ? Math.max(...reaches) : 1;
+  const R_MIN = 3, R_MAX = 12;
+  const radiusFor = p => {
+    if(p.reach==null || Number.isNaN(p.reach) || reachMax===reachMin) return R_MIN;
+    const t = (p.reach - reachMin)/(reachMax - reachMin);
+    return R_MIN + Math.sqrt(t)*(R_MAX - R_MIN);
+  };
 
   // A quadrant chip filter (state.quadFilter) dims the other 3 quadrants'
   // points instead of hiding them, so the trend line / axes stay stable.
@@ -990,8 +1023,8 @@ function updateScatter(){
     }),
     pointBorderColor: pts.map(p=>p.code===state.selectedDistrict?'#EC008C':'rgba(0,0,0,0)'),
     pointBorderWidth: pts.map(p=>p.code===state.selectedDistrict?3:0),
-    pointRadius: pts.map(p=>p.code===state.selectedDistrict?8:5),
-    pointHoverRadius:7
+    pointRadius: pts.map(p=>radiusFor(p) + (p.code===state.selectedDistrict?2:0)),
+    pointHoverRadius: pts.map(p=>radiusFor(p) + 2)
   };
 
   const datasets=[main];
@@ -1024,9 +1057,11 @@ function updateScatter(){
   scatterChart.options.plugins.tooltip.callbacks.label = (c)=>{
     if(c.dataset.label==='Trend') return null;
     const d=c.raw;
+    const reachLine = (d.reach!=null && !Number.isNaN(d.reach))
+      ? `BRAC reach (bubble size): ${fmt(d.reach,'Total_Brac_Reach')}` : 'BRAC reach: —';
     if(norm) return [`${metricLabel(xk)}: ${fmt(d.ax,xk)} (norm ${d.x.toFixed(2)})`,
-                     `${metricLabel(yk)}: ${fmt(d.ay,yk)} (norm ${d.y.toFixed(2)})`];
-    return [`${metricLabel(xk)}: ${fmt(d.ax,xk)}`, `${metricLabel(yk)}: ${fmt(d.ay,yk)}`];
+                     `${metricLabel(yk)}: ${fmt(d.ay,yk)} (norm ${d.y.toFixed(2)})`, reachLine];
+    return [`${metricLabel(xk)}: ${fmt(d.ax,xk)}`, `${metricLabel(yk)}: ${fmt(d.ay,yk)}`, reachLine];
   };
 
   // outlier name labels turned off for a cleaner chart (kept the computation
@@ -1048,7 +1083,7 @@ function updateScatter(){
   // Pearson r sits inline on the title line; the subtitle is just the relationship.
   const r = reg ? reg.r.toFixed(2) : '—';
   $('scatter-pearson').textContent = `Pearson r ${r}`;
-  $('scatter-subtitle').textContent = `Relationship between ${metricLabel(xk)} and ${metricLabel(yk)}`;
+  $('scatter-subtitle').textContent = `Relationship between ${metricLabel(xk)} and ${metricLabel(yk)} · bubble size = total BRAC reach`;
 
   // Live insight card for whichever district is currently selected (any panel
   // can set it) — replaces a once-static "High X · High Y" legend. Short,
@@ -1383,6 +1418,23 @@ function toggleMapFullscreen(){
   }, 50);
 }
 
+// MVI-map full-screen toggle — mirrors toggleMapFullscreen() but for the MVI page's
+// own Leaflet instance (#mvi-map-card / mviMap / mviGeoLayer). Respects an active
+// division filter so exiting/entering full screen keeps the current zoom framing.
+function toggleMviMapFullscreen(){
+  const card = $('mvi-map-card');
+  const btn = $('mvi-map-fullscreen-btn');
+  const isFs = card.classList.toggle('map-fullscreen');
+  document.body.classList.toggle('map-fullscreen-active', isFs);
+  btn.title = isFs ? 'Exit full screen' : 'Full screen';
+  btn.setAttribute('aria-pressed', String(isFs));
+  setTimeout(()=>{
+    if(!mviMap) return;
+    mviMap.invalidateSize();
+    mviZoomToDivision();
+  }, 50);
+}
+
 function bindFilters(){
   $('f-metric').addEventListener('change', e=>{
     state.metric = e.target.value;
@@ -1464,6 +1516,7 @@ function bindFilters(){
     // Map/Correlation, the Metric-repository sidebar (#mvi-sidebar) on MVI. The
     // shared "Filters" toggle button now controls whichever one the page shows.
     document.body.classList.toggle('mvi-page-active', isMvi);
+    document.body.classList.toggle('map-page-active', isMap); // shows the metric headline only on Map view
     if(isCorrelation && scatterChart) scatterChart.resize();
     // Sync the MVI sub-view on entering the page: shows the right card and lazily
     // creates the Leaflet map on first use (map is the default sub-view). Idempotent,
@@ -1534,10 +1587,14 @@ function downloadQuadrantCsv(){
 
 /* ---- Metric repository picker: search, chips, DIRECT/INVERSE tags, weights ---- */
 function buildMviPicker(){
+  renderMviPrimaryList();
   renderMviPickerList();
   renderMviChips();
   renderMviWeightList();
   renderMviWeightSum();
+  // Show the current primary target as the combobox placeholder (unless the user is typing in it).
+  const primEl = $('mvi-primary-search');
+  if(primEl && document.activeElement !== primEl){ primEl.value = ''; primEl.placeholder = metricLabel(state.mviPrimary); }
   $('mvi-picker-count').textContent = `${state.mviSelected.length}/${MVI_MAX_INDICATORS}`;
   // Metric totals are computed at runtime (master_data.json's 421 + NEET's 27 merged
   // into DICT + 1 derived), so show the live count instead of a hardcoded "421".
@@ -1607,6 +1664,45 @@ function renderMviPickerList(){
   });
 }
 
+// Primary-target combobox list: single-select (one anchor), grouped by category,
+// current primary highlighted. Choosing a row triggers the recommender.
+function renderMviPrimaryList(){
+  const list = $('mvi-primary-list');
+  if(!list) return;
+  list.innerHTML = '';
+  const q = (state.mviPrimarySearch || '').trim().toLowerCase();
+  const addHead = (text) => { const h=document.createElement('div'); h.className='mvi-metric-group'; h.textContent=text; list.appendChild(h); };
+  const addRow = (m) => {
+    const isCur = m.key === state.mviPrimary;
+    const row = document.createElement('div');
+    row.className = 'mvi-metric-row' + (isCur ? ' selected' : '');
+    row.innerHTML = `<span class="mvi-metric-label" title="${m.label}">${m.label}</span>` +
+      (isCur ? `<span class="mvi-polarity-tag">PRIMARY</span>` : '');
+    row.addEventListener('click', () => mviSetPrimary(m.key));
+    list.appendChild(row);
+  };
+  const all = mviAllMetricKeys().map(mviMetricMeta)
+    .filter(m => !q || m.label.toLowerCase().includes(q) || m.key.toLowerCase().includes(q));
+  const catOrder = Object.keys((DATA.meta && DATA.meta.categories) || {});
+  const byCat = {};
+  all.forEach(m => { (byCat[m.category] = byCat[m.category] || []).push(m); });
+  const orderedCats = catOrder.filter(c => byCat[c]).concat(Object.keys(byCat).filter(c => !catOrder.includes(c)));
+  orderedCats.forEach(cat => {
+    const catLabel = (DATA.meta && DATA.meta.categories && DATA.meta.categories[cat]) || cat;
+    addHead(catLabel);
+    byCat[cat].sort((a,b)=>a.label.localeCompare(b.label)).forEach(addRow);
+  });
+}
+
+function mviSetPrimary(key){
+  state.mviPrimarySearch = '';
+  const input = $('mvi-primary-search');
+  if(input){ input.value = ''; input.blur(); }
+  const list = $('mvi-primary-list');
+  if(list){ list.hidden = true; }
+  mviRecommendFrom(key); // rebuilds selection/weights/polarity + recalculates
+}
+
 function renderMviChips(){
   const wrap = $('mvi-chips');
   wrap.innerHTML = '';
@@ -1623,14 +1719,33 @@ function renderMviChips(){
 function renderMviWeightList(){
   const list = $('mvi-weight-list');
   list.innerHTML = '';
-  state.mviSelected.forEach(key => {
+  // Display order: primary first, then recommended (by |r| desc), then manual adds.
+  const corr = state.mviRecCorr || {};
+  const rank = k => (k === state.mviPrimary) ? 0 : (state.mviRecommended.includes(k) ? 1 : 2);
+  const order = state.mviSelected.slice().sort((a,b) => {
+    const ra = rank(a), rb = rank(b);
+    if(ra !== rb) return ra - rb;
+    if(ra === 1) return Math.abs(corr[b]||0) - Math.abs(corr[a]||0);
+    return 0;
+  });
+  order.forEach(key => {
     const meta = mviMetricMeta(key);
     const weight = state.mviWeights[key] || 0;
     const row = document.createElement('div');
     row.className = 'mvi-weight-row';
     row.dataset.key = key;
+    // Primary → subtle "primary" tag; recommended → signed correlation value (r);
+    // manually-added → no badge.
+    let badge = '';
+    if(key === state.mviPrimary){
+      badge = '<span class="mvi-rec-badge primary" title="Primary target (anchor)">primary</span>';
+    }else if(state.mviRecommended.includes(key) && corr[key] != null){
+      const r = corr[key];
+      const txt = (r >= 0 ? '+' : '−') + Math.abs(r).toFixed(2);
+      badge = `<span class="mvi-rec-badge${r < 0 ? ' neg' : ''}" title="Correlation (r) with the primary target">r ${txt}</span>`;
+    }
     row.innerHTML =
-      `<div class="mvi-weight-top"><span class="mvi-label" title="${meta.label}">${meta.label}</span>` +
+      `<div class="mvi-weight-top"><span class="mvi-label" title="${meta.label}">${meta.label}</span>${badge}` +
       `<input type="number" class="mvi-num" min="0" max="100" value="${weight}"/>` +
       `<button class="mvi-weight-remove" title="Remove this indicator">×</button></div>` +
       `<input type="range" class="mvi-slider" min="0" max="100" value="${weight}"/>`;
@@ -1703,10 +1818,147 @@ function mviDistributeEvenly(){
 }
 
 function mviResetToDefault(){
-  state.mviSelected = MVI_DEFAULT_SELECTION.slice();
-  state.mviWeights = Object.assign({}, MVI_DEFAULT_WEIGHTS);
+  // "Reset" now restores the default recommended set (primary = poverty), clearing
+  // any manual polarity flips, rather than a fixed hand-picked 10.
   state.mviInverseOverrides = {};
+  state.mviWeights = {};
+  mviRecommendFrom('HCR_Upper_pct_HIES_22');
+}
+
+/* ---- Smart recommend: correlate a primary target against every other metric ---- */
+// Tuning knobs come from metric_catalog.json "settings" when present, else the code
+// defaults below. Keeps the whole pipeline configuration-driven.
+function mviRecSetting(name, fallback){
+  return (CATALOG_SETTINGS && CATALOG_SETTINGS[name] != null) ? CATALOG_SETTINGS[name] : fallback;
+}
+// A metric may be *auto-recommended* only if the catalog marks it enabled + allowed.
+// No catalog loaded → allow everything (fallback = previous behaviour). A metric absent
+// from a loaded catalog is treated as not-yet-vetted (excluded from auto-recommend).
+function mviAutoEligible(key){
+  if(!METRIC_CATALOG) return true;
+  const e = METRIC_CATALOG[key];
+  return !!(e && e.enabled && e.allowAutoRecommend);
+}
+// Category used for the per-domain diversity cap (catalog first, else metric meta).
+function mviRecCategory(key){
+  return (METRIC_CATALOG && METRIC_CATALOG[key] && METRIC_CATALOG[key].category) || mviMetricMeta(key).category;
+}
+
+// Startup sanity-check of metric_catalog.json — warns (never throws) so a bad edit is
+// caught early in the console instead of silently skewing recommendations.
+function validateMetricCatalog(cat){
+  const VALID_TYPES = ['need','response','statistical','raw_count','demographic_slice'];
+  const allowedCats = Array.isArray(cat.categories) ? new Set(cat.categories) : null;
+  const list = Array.isArray(cat.metrics) ? cat.metrics : [];
+  const issues = [];
+  const seen = new Set();
+  list.forEach((m, i) => {
+    const at = `#${i} ${m && m.metric_key ? m.metric_key : '(no key)'}`;
+    if(!m || !m.metric_key){ issues.push(`${at}: missing metric_key`); return; }
+    if(seen.has(m.metric_key)) issues.push(`${at}: duplicate metric_key`);
+    seen.add(m.metric_key);
+    if(!m.label) issues.push(`${at}: missing label`);
+    if(!m.category) issues.push(`${at}: missing category`);
+    else if(allowedCats && !allowedCats.has(m.category)) issues.push(`${at}: category "${m.category}" not in allowed list`);
+    if(!VALID_TYPES.includes(m.type)) issues.push(`${at}: invalid type "${m.type}"`);
+    if(m.allowAutoRecommend === true && m.type !== 'need') issues.push(`${at}: allowAutoRecommend=true but type="${m.type}" (only "need" should be auto-recommendable)`);
+  });
+  const tag = `metric_catalog.json ${cat.version ? 'v'+cat.version : '(no version)'}${cat.last_updated ? ' · updated '+cat.last_updated : ''}: ${list.length} metrics`;
+  if(issues.length){
+    console.warn(`${tag}, ${issues.length} validation issue(s):`);
+    issues.slice(0, 50).forEach(s => console.warn('  • ' + s));
+    if(issues.length > 50) console.warn(`  … and ${issues.length - 50} more`);
+  }else{
+    console.info(`${tag}, no validation issues.`);
+  }
+}
+
+// Pearson r between two metric keys over the units where BOTH values are present.
+// Returns {r, n} or null when there aren't enough paired points / there's no variance.
+function mviPairR(units, ka, kb){
+  const pts = [];
+  for(const u of units){
+    const x = u.metrics[ka], y = u.metrics[kb];
+    if(x==null || Number.isNaN(x) || y==null || Number.isNaN(y)) continue;
+    pts.push({x, y});
+  }
+  if(pts.length < mviRecSetting('minPairs', MVI_MIN_PAIRS)) return null;
+  const reg = linReg(pts);
+  if(!reg) return null;
+  return {r: reg.r, n: pts.length};
+}
+
+// Rank every catalog-eligible metric by |correlation| with the primary, strongest first.
+function mviCorrelate(primaryKey){
+  const units = getUnits();
+  const out = [];
+  for(const k of mviAllMetricKeys()){
+    if(k === primaryKey) continue;
+    if(!mviAutoEligible(k)) continue;   // config-driven eligibility (metric_catalog.json)
+    const pr = mviPairR(units, primaryKey, k);
+    if(!pr) continue;
+    out.push({key:k, r:pr.r, abs:Math.abs(pr.r)});
+  }
+  out.sort((a,b) => b.abs - a.abs);
+  return out;
+}
+
+// Build + apply a full recommended selection: primary + top-N diverse correlates,
+// weights ∝ |r| (sum 100), polarity oriented to the primary, then re-render +
+// recalculate. This is the dynamic entry point wired to the primary-target box.
+function mviRecommendFrom(primaryKey){
+  const units = getUnits();
+  const ranked = mviCorrelate(primaryKey);
+  const primaryInverse = mviMetricMeta(primaryKey).inverse;
+
+  const recommendCount = mviRecSetting('recommendCount', MVI_RECOMMEND_COUNT);
+  const dedupR = mviRecSetting('dedupR', MVI_DEDUP_R);
+  const maxPerCategory = mviRecSetting('maxPerCategory', Infinity);
+
+  // Greedy pick: skip near-duplicates (of the primary or of an already-picked metric)
+  // and cap how many come from any one domain, so the set stays diverse across
+  // poverty / education / WASH / housing / health / climate / disability / migration…
+  const picked = []; // [{key, r, abs}]
+  const perCat = {};
+  for(const cand of ranked){
+    if(picked.length >= recommendCount) break;
+    if(cand.abs >= dedupR) continue; // effectively identical to the primary
+    const cat = mviRecCategory(cand.key);
+    if((perCat[cat] || 0) >= maxPerCategory) continue; // per-domain diversity cap
+    let dup = false;
+    for(const p of picked){
+      const pr = mviPairR(units, cand.key, p.key);
+      if(pr && Math.abs(pr.r) >= dedupR){ dup = true; break; }
+    }
+    if(dup) continue;
+    picked.push(cand);
+    perCat[cat] = (perCat[cat] || 0) + 1;
+  }
+
+  const keys = [primaryKey, ...picked.map(p=>p.key)];
+  state.mviPrimary = primaryKey;
+  state.mviSelected = keys;
+  state.mviRecommended = picked.map(p=>p.key);
+  state.mviRecCorr = {};
+  picked.forEach(p => { state.mviRecCorr[p.key] = p.r; }); // signed r, shown on each rec row
+
+  // Polarity: orient each pick so its contribution points the same way as the primary.
+  // For a direct primary (e.g. poverty) this is simply inverse = (r < 0).
+  picked.forEach(p => {
+    state.mviInverseOverrides[p.key] = (p.r > 0 && primaryInverse) || (p.r < 0 && !primaryInverse);
+  });
+
+  // Weights ∝ |r|, primary anchored at 1.0 (biggest slice), integers summing to 100.
+  const raw = [1.0, ...picked.map(p=>p.abs)];
+  const total = raw.reduce((a,b)=>a+b, 0) || 1;
+  const weights = raw.map(w => Math.floor(100 * w / total));
+  let rem = 100 - weights.reduce((a,b)=>a+b, 0);
+  for(let i=0; rem>0 && i<weights.length; i++, rem--) weights[i]++; // leftover to the top (primary first)
+  state.mviWeights = {};
+  keys.forEach((k, i) => { state.mviWeights[k] = weights[i]; });
+
   buildMviPicker();
+  runMviCalculation();
 }
 
 /* ---- Computation: min-max normalize -> inverse flip -> weight -> sum ---- */
@@ -1878,7 +2130,7 @@ function mviStyleFor(u){
   const visible = rec && rec.included && mviPassesDisplayFilter(rec);
   const val = visible ? rec.score : null;
   return {
-    fillColor: colorScale(val, results ? results.scoreMin : 0, results ? results.scoreMax : 1),
+    fillColor: colorScale(val, results ? results.scoreMin : 0, results ? results.scoreMax : 1, 1.5),
     fillOpacity: 0.85,
     color: '#FFFFFF',
     weight: 0.6
@@ -1913,9 +2165,8 @@ async function initMviMap(){
     zoomSnap:0.1, zoomDelta:0.1,
     attributionControl:true
   }).setView([23.7, 90.35], 6.4);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-    attribution:'&copy; OpenStreetMap, &copy; CARTO', subdomains:'abcd', maxZoom:19
-  }).addTo(mviMap);
+  // No tile basemap on the MVI map — user wants ONLY Bangladesh, no India/ocean context.
+  // The district polygons render on the plain #mvi-map background instead.
 
   if(!cachedGeojson){
     try{
@@ -1997,11 +2248,36 @@ function updateMviLegend(){
   $('mvi-legend-max').textContent = results.scoreMax.toFixed(3);
 }
 
+// Zoom the MVI map to frame the active division filter: with a division selected,
+// fit to the bounds of just that division's districts; with "All divisions", fall
+// back to the full-Bangladesh extent. Safe to call before the map exists (no-op).
+function mviZoomToDivision(){
+  if(!mviMap || !mviGeoLayer) return;
+  const div = state.mviDivisionFilter;
+  if(!div){
+    try{ mviMap.fitBounds(mviGeoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
+    return;
+  }
+  let bounds = null;
+  mviGeoLayer.eachLayer(layer => {
+    const u = matchUnit(layer.feature.properties);
+    if(u && districtDivision(u.name) === div){
+      const b = layer.getBounds();
+      bounds = bounds ? bounds.extend(b) : L.latLngBounds(b.getSouthWest(), b.getNorthEast());
+    }
+  });
+  if(bounds && bounds.isValid()){
+    try{ mviMap.fitBounds(bounds, {padding:[24,24]}); }catch(e){}
+  }
+}
+
 /* ---- Data grid / Map view toggle ---- */
 function mviSwitchView(view){
   state.mviResultView = view;
   $('mvi-grid-card').style.display = view === 'grid' ? '' : 'none';
   $('mvi-map-card').style.display = view === 'map' ? '' : 'none';
+  // The zoom/reset/fullscreen icons now live in the shared toolbar; only relevant on Map view.
+  $('mvi-map-actions').style.display = view === 'map' ? '' : 'none';
   $('mvi-view-toggle').querySelectorAll('.scale-tab').forEach(btn => {
     const on = btn.dataset.view === view;
     btn.classList.toggle('active', on);
@@ -2011,7 +2287,7 @@ function mviSwitchView(view){
     if(!mviMap) initMviMap();
     else{
       mviMap.invalidateSize();
-      try{ if(mviGeoLayer) mviMap.fitBounds(mviGeoLayer.getBounds(), {padding:[4,4]}); }catch(e){}
+      mviZoomToDivision();
     }
   }
 }
@@ -2046,6 +2322,21 @@ function bindMviEvents(){
     const combo = mviSearchInput.closest('.combobox');
     if(combo && !combo.contains(e.target)) closeMviList();
   });
+
+  // Primary-target combobox: single-select. Opens on focus/typing; selecting a row
+  // (in renderMviPrimaryList) closes it and fires the recommender.
+  const primInput = $('mvi-primary-search');
+  const primList = $('mvi-primary-list');
+  const openPrim  = () => { primList.hidden = false; primInput.setAttribute('aria-expanded', 'true'); };
+  const closePrim = () => { primList.hidden = true;  primInput.setAttribute('aria-expanded', 'false'); };
+  primInput.addEventListener('focus', openPrim);
+  primInput.addEventListener('input', e => { state.mviPrimarySearch = e.target.value; renderMviPrimaryList(); openPrim(); });
+  primInput.addEventListener('keydown', e => { if(e.key === 'Escape'){ closePrim(); primInput.blur(); } });
+  document.addEventListener('click', e => {
+    const combo = primInput.closest('.combobox');
+    if(combo && !combo.contains(e.target)){ state.mviPrimarySearch = ''; closePrim(); buildMviPicker(); }
+  });
+
   $('mvi-calc-btn').addEventListener('click', runMviCalculation);
   $('mvi-distribute-btn').addEventListener('click', mviDistributeEvenly);
   $('mvi-reset-btn').addEventListener('click', mviResetToDefault);
@@ -2060,6 +2351,13 @@ function bindMviEvents(){
   $('mvi-view-toggle').querySelectorAll('.scale-tab').forEach(btn => {
     btn.addEventListener('click', () => mviSwitchView(btn.dataset.view));
   });
+  // MVI map controls — same set as Map view (zoom in / reset / full screen).
+  $('mvi-map-zoom-in').addEventListener('click', ()=>{ if(mviMap) mviMap.zoomIn(); });
+  $('mvi-map-reset').addEventListener('click', mviZoomToDivision);
+  $('mvi-map-fullscreen-btn').addEventListener('click', toggleMviMapFullscreen);
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && $('mvi-map-card').classList.contains('map-fullscreen')) toggleMviMapFullscreen();
+  });
   $('mvi-district-search').addEventListener('input', e => {
     state.mviDistrictSearch = e.target.value;
     if(state.mviResults){ renderMviKPIs(state.mviResults); renderMviTable(state.mviResults); mviRecolorMap(); }
@@ -2067,6 +2365,7 @@ function bindMviEvents(){
   $('mvi-division-filter').addEventListener('change', e => {
     state.mviDivisionFilter = e.target.value;
     if(state.mviResults){ renderMviKPIs(state.mviResults); renderMviTable(state.mviResults); mviRecolorMap(); }
+    mviZoomToDivision(); // zoom in to the chosen division (or back to full BD for "All divisions")
   });
   [...new Set(Object.values(BD_DISTRICT_DIVISIONS))].sort().forEach(div => {
     const opt = document.createElement('option');
@@ -2143,6 +2442,22 @@ async function init(){
     }
   }catch(e){ console.warn('NEET data (neet_data.json) not loaded — MVI/dropdowns will simply omit NEET metrics.', e); }
 
+  // Config-driven eligibility for MVI auto-recommendations (2026-07-14). Which metrics
+  // may be *automatically recommended* is defined in metric_catalog.json (editable by
+  // hand), not hardcoded here — BRAC can add/remove/reclassify without touching JS.
+  // The manual "Indicators" search still spans ALL metrics regardless of this file.
+  // If the file is missing, METRIC_CATALOG stays null and the recommender falls back
+  // to considering every metric (previous behaviour).
+  try{
+    const cat = await fetch('./metric_catalog.json').then(r=>{ if(!r.ok) throw new Error('no catalog'); return r.json(); });
+    if(cat && Array.isArray(cat.metrics)){
+      METRIC_CATALOG = {};
+      cat.metrics.forEach(m => { if(m && m.metric_key) METRIC_CATALOG[m.metric_key] = m; });
+      CATALOG_SETTINGS = cat.settings || null;
+      validateMetricCatalog(cat); // surface duplicate keys / bad type / bad category etc. as console warnings
+    }
+  }catch(e){ console.warn('metric_catalog.json not loaded — MVI recommender will consider all metrics (unfiltered fallback).', e); }
+
   buildMetricDropdown();
   buildProgrammeDropdown();
 
@@ -2162,9 +2477,8 @@ async function init(){
   renderTable();
   updateScatter();
 
-  bindMviEvents(); // builds the division-filter <option> list, must run before buildMviPicker's first render
-  buildMviPicker();
-  runMviCalculation(); // compute with the default indicators so the MVI page shows data on load (mirrors MVI.html init)
+  bindMviEvents(); // builds the division-filter + primary-target lists and wires events; must run first
+  mviRecommendFrom(state.mviPrimary); // default primary (poverty) → recommended set drives the page on load
 
   await initMap();          // async; map renders when GeoJSON resolves
 }
