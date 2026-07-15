@@ -2480,6 +2480,14 @@ async function init(){
   bindMviEvents(); // builds the division-filter + primary-target lists and wires events; must run first
   mviRecommendFrom(state.mviPrimary); // default primary (poverty) → recommended set drives the page on load
 
+  // On phones the filter sidebars would open full-width and push all content below
+  // the fold — start them collapsed so the dashboard shows first. (Tapping "Filters"
+  // still opens them; desktop is unaffected.) 768px matches the CSS mobile breakpoint.
+  if(window.innerWidth <= 768){
+    $('sidebar').classList.add('collapsed');
+    $('mvi-sidebar').classList.add('collapsed');
+  }
+
   await initMap();          // async; map renders when GeoJSON resolves
 }
 

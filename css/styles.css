@@ -399,6 +399,14 @@
     .card{padding:16px;}
     .card-head{flex-wrap:wrap; gap:8px;}
     .card-head h2{font-size:16px;}
+    /* On phones the absolute-centred map title (max-width:55%) collided with the
+       zoom/reset/fullscreen icons. Let it flow normally instead: left-aligned, wraps
+       to full text, and the icons sit to its right without overlap. */
+    .map-card-head h2{
+      position:static; transform:none; left:auto; top:auto;
+      max-width:100%; white-space:normal; text-align:left;
+      flex:1 1 auto; min-width:0; pointer-events:auto;
+    }
     .row-mid > .card{min-width:0;}
     #map{height:420px;}
     .chart-wrap{height:420px;}
