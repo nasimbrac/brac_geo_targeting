@@ -110,6 +110,7 @@
     position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
     text-align:center; max-width:55%; white-space:nowrap; overflow:hidden;
     text-overflow:ellipsis; pointer-events:none;
+    font-size:14px; font-weight:400;
   }
   .map-head-actions{margin-left:auto; display:flex; gap:2px;}
 
@@ -293,6 +294,9 @@
     padding:11px 16px; border-bottom:0.5px solid var(--border);
   }
   thead th.num{text-align:right;}
+  .sort-th{cursor:pointer; user-select:none;}
+  .sort-th svg{width:14px; height:14px; vertical-align:middle; margin-left:4px;}
+  .sort-th:hover{color:var(--magenta);}
   tbody td{padding:11px 16px; border-bottom:0.5px solid var(--border); font-size:14px;}
   tbody td.num{text-align:right; font-variant-numeric:tabular-nums;}
   tbody td.dist{color:var(--text); font-weight:500;}
@@ -370,6 +374,8 @@
     #page-map, #page-correlation{height:auto;}
     #page-map .row-mid, #page-correlation .row-mid{flex:none; min-height:0;}
     .mvi-results-col{height:auto; overflow:visible;}
+    .mvi-map-row{flex:none; min-height:0;}
+    .mvi-map-side{overflow:visible;}
     #mvi-map{height:460px; flex:none;}
     .topbar-row{display:flex; flex-wrap:wrap; row-gap:8px;}
     .dashboard-title{order:3; width:100%; text-align:center; white-space:normal;}
@@ -460,8 +466,18 @@
   /* Caption removed (user request) — the search bar sits right under the title. */
   #mvi-picker-sub{ display:none; }
   /* Tighter weight rows + header so all 10 sliders + footer fit one screen. */
-  .mvi-weight-row{ padding:6px 0; gap:3px; }
   #mvi-picker-search{ margin-bottom:6px !important; }
+  /* Trim the MVI sidebar's fixed chrome so the 10-row weight list has room. */
+  .mvi-sidebar{ padding-top:14px; padding-bottom:14px; }
+  #mvi-primary-search{ padding:7px 10px; font-size:13px; }
+  .mvi-sidebar .filter-section-label{ margin-bottom:6px; }
+  /* Calculate pinned to the sidebar bottom so it never needs scrolling, even
+     with 10 rows. (Total + Distribute/Reset now sit up under the Weights header.) */
+  .mvi-picker-footer{
+    position:sticky; bottom:0; z-index:1; background:var(--surface);
+    padding-top:6px; margin-top:2px; border-top:0.5px solid var(--border);
+  }
+  .mvi-picker-footer #mvi-calc-btn{ padding:9px; }
   /* Extra compaction so the whole MVI page fits one screen: smaller KPI boxes, tighter
      rows, drop the subtitle. (user: font choto, space komano, box choto) */
   .mvi-results-head .sub{ display:none; }
@@ -469,9 +485,12 @@
   .mvi-results-col .kpi .label{ font-size:10px; }
   .mvi-results-col .kpi .value{ font-size:20px; }
   .mvi-metric-row{ padding:5px 10px; font-size:12px; }
-  .mvi-weight-row .mvi-label{ font-size:12px; }
-  .mvi-weight-sum{ margin-top:6px; padding:6px 10px; font-size:12px; }
-  .mvi-picker-actions{ margin-top:6px; }
+  /* Wider label column (+ hover tooltip via the row's title attr) so long
+     indicator names read as far as possible before truncating. */
+  .mvi-weight-row .mvi-label{ font-size:12px; flex:3 1 0; cursor:help; }
+  .mvi-weight-row .mvi-slider{ flex:1 1 0; min-width:40px; }
+  .mvi-weight-sum{ margin-top:0; padding:6px 10px; font-size:12px; }
+  .mvi-picker-actions{ margin-top:6px; margin-bottom:8px; }
   #mvi-calc-btn{ margin-top:6px !important; }
   .mvi-results-col .kpi-strip{ margin-bottom:0; flex:0 0 auto; }
   .mvi-results-col .mvi-toolbar{ margin-bottom:0; flex:0 0 auto; }
@@ -485,6 +504,44 @@
      lone full-width map has neutral side space — the real fix for that is a side-by-side
      layout (map + ranking), see log #25. */
   #mvi-map{ flex:1; min-height:220px; border-radius:var(--radius); border:0.5px solid var(--border); background:var(--surface); }
+
+  /* MVI Map view: side-by-side map (left) + score legend & District detail (right).
+     Fills the one-screen results column; the right column scrolls internally. */
+  .mvi-map-row{ flex:1 1 auto; min-height:0; grid-template-rows:minmax(0,1fr); margin-bottom:0; }
+  .mvi-map-row > .card{ min-height:0; }
+  .mvi-map-side{ display:flex; flex-direction:column; gap:10px; min-height:0; overflow-y:auto; }
+  .mvi-map-side .card{ flex:0 0 auto; }
+  .mvi-side-title{ font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted); font-weight:700; }
+  .mvi-detail-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-top:6px; }
+  .mvi-detail-id{ min-width:0; }
+  .mvi-detail-card h3{ font-size:18px; font-weight:700; margin:0 0 1px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mvi-detail-division{ font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-muted); }
+  .mvi-detail-score-row{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .mvi-detail-score{ font-size:26px; font-weight:800; color:var(--magenta); line-height:1; }
+  .mvi-detail-list{ display:flex; flex-direction:column; }
+  .mvi-detail-row{ display:flex; align-items:baseline; gap:12px;
+    padding:7px 0; border-top:0.5px solid var(--border); font-size:12.5px; }
+  .mvi-detail-row:first-child{ border-top:0; }
+  .mvi-detail-ind{ flex:1; min-width:0; color:var(--text); }
+  .mvi-detail-wt{ color:var(--text-muted); font-size:11px; }
+  .mvi-detail-val{ text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:600; color:var(--text); min-width:56px; }
+  .mvi-detail-rank{ text-align:right; white-space:nowrap; font-size:10.5px; font-weight:500; color:var(--text-muted); min-width:48px; }
+  .mvi-detail-empty{ font-size:12.5px; color:var(--text-muted); padding:6px 0; }
+
+  /* Ranking table: per-indicator value columns overflow into a horizontal scroll; the
+     header row is sticky (vertical scroll) and the Rank + District columns are frozen
+     (horizontal scroll) so a row's identity stays visible. Rank is left-aligned so its
+     numbers sit under the "Rank" heading. Opaque backgrounds keep scrolled cells hidden. */
+  #mvi-grid-card table{ min-width:max-content; }
+  #mvi-grid-card thead th{ position:sticky; top:0; z-index:3; }
+  #mvi-grid-card th.mvi-rank-col, #mvi-grid-card td.mvi-rank-col{
+    text-align:left; width:52px; white-space:nowrap; position:sticky; left:0; z-index:2; background:var(--bg); }
+  #mvi-grid-card th.mvi-dist-col, #mvi-grid-card td.mvi-dist-col{
+    position:sticky; left:52px; z-index:2; background:var(--bg); white-space:nowrap; }
+  #mvi-grid-card thead th.mvi-rank-col, #mvi-grid-card thead th.mvi-dist-col{ z-index:4; background:var(--surface); }
+  #mvi-grid-card tbody tr:hover td.mvi-rank-col, #mvi-grid-card tbody tr:hover td.mvi-dist-col{ background:var(--surface); }
+  #mvi-grid-card tbody tr.selected td.mvi-rank-col, #mvi-grid-card tbody tr.selected td.mvi-dist-col{ background:#FDEBF6; }
+  #mvi-grid-card thead th.mvi-ind-col{ text-align:left; max-width:120px; min-width:76px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
   .mvi-picker-scroll{
     /* flex-shrink:0 so this scroll box never collapses to 0 height inside the
@@ -531,18 +588,21 @@
   }
   .mvi-chip button{background:none; border:none; color:var(--magenta); cursor:pointer; padding:2px; line-height:0; font-size:14px;}
 
+  /* Single inline row (label · badge · slider · number · ×) — collapsing the old
+     two-line row (label line + full-width slider below) is what lets 10 indicators
+     fit on one screen. */
   .mvi-weight-row{
-    display:flex; flex-direction:column; gap:4px;
-    padding:8px 0; border-bottom:0.5px solid var(--border);
+    display:flex; align-items:center; gap:8px;
+    padding:5px 0; border-bottom:0.5px solid var(--border);
   }
   .mvi-weight-row:last-child{border-bottom:none;}
   .mvi-weight-top{display:flex; align-items:center; justify-content:space-between; gap:8px;}
-  .mvi-weight-row .mvi-label{flex:1; min-width:0; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .mvi-weight-row .mvi-label{flex:2 1 0; min-width:0; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   /* Thin custom track (native accent-color track rendered too thick). Chrome shows a
      slim grey track + magenta thumb; Firefox additionally fills the left side magenta. */
   .mvi-weight-row .mvi-slider{
-    -webkit-appearance:none; appearance:none; width:100%; height:14px;
-    background:transparent; cursor:pointer; margin:2px 0;
+    -webkit-appearance:none; appearance:none; flex:1.4 1 0; min-width:48px; height:14px;
+    background:transparent; cursor:pointer; margin:0;
   }
   .mvi-weight-row .mvi-slider::-webkit-slider-runnable-track{ height:3px; border-radius:999px; background:var(--border); }
   .mvi-weight-row .mvi-slider::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:12px; height:12px; margin-top:-4.5px; border-radius:50%; background:var(--magenta); }
@@ -550,8 +610,8 @@
   .mvi-weight-row .mvi-slider::-moz-range-progress{ height:3px; border-radius:999px; background:var(--magenta); }
   .mvi-weight-row .mvi-slider::-moz-range-thumb{ width:12px; height:12px; border:none; border-radius:50%; background:var(--magenta); }
   .mvi-weight-row .mvi-num{
-    flex:0 0 52px; width:52px; padding:4px 6px; text-align:right;
-    border:0.5px solid var(--border); border-radius:6px; font-size:13px; font-variant-numeric:tabular-nums;
+    flex:0 0 44px; width:44px; padding:3px 5px; text-align:right;
+    border:0.5px solid var(--border); border-radius:6px; font-size:12px; font-variant-numeric:tabular-nums;
   }
 
   .mvi-weight-sum{

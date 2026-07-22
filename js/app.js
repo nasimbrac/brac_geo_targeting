@@ -5,7 +5,7 @@
    ===================================================================== */
 const state = {
   page: 'map',                       // 'map' | 'correlation' | 'mvi'
-  metric: 'HCR_Upper_pct_HIES_22',   // default reproduces reference (Poverty Headcount Rate)
+  metric: 'Have_financial_account_Female', // default: Women with a financial account (%)
   bracProgramme: '',
   valueRange: null,                  // [lo, hi] on selected metric, or null = full
   cviRange: null,                    // [lo, hi] on CVI, or null = full
@@ -696,11 +696,7 @@ async function initMap(){
     zoomSnap:0.1, zoomDelta:0.1,
     attributionControl:true
   }).setView([23.7, 90.35], 6.4);
-  // nolabels variant: drops basemap place-name labels (Meghalaya, Assam, Tripura,
-  // Kolkata, etc.) that otherwise clutter the area around Bangladesh.
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-    attribution:'&copy; OpenStreetMap, &copy; CARTO', subdomains:'abcd', maxZoom:19
-  }).addTo(map);
+  // No basemap tiles: Bangladesh-only, plain background, matching the MVI map (log #25).
 
   let geojson = null;
   // Primary: bundled bd_districts.geojson (geoBoundaries ADM2, same folder) — reliable, no CORS issues.
@@ -891,7 +887,6 @@ let tableExpanded = false;
 
 function renderTable(){
   const k = state.metric;
-  $('th-value').textContent = 'Value';
 
   let units = visibleUnits().slice();
   units.sort((a,b)=>{
@@ -961,13 +956,22 @@ function initScatter(){
 
 function updateScatter(){
   const xk = state.scatterX, yk = state.scatterY;
+  // Bubble sizing metric: default = total BRAC reach (all programmes). When a
+  // BRAC programme is selected in the Data-filters dropdown, size by THAT
+  // programme's value instead, and show only the districts where it is active
+  // (null = programme not running there). No programme → all visible districts.
+  const progKey = state.bracProgramme;
+  const sizeKey = progKey || 'Total_Brac_Reach';
   const units = visibleUnits();
   const pts = [];
   for(const u of units){
     const x = u.metrics[xk], y = u.metrics[yk];
     if(x===null||x===undefined||Number.isNaN(x)) continue;
     if(y===null||y===undefined||Number.isNaN(y)) continue;
-    pts.push({x,y,name:u.name,code:u.code,zone:u.climate_zone,reach:u.metrics['Total_Brac_Reach']});
+    const reach = u.metrics[sizeKey];
+    // Programme selected → keep only districts where the programme is active.
+    if(progKey && (reach===null || reach===undefined || Number.isNaN(reach))) continue;
+    pts.push({x,y,name:u.name,code:u.code,zone:u.climate_zone,reach});
   }
 
   // quadrant split at the median of each axis
@@ -1058,7 +1062,7 @@ function updateScatter(){
     if(c.dataset.label==='Trend') return null;
     const d=c.raw;
     const reachLine = (d.reach!=null && !Number.isNaN(d.reach))
-      ? `BRAC reach (bubble size): ${fmt(d.reach,'Total_Brac_Reach')}` : 'BRAC reach: —';
+      ? `${metricLabel(sizeKey)} (bubble size): ${fmt(d.reach,sizeKey)}` : `${metricLabel(sizeKey)}: —`;
     if(norm) return [`${metricLabel(xk)}: ${fmt(d.ax,xk)} (norm ${d.x.toFixed(2)})`,
                      `${metricLabel(yk)}: ${fmt(d.ay,yk)} (norm ${d.y.toFixed(2)})`, reachLine];
     return [`${metricLabel(xk)}: ${fmt(d.ax,xk)}`, `${metricLabel(yk)}: ${fmt(d.ay,yk)}`, reachLine];
@@ -1083,7 +1087,9 @@ function updateScatter(){
   // Pearson r sits inline on the title line; the subtitle is just the relationship.
   const r = reg ? reg.r.toFixed(2) : '—';
   $('scatter-pearson').textContent = `Pearson r ${r}`;
-  $('scatter-subtitle').textContent = `Relationship between ${metricLabel(xk)} and ${metricLabel(yk)} · bubble size = total BRAC reach`;
+  $('scatter-subtitle').textContent = progKey
+    ? `Relationship between ${metricLabel(xk)} and ${metricLabel(yk)} · bubble size = ${metricLabel(progKey)} · ${pts.length} districts active`
+    : `Relationship between ${metricLabel(xk)} and ${metricLabel(yk)} · bubble size = total BRAC reach`;
 
   // Live insight card for whichever district is currently selected (any panel
   // can set it) — replaces a once-static "High X · High Y" legend. Short,
@@ -1458,7 +1464,7 @@ function bindFilters(){
     cviRangeSlider.commit();
   });
 
-  $('sort-btn').addEventListener('click', ()=>{
+  $('th-value').addEventListener('click', ()=>{
     state.sortDir = state.sortDir==='desc'?'asc':'desc';
     renderTable();
   });
@@ -1744,11 +1750,13 @@ function renderMviWeightList(){
       const txt = (r >= 0 ? '+' : '−') + Math.abs(r).toFixed(2);
       badge = `<span class="mvi-rec-badge${r < 0 ? ' neg' : ''}" title="Correlation (r) with the primary target">r ${txt}</span>`;
     }
+    // Single-line row so up to 10 indicators fit on one screen without scrolling:
+    // [label] [r-badge] [slider (flex)] [number] [×], all inline.
     row.innerHTML =
-      `<div class="mvi-weight-top"><span class="mvi-label" title="${meta.label}">${meta.label}</span>${badge}` +
+      `<span class="mvi-label" title="${meta.label}">${meta.label}</span>${badge}` +
+      `<input type="range" class="mvi-slider" min="0" max="100" value="${weight}"/>` +
       `<input type="number" class="mvi-num" min="0" max="100" value="${weight}"/>` +
-      `<button class="mvi-weight-remove" title="Remove this indicator">×</button></div>` +
-      `<input type="range" class="mvi-slider" min="0" max="100" value="${weight}"/>`;
+      `<button class="mvi-weight-remove" title="Remove this indicator">×</button>`;
     row.querySelector('.mvi-slider').addEventListener('input', e => mviSetWeight(key, e.target.value));
     row.querySelector('.mvi-num').addEventListener('input', e => mviSetWeight(key, e.target.value));
     row.querySelector('.mvi-weight-remove').addEventListener('click', () => mviToggleIndicator(key, false));
@@ -2031,6 +2039,15 @@ function computeMviScores(){
   const excludedCodes = Object.values(byCode).filter(r=>!r.included).map(r=>r.code);
   const tiers = mviTiers(includedScores);
   order.forEach(code => { byCode[code].tier = mviTierFor(byCode[code].score, tiers); });
+
+  // Per-indicator rank of each included district (1 = most vulnerable on that indicator,
+  // by the polarity-applied normalized value) — powers the District detail panel.
+  keys.forEach(k => {
+    const ranked = order
+      .map(code => byCode[code].breakdown.find(x => x.key === k))
+      .sort((p, q) => q.norm - p.norm);
+    ranked.forEach((b, i) => { b.rank = i + 1; b.rankTotal = ranked.length; });
+  });
   const scoreMin = includedScores.length ? Math.min(...includedScores) : 0;
   const scoreMax = includedScores.length ? Math.max(...includedScores) : 0;
 
@@ -2043,6 +2060,15 @@ function mviPassesDisplayFilter(rec){
   if(q && !rec.name.toLowerCase().includes(q)) return false;
   if(state.mviDivisionFilter && districtDivision(rec.name) !== state.mviDivisionFilter) return false;
   return true;
+}
+
+/* First district in ranked order that passes the active display filter
+   (division / search) — i.e. the most-vulnerable district WITHIN the current
+   filter. Falls back to the overall #1 when nothing matches. */
+function mviTopVisibleDistrict(results){
+  if(!results) return null;
+  const top = results.order.find(code => mviPassesDisplayFilter(results.byCode[code]));
+  return top || results.order[0] || null;
 }
 
 /* ---- KPI strip + ranked table ---- */
@@ -2068,16 +2094,34 @@ function renderMviKPIs(results){
   $('mvi-kpi-min-district').onclick = () => mviSelectDistrict(minCode);
 }
 
+// Compact a long metric label for a ranking-table column header (full label stays in the
+// th's title tooltip). Keeps a trailing "(%)", drops any clause after the first comma, and
+// caps to ~3 words. Never splits on hyphens (e.g. "Child-Woman" stays intact).
+function mviShortLabel(label){
+  const pct = /\(%\)/.test(label) ? ' (%)' : '';
+  let s = label.replace(/\s*\(%\)\s*/g, ' ').split(',')[0].trim();
+  const words = s.split(/\s+/);
+  if(words.length > 3) s = words.slice(0, 3).join(' ') + '…';
+  return s + pct;
+}
+
 function renderMviTable(results){
   const descOrder = results.order; // true rank, independent of the display filters below
   const rankByCode = {};
   descOrder.forEach((code,i) => { rankByCode[code] = i + 1; });
 
-  // Core columns only (Rank / District / Division / MVI Score / Households) so the ranking
-  // fits one screen without horizontal scroll. Per-indicator raw values live on the Map
-  // view tooltip / could return as a row-expand later.
+  // Core columns (Rank / District / Division / MVI Score / Households) + one raw-value
+  // column per selected indicator (user request). The full-width ranking card scrolls
+  // horizontally when the indicator columns overflow. Rank header + cells are both
+  // left-aligned (.mvi-rank-col) so the numbers sit directly under the "Rank" heading.
+  const indKeys = state.mviSelected.slice();
   const thead = $('mvi-table-head');
-  thead.innerHTML = '<th>Rank</th><th>District</th><th>Division</th><th class="num">MVI Score</th><th class="num">Households</th>';
+  let head = '<th class="mvi-rank-col">Rank</th><th class="mvi-dist-col">District</th><th>Division</th><th class="num">MVI Score</th><th class="num">Households</th>';
+  indKeys.forEach(k => {
+    const lbl = mviMetricMeta(k).label;
+    head += `<th class="num mvi-ind-col" title="${lbl.replace(/"/g,'&quot;')}">${mviShortLabel(lbl)}</th>`;
+  });
+  thead.innerHTML = head;
 
   let rows = descOrder.filter(code => mviPassesDisplayFilter(results.byCode[code])).map(code => results.byCode[code]);
   if(state.mviSortDir === 'asc') rows = rows.slice().reverse();
@@ -2086,17 +2130,22 @@ function renderMviTable(results){
   const shown = state.mviTableExpanded ? rows : rows.slice(0,10);
   const tb = $('mvi-table-body');
   tb.innerHTML = '';
-  const colCount = 5;
+  const colCount = 5 + indKeys.length;
   shown.forEach(r => {
     const tr = document.createElement('tr');
     tr.dataset.code = r.code;
     if(r.code === state.mviSelectedDistrict) tr.classList.add('selected');
     const tierLabel = r.tier.charAt(0).toUpperCase() + r.tier.slice(1);
     const hh = r.households != null ? r.households.toLocaleString('en-US') : '—';
-    let cells = `<td class="num">${rankByCode[r.code]}</td><td class="dist">${r.name}</td>` +
+    let cells = `<td class="mvi-rank-col">${rankByCode[r.code]}</td><td class="dist mvi-dist-col">${r.name}</td>` +
       `<td>${districtDivision(r.name) || '—'}</td>` +
       `<td class="num">${r.score.toFixed(3)} <span class="mvi-tier-pill mvi-tier-${r.tier}">${tierLabel}</span></td>` +
       `<td class="num">${hh}</td>`;
+    indKeys.forEach(k => {
+      const b = r.included ? r.breakdown.find(x => x.key === k) : null;
+      const v = (b && b.raw != null) ? Number(b.raw).toLocaleString('en-US',{maximumFractionDigits:2}) : '—';
+      cells += `<td class="num">${v}</td>`;
+    });
     tr.innerHTML = cells;
     tr.addEventListener('click', ()=>mviSelectDistrict(r.code));
     tb.appendChild(tr);
@@ -2106,7 +2155,7 @@ function renderMviTable(results){
       const tr = document.createElement('tr');
       tr.className = 'mvi-excluded-row';
       const hh = r.households != null ? r.households.toLocaleString('en-US') : '—';
-      tr.innerHTML = `<td class="num">—</td><td class="dist">${r.name}</td><td>${districtDivision(r.name) || '—'}</td>` +
+      tr.innerHTML = `<td class="mvi-rank-col">—</td><td class="dist mvi-dist-col">${r.name}</td><td>${districtDivision(r.name) || '—'}</td>` +
         `<td colspan="${colCount-3}">Insufficient data for the selected indicators (households: ${hh})</td>`;
       tb.appendChild(tr);
     });
@@ -2150,6 +2199,45 @@ function mviTooltipHTML(u){
     `${b.label}: ${b.raw!=null ? Number(b.raw).toLocaleString('en-US',{maximumFractionDigits:2}) : '—'} (weight ${b.weight}%)`
   ).join('<br>');
   return `<strong>${u.name}</strong><br>Composite score: ${rec.score.toFixed(3)} (${rec.tier})<br>${rows}`;
+}
+
+/* District detail panel (Map view, right column): the per-indicator breakdown for the
+   currently selected district — each indicator's raw value, its weight, and the district's
+   rank on that indicator. Updated on click (mviSelectDistrict); defaults to the top-ranked
+   district after each Calculate so the panel is never empty. */
+function renderMviDetail(code){
+  const results = state.mviResults;
+  const rec = (code && results) ? results.byCode[code] : null;
+  const nameEl = $('mvi-detail-name'), divEl = $('mvi-detail-division'),
+        scoreEl = $('mvi-detail-score'), tierEl = $('mvi-detail-tier'), listEl = $('mvi-detail-list');
+  if(!nameEl) return; // panel not in DOM yet
+  const clearTier = () => { tierEl.textContent = ''; tierEl.className = 'mvi-tier-pill'; };
+  if(!rec){
+    nameEl.textContent = '—'; divEl.textContent = ''; scoreEl.textContent = '—'; clearTier();
+    listEl.innerHTML = '<div class="mvi-detail-empty">Click a district on the map to see its indicator breakdown.</div>';
+    return;
+  }
+  nameEl.textContent = rec.name;
+  const div = districtDivision(rec.name);
+  divEl.textContent = div ? div + ' Division' : '';
+  if(!rec.included){
+    scoreEl.textContent = '—'; clearTier();
+    listEl.innerHTML = '<div class="mvi-detail-empty">Insufficient data for the selected indicators.</div>';
+    return;
+  }
+  scoreEl.textContent = rec.score.toFixed(3);
+  const tierLabel = rec.tier.charAt(0).toUpperCase() + rec.tier.slice(1);
+  tierEl.textContent = tierLabel;
+  tierEl.className = 'mvi-tier-pill mvi-tier-' + rec.tier;
+  listEl.innerHTML = rec.breakdown.map(b => {
+    const val = b.raw != null ? Number(b.raw).toLocaleString('en-US',{maximumFractionDigits:2}) : '—';
+    const rank = b.rank != null ? `rank ${b.rank}/${b.rankTotal}` : '';
+    return '<div class="mvi-detail-row">'
+      + `<span class="mvi-detail-ind">${b.label} <span class="mvi-detail-wt">(${b.weight}%)</span></span>`
+      + `<span class="mvi-detail-val">${val}</span>`
+      + `<span class="mvi-detail-rank">${rank}</span>`
+      + '</div>';
+  }).join('');
 }
 
 function showMviMapMessage(msg){
@@ -2275,7 +2363,8 @@ function mviZoomToDivision(){
 function mviSwitchView(view){
   state.mviResultView = view;
   $('mvi-grid-card').style.display = view === 'grid' ? '' : 'none';
-  $('mvi-map-card').style.display = view === 'map' ? '' : 'none';
+  // The map card + District detail panel share the #mvi-map-row grid, shown together.
+  $('mvi-map-row').style.display = view === 'map' ? '' : 'none';
   // The zoom/reset/fullscreen icons now live in the shared toolbar; only relevant on Map view.
   $('mvi-map-actions').style.display = view === 'map' ? '' : 'none';
   $('mvi-view-toggle').querySelectorAll('.scale-tab').forEach(btn => {
@@ -2284,6 +2373,7 @@ function mviSwitchView(view){
     btn.setAttribute('aria-selected', on);
   });
   if(view === 'map'){
+    renderMviDetail(state.mviSelectedDistrict);
     if(!mviMap) initMviMap();
     else{
       mviMap.invalidateSize();
@@ -2296,13 +2386,23 @@ function mviSwitchView(view){
 function mviSelectDistrict(code){
   state.mviSelectedDistrict = code;
   if(state.mviResults) renderMviTable(state.mviResults);
+  renderMviDetail(code);
   mviRecolorMap();
 }
 
 function runMviCalculation(){
   state.mviResults = computeMviScores();
+  // Default the detail panel to the top-ranked district within the active
+  // display filter (division / search) so it's never empty AND reflects the
+  // filtered view — not always the overall #1.
+  if(!state.mviSelectedDistrict
+     || !state.mviResults.byCode[state.mviSelectedDistrict]
+     || !mviPassesDisplayFilter(state.mviResults.byCode[state.mviSelectedDistrict])){
+    state.mviSelectedDistrict = mviTopVisibleDistrict(state.mviResults);
+  }
   renderMviKPIs(state.mviResults);
   renderMviTable(state.mviResults);
+  renderMviDetail(state.mviSelectedDistrict);
   if(mviGeoLayer){ mviRecolorMap(); updateMviLegend(); }
 }
 
@@ -2360,11 +2460,21 @@ function bindMviEvents(){
   });
   $('mvi-district-search').addEventListener('input', e => {
     state.mviDistrictSearch = e.target.value;
-    if(state.mviResults){ renderMviKPIs(state.mviResults); renderMviTable(state.mviResults); mviRecolorMap(); }
+    if(state.mviResults){
+      state.mviSelectedDistrict = mviTopVisibleDistrict(state.mviResults);
+      renderMviKPIs(state.mviResults); renderMviTable(state.mviResults);
+      renderMviDetail(state.mviSelectedDistrict); mviRecolorMap();
+    }
   });
   $('mvi-division-filter').addEventListener('change', e => {
     state.mviDivisionFilter = e.target.value;
-    if(state.mviResults){ renderMviKPIs(state.mviResults); renderMviTable(state.mviResults); mviRecolorMap(); }
+    if(state.mviResults){
+      // Re-anchor the detail panel + map selection to the top district WITHIN
+      // the chosen division (not the overall #1).
+      state.mviSelectedDistrict = mviTopVisibleDistrict(state.mviResults);
+      renderMviKPIs(state.mviResults); renderMviTable(state.mviResults);
+      renderMviDetail(state.mviSelectedDistrict); mviRecolorMap();
+    }
     mviZoomToDivision(); // zoom in to the chosen division (or back to full BD for "All divisions")
   });
   [...new Set(Object.values(BD_DISTRICT_DIVISIONS))].sort().forEach(div => {

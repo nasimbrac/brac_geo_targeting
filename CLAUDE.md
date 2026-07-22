@@ -537,6 +537,89 @@ it had hardcoded values and placeholder images, so we wrote a fresh compliant bu
       fullscreen the Ranking/Map toggle, Search district, All divisions, and zoom/reset/
       EXIT icons are all visible & clickable; exit minimizes correctly (Escape still works
       too). Satisfies the user's "show the filters in fullscreen + let me minimize" ask.
+26. **Map View default metric → women's financial account + MVI Map view side-by-side
+    District-detail panel (2026-07-19, browser-verified)** —
+    - **Map View now opens on "Women with a financial account (%)"** (`state.metric`
+      default `HCR_Upper_pct_HIES_22` → `Have_financial_account_Female`, `js/app.js:8`).
+      Key is 64/64 coverage + already `curated:true`, so the whole load-time render chain
+      (combobox, KPIs, legend, table, choropleth) picks it up with no other change.
+      Verified in-browser: title/combobox/KPIs (max 27.86 Dhaka, min 8.87 Sunamganj) all
+      reflect it. (Poverty is still the Correlation default Y and the MVI primary — unchanged.)
+    - **MVI Map sub-view is now side-by-side** (map left + a right column), resolving the
+      long-standing "portrait BD wastes the map card's sides" open item (log #25). The old
+      full-width `#mvi-map-card` (with its title `<h2>` + bottom legend) was wrapped in a
+      new `<section class="row-mid mvi-map-row" id="mvi-map-row">` inside `.mvi-results-col`.
+      Right column `.mvi-map-side` (scrolls internally) holds: (a) the **MVI score-intensity
+      legend** moved out of the map card (frees vertical space → taller map), and (b) a new
+      **District detail** card (`#mvi-detail-*`) matching the `MVI.html` "District Detail"
+      panel the user pointed at: district name, division, composite score + tier pill, then
+      one row per selected indicator = `label (weight%) → value` **plus a `rank N/64`** (the
+      "ranking of each indicator" ask). `#mvi-map-card` kept its id (fullscreen still targets
+      it, map only); `#mvi-legend-min/max` ids preserved so `updateMviLegend()` is unchanged.
+    - **Trigger = click (sticky), not hover** (recommended to the user, who agreed): the
+      panel updates on `mviSelectDistrict` (map polygon / ranking row / KPI-district click)
+      and **defaults to the #1 most-vulnerable district** (`results.order[0]`) after each
+      Calculate so it's never empty; the lightweight hover tooltip (`mviTooltipHTML`) is
+      unchanged. Chosen over hover-follow because the tall card would flicker across the 64
+      dense central districts.
+    - **JS**: new `renderMviDetail(code)`; `computeMviScores()` now also stamps per-indicator
+      `rank`/`rankTotal` onto each `breakdown[]` item (rank included districts by the
+      polarity-applied `norm`, 1 = most vulnerable); `mviSelectDistrict` + `runMviCalculation`
+      call `renderMviDetail`; `mviSwitchView` toggles `#mvi-map-row` (was `#mvi-map-card`) and
+      renders the panel on entering Map view. **CSS**: `.mvi-map-row`/`.mvi-map-side`/
+      `.mvi-detail-*`/`.mvi-side-title` (reuses the `.row-mid` 1.6fr/1fr grid + `.mvi-tier-*`
+      pills); `@media(max-width:1024px)` stacks the row.
+    - Browser-verified (chrome-devtools bridge; Claude-in-Chrome still not connecting): clean
+      load defaults the panel to Madaripur (0.835, = KPI max = ranking #1); clicking a district
+      (tested via the min-district control → Dhaka 0.031, teal "Low" pill, ranks 63–64/64)
+      updates the panel + map selection outline; Ranking-view toggle hides the whole map row +
+      map actions and shows the grid; **zero page scroll** on both sub-views (one-screen fit
+      holds). Note: a transient wrong-default (rank-6 Sunamganj) seen mid-session was an
+      artifact of resizing the window across the 1024px breakpoint, NOT a load bug — a fresh
+      reload is always correct.
+27. **MVI toggle order + ranking table per-indicator columns + rank alignment (2026-07-19,
+    browser-verified)** — three quick follow-ups to #26:
+    - **Sub-view toggle reordered** to **Map view | Ranking view** (Map first) in
+      `index.html` (`#mvi-view-toggle`); Map stays the default-active. (Reverses #18's
+      "Ranking | Map" order per user request.)
+    - **Ranking table now shows one raw-value column per selected indicator again**
+      (`renderMviTable` builds a dynamic `<thead>` from `state.mviSelected` + appends a
+      `<td>` per indicator reading `rec.breakdown[].raw`). This re-adds the columns #18
+      removed — the user explicitly wants them, to fill the full-width card's empty right
+      side. The card scrolls **horizontally** when they overflow (`#mvi-grid-card table{
+      min-width:max-content }`, headers `.mvi-ind-col` ellipsis-truncated with a `title`);
+      the page still fits one screen **vertically** (verified `docScroll==0`).
+    - **Rank column left-aligned** (`.mvi-rank-col` on both `<th>` and `<td>`) so the 1/2/3…
+      numbers sit directly under the "Rank" heading — fixes the user's "rank numbers aren't
+      on the same side, big gap" report (was a right-aligned `.num` cell under a left-aligned
+      header in an over-wide first column).
+    - Verified: toggle reads Map/Ranking; 15 columns (5 core + 10 indicators) with real values
+      (Madaripur 54.4/42.67/350.28/…); Rank header+cells both `text-align:left`; horizontal
+      scroll present; "View all 64 regions" intact; zero vertical page scroll.
+28. **Navbar title: dropped the "BRAC" word (2026-07-19)** — `.dashboard-title` text
+    "BRAC Geo-Targeting Insights" → **"Geo-Targeting Insights"** (`index.html`, user
+    request; the magenta `brac` logo on the far left already carries the brand, so the
+    word was redundant). Re-confirms #22's intent (the "BRAC" prefix had crept back in).
+29. **Ranking-table polish: frozen columns + sticky header + short headers (2026-07-19,
+    browser-verified)** — usability follow-ups on the #27 wide ranking table:
+    - **Frozen Rank + District columns** (`.mvi-rank-col`/`.mvi-dist-col` → `position:sticky;
+      left:0 / left:52px`) so a row's identity stays on screen while the indicator columns
+      scroll horizontally. Opaque backgrounds (`--bg`/`--surface`, selected `#FDEBF6`) prevent
+      scrolled cells bleeding through; header cells get higher z-index for the sticky corner.
+    - **Sticky header row** (`#mvi-grid-card thead th{ position:sticky; top:0 }`) — column
+      names stay visible when scrolling the 64-row "View all" list. Scoped to `#mvi-grid-card`
+      so the Map-view/Correlation tables are unaffected.
+    - **Short column headers** via new `mviShortLabel()` (keeps a trailing "(%)", drops the
+      clause after the first comma, caps ~3 words, never splits hyphens like "Child-Woman");
+      full label stays in the `<th title>` + CSS ellipsis backstop. Roughly halves the table
+      width vs. full labels.
+    - **`metric_catalog.json` 404 left as-is (documented)**: the file was intentionally
+      removed (#16 code-only cleanup); the fetch already falls back to "consider all metrics".
+      A stub would BREAK Smart-Recommend (metrics absent from a *loaded* catalog are treated as
+      not-vetted → ineligible), so silencing the harmless console 404 isn't worth that risk.
+    - Verified: frozen Rank/District persist on horizontal scroll (incl. the selected row's
+      pink tint), header sticky, short labels render, horizontal scroll present, zero vertical
+      page scroll.
 
 ## 6. Indicator naming — decision & approach
 Problem: dropdown labels were cryptic codes (e.g. `HCR_Upper_pct_HIES_22`, `Kancha_pct`,
